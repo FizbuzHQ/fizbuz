@@ -1,7 +1,7 @@
 {
   "name": "Ruby on Rails",
   "language": "Ruby",
-  "kind": "web",
+  "category": "web",
   "homepage": "http://rubyonrails.org",
   "source": "https://github.com/rails/rails",
   "first_release_version": "1.0",
