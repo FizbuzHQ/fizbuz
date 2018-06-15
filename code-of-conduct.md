@@ -10,7 +10,7 @@ Discouraged behaviors include: directly DM-ing people. Please try and conduct al
 
 Unacceptable behaviors include: intimidating, harassing, abusive, discriminatory, derogatory or demeaning speech or actions by any participant. This includes in our Discord community online, at all related events, and in one-on-one communications carried out in the context of community business. 
 
-The Fizbuz Discord community is dedicated to providing a harassment-free space for developers regardless of gender identity, sex, race, ethnicity, sexual orientation, religion, age, disability, physical appearance, or body size. Harassment includes: prejudicial verbal or written comments, sexual imagery or inappropriate use of nudity, deliberate intimidation, stalking or following, sustained disruption of conversation and unwelcome sexual attention.
+The Fizbuz Slack community is dedicated to providing a harassment-free space for developers regardless of gender identity, sex, race, ethnicity, sexual orientation, religion, age, disability, physical appearance, or body size. Harassment includes: prejudicial verbal or written comments, sexual imagery or inappropriate use of nudity, deliberate intimidation, stalking or following, sustained disruption of conversation and unwelcome sexual attention.
 
 Finally, anything that would make someone think "Hmmm, that's inappropriate" may also be unacceptable behavior.
 
