@@ -10,11 +10,6 @@ Fizbuz is for developers, by developers.
 
 Participating in the Fizbuz community (here on Github, on Slack, etc) requires you to abide by our [Code of Conduct](/code-of-coduct.md).
 
-## Docs
+## Open Source
 
-Part of building Fizbuz involves creating highly structured data types that helps turn what is often free-form resume writing into a structured and semanticly interesting document that both humans and machine can quickly reason about. 
-
-Part of building Fizbuz will involve building a comprehensive taxonomy of technical and non-technical skills. Everything from Bash to Erlang to Terraform. We hope to crowd-source much of this information via easy-to-use web interfaces.
-
-But we also want to give back, and will be making the data available both on the web and via REST and GraphQL APIs. You can read more about these efforts in our [Docs](/docs/).
-
+Fizbuz is Open Source and is being built with [RedwoodJS](/REDWOOD.MD).

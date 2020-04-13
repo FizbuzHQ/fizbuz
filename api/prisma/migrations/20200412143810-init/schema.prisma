@@ -1,0 +1,20 @@
+datasource DS {
+  provider = "sqlite"
+  url = "***"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = env("BINARY_TARGET")
+}
+
+model User {
+  id               String    @default(cuid()) @id
+  auth0Sub         String
+  email            String    @unique
+  productEmail     Boolean   @default(true)
+  promotionalEmail Boolean   @default(true)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime?
+  deletedAt        DateTime?
+}
