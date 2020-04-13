@@ -1,4 +1,4 @@
-![Fizbuz logo](/fizbuz-logo-large.png)
+![Fizbuz logo](/web/public/fizbuz-logo-large.png)
 
 # Fizbuz
 
