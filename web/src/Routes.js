@@ -14,21 +14,29 @@ const Routes = () => {
     <Router>
       <Route
         path="/connections/new"
-        page={NewConnectionPage}
+        page={ConnectionsNewConnectionPage}
         name="newConnection"
       />
       <Route
         path="/connections/{id}/edit"
-        page={EditConnectionPage}
+        page={ConnectionsEditConnectionPage}
         name="editConnection"
       />
-      <Route path="/connections/{id}" page={ConnectionPage} name="connection" />
-      <Route path="/connections" page={ConnectionsPage} name="connections" />
+      <Route
+        path="/connections/{id}"
+        page={ConnectionsConnectionPage}
+        name="connection"
+      />
+      <Route
+        path="/connections"
+        page={ConnectionsConnectionsPage}
+        name="connections"
+      />
       <Route path="/" page={LandingPage} name="landing" />
-      <Route path="/users/new" page={NewUserPage} name="newUser" />
-      <Route path="/users/{id}/edit" page={EditUserPage} name="editUser" />
-      <Route path="/users/{id}" page={UserPage} name="user" />
-      <Route path="/users" page={UsersPage} name="users" />
+      <Route path="/users/new" page={UsersNewUserPage} name="newUser" />
+      <Route path="/users/{id}/edit" page={UsersEditUserPage} name="editUser" />
+      <Route path="/users/{id}" page={UsersUserPage} name="user" />
+      <Route path="/users" page={UsersUsersPage} name="users" />
       <Route notfound page={NotFoundPage} />
     </Router>
   )
