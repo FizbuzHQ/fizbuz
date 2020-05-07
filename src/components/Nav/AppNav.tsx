@@ -7,10 +7,10 @@ import { useAuth0 } from '../../auth/auth0';
 function Logo() {
     const logo = '/logo.png';
     return (
-        <>
+        <Link to="/">
             <img className="block lg:hidden h-8 w-auto" src={logo} alt="logo" />
             <img className="hidden lg:block h-8 w-auto" src={logo} alt="logo" />
-        </>
+        </Link>
     );
 }
 
@@ -59,7 +59,7 @@ function ProfileActions({ mode }: { mode?: string }) {
                 Settings
             </Link>
             <Link
-                to="/logout"
+                to="/"
                 onClick={() => logoutWithRedirect()}
                 className={
                     mode === 'mobile'
@@ -79,7 +79,7 @@ const Nav = () => {
 
     return (
         <nav className="bg-gray-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center">
                         <div className="flex-shrink-0">

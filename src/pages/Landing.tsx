@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 function Landing() {
     return (
@@ -7,7 +8,9 @@ function Landing() {
             <p>Here are some things you can do to test that things are running properly:</p>
             <ul className="list-disc list-inside">
                 <li>Log in</li>
-                <li>View your data in the Dashboard</li>
+                <li>
+                    View your Auth0 data at <Link to="/home">/home</Link>
+                </li>
                 <li>Log out</li>
             </ul>
         </div>

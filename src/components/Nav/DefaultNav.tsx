@@ -1,13 +1,14 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth0 } from '../../auth/auth0';
 
 function Logo() {
     const logo = '/logo.png';
     return (
-        <>
+        <Link to="/">
             <img className="block lg:hidden h-8 w-auto" src={logo} alt="logo" />
             <img className="hidden lg:block h-8 w-auto" src={logo} alt="logo" />
-        </>
+        </Link>
     );
 }
 
@@ -15,7 +16,7 @@ function DefaultNav() {
     const { loginWithRedirect } = useAuth0();
     return (
         <nav className="bg-white shadow">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex">
                         <div className="flex-shrink-0 flex items-center">

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { useAuth0 } from './auth/auth0';
 import AppLayout from './layouts/AppLayout';
 import DefaultLayout from './layouts/DefaultLayout';
@@ -13,6 +13,7 @@ const NoMatch = () => {
 };
 
 const PrivateRoute = ({ component, ...rest }) => {
+    const location = useLocation();
     const { loading, isAuthenticated } = useAuth0();
     if (loading) {
         return <div>Loading...</div>;
