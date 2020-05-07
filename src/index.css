@@ -1,0 +1,15 @@
+@tailwind base;
+
+h1 {
+  @apply text-2xl font-bold leading-7 text-gray-900;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+}

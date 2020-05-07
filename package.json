@@ -1,22 +1,68 @@
 {
-  "version": "0.0.4",
-  "private": true,
-  "workspaces": {
-    "packages": [
-      "api",
-      "web"
-    ]
+  "name": "fizbuz",
+  "version": "0.0.5",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel src/index.html --no-source-maps --out-dir build/debug",
+    "build": "parcel build src/index.html --no-source-maps --out-dir build/release --public-url ./",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
+  "keywords": [],
+  "author": "Carter Rabasa",
+  "license": "MIT",
   "devDependencies": {
-    "@redwoodjs/core": "^0.6.0",
-    "netlify-plugin-prisma-provider": "^0.1.1"
+    "@fullhuman/postcss-purgecss": "^2.1.2",
+    "@graphql-codegen/cli": "1.13.4",
+    "@graphql-codegen/typescript": "1.13.4",
+    "@graphql-codegen/typescript-operations": "1.13.4",
+    "@graphql-codegen/typescript-react-apollo": "1.13.4",
+    "@tailwindcss/ui": "^0.3.0",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "@typescript-eslint/eslint-plugin": "^2.31.0",
+    "@typescript-eslint/parser": "^2.31.0",
+    "autoprefixer": "^9.7.6",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "parcel": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.3.1",
+    "postcss-import": "^12.0.1",
+    "postcss-modules": "^2.0.0",
+    "prettier": "^2.0.5",
+    "source-map-loader": "^0.2.4",
+    "tailwindcss": "^1.4.4",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3"
   },
-  "eslintConfig": {
-    "extends": "@redwoodjs/eslint-config"
-  },
-  "engines": {
-    "node": ">=12",
-    "yarn": ">=1.15"
-  },
-  "dependencies": {}
+  "dependencies": {
+    "@apollo/react-common": "^3.1.4",
+    "@apollo/react-components": "^3.1.5",
+    "@apollo/react-hoc": "^3.1.5",
+    "@apollo/react-hooks": "^3.1.5",
+    "@auth0/auth0-spa-js": "^1.8.0",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link": "^1.2.14",
+    "apollo-link-context": "^1.0.20",
+    "apollo-link-error": "^1.1.13",
+    "apollo-link-http": "^1.5.17",
+    "graphql": "^14",
+    "graphql-tag": "^2.10.3",
+    "history": "^4.10.1",
+    "react": "^16.13.1",
+    "react-apollo": "^3.1.5",
+    "react-apollo-hooks": "^0.5.0",
+    "react-dom": "^16.13.1",
+    "react-helmet": "^6.0.0",
+    "react-hook-form": "^5.6.0",
+    "react-router-dom": "^5.1.2",
+    "react-transition-group": "^4.3.0",
+    "regenerator-runtime": "^0.13.5",
+    "src": "^1.1.2"
+  }
 }
