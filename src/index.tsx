@@ -49,6 +49,7 @@ ReactDOM.render(
         client_id={AUTH_CONFIG.clientId}
         audience={AUTH_CONFIG.audience}
         redirect_uri={`${window.location.origin}/home`}
+        useRefreshTokens={AUTH_CONFIG.useRefreshTokens}
     >
         <GraphQLProvider>
             <App />
