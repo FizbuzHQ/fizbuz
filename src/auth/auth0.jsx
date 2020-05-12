@@ -1,5 +1,3 @@
-/* eslint-disable no-shadow */
-// src/react-auth0-spa.js
 import React, { useState, useEffect, useContext } from 'react';
 import createAuth0Client from '@auth0/auth0-spa-js';
 
@@ -44,7 +42,6 @@ export const Auth0Provider = ({ children, onRedirectCallback = DEFAULT_REDIRECT_
         try {
             await auth0Client.loginWithPopup(params);
         } catch (error) {
-            // eslint-disable-next-line no-console
             console.error(error);
         } finally {
             setPopupOpen(false);

@@ -1,8 +1,9 @@
 const AUTH_CONFIG = {
-    domain: 'fizbuz.auth0.com',
-    clientId: 'NdvY3uAHQSF7tuGx4554V6dGbDITzXGu',
-    audience: 'https://alpha.fizbuz.com',
-    useRefreshTokens: true,
+    domain: process.env.REACT_APP_DOMAIN,
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    audience: process.env.REACT_APP_AUDIENCE,
+    useRefreshTokens: process.env.REACT_APP_USE_REFRESH_TOKENS,
+    cacheLocation: process.env.REACT_APP_CACHE_LOCATION,
 };
 
 export default AUTH_CONFIG;
