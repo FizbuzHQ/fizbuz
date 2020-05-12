@@ -11,6 +11,9 @@ function Landing() {
                 <li>
                     View your Auth0 data at <Link to="/home">/home</Link>
                 </li>
+                <li>
+                    View data from the Fizbuz GraphQL API at <Link to="/users">/users</Link>
+                </li>
                 <li>Log out</li>
             </ul>
         </div>

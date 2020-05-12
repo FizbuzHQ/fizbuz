@@ -1,10 +1,11 @@
 import * as React from 'react';
+import { useParams } from 'react-router-dom';
 import { useUpdateUserMutation, useUserQuery } from '../../generated/graphql';
 import UserForm from './UserForm';
 
 const UserFormContainer = () => {
     // this will come from a URL param or the session
-    const id = 'ck9lkby2d00009xar3ym47tpq';
+    const { id } = useParams();
 
     const { data: userData, error: userError, loading: userLoading } = useUserQuery({
         variables: {

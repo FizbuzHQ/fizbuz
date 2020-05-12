@@ -47,7 +47,7 @@ function Routes() {
             <PublicRoute exact path="/" component={Landing} />
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/users" component={UserList} />
-            <PrivateRoute exact path="/users/edit" component={UserForm} />
+            <PrivateRoute exact path="/users/:id/edit" component={UserForm} />
             <PublicRoute path="*" component={NoMatch} />
         </Switch>
     );

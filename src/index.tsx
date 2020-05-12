@@ -20,7 +20,6 @@ const GraphQLProvider = ({ children }) => {
     if (loading) {
         return <div>Loading...</div>;
     }
-
     const authLink = setContext(async (_, { headers }) => {
         const token = isAuthenticated ? await getTokenSilently() : null;
         return {
@@ -42,7 +41,7 @@ const GraphQLProvider = ({ children }) => {
         </ApolloProvider>
     );
 };
-console.log(window.location.origin);
+
 ReactDOM.render(
     <Auth0Provider
         domain={AUTH_CONFIG.domain}

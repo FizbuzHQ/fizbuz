@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { UserListQuery } from '../../generated/graphql';
 // import './styles.css';
 
@@ -12,7 +13,9 @@ const UserList: React.FC<Props> = ({ data }) => (
         <ol>
             {data?.users.map((user, i) => (
                 <li key={i}>
-                    {user.id} {user.email}
+                    <Link to={`/users/${user.id}/edit`}>
+                        {user.id} {user.email}
+                    </Link>
                 </li>
             ))}
         </ol>
