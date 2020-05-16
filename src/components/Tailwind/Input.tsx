@@ -3,7 +3,7 @@ import * as React from 'react';
 const Input = ({ display, field, placeholder, validationRef, errors, errorMessage }) => {
     return (
         <>
-            <div>
+            <div className="my-6">
                 <label htmlFor={field} className="block text-sm font-medium leading-5 text-gray-700">
                     {display}
                 </label>
@@ -32,12 +32,12 @@ const Input = ({ display, field, placeholder, validationRef, errors, errorMessag
                         </div>
                     )}
                 </div>
+                {errors[field] && (
+                    <p className="mt-2 text-sm text-red-600" id={`${field}-error`}>
+                        {errorMessage}
+                    </p>
+                )}
             </div>
-            {errors[field] && (
-                <p className="mt-2 text-sm text-red-600" id={`${field}-error`}>
-                    {errorMessage}
-                </p>
-            )}
         </>
     );
 };
