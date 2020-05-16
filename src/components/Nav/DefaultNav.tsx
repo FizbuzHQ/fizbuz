@@ -13,20 +13,38 @@ function Logo() {
     );
 }
 
-function LoginButton(props) {
-    const { mode } = props;
+function LoginButton() {
     const { loginWithRedirect } = useAuth0();
     return (
         <button
-            onClick={() => loginWithRedirect()}
+            onClick={() =>
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                loginWithRedirect({ redirect_uri: `${window.location.origin}/home` })
+            }
             className={
-                mode === 'mobile'
-                    ? 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-                    : 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+                'text-indigo-700 bg-indigo-100 hover:bg-indigo-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
             }
             type="button"
         >
-            Sign In
+            Log In
+        </button>
+    );
+}
+
+function SignupButton() {
+    const { loginWithRedirect } = useAuth0();
+    return (
+        <button
+            onClick={() =>
+                // eslint-disable-next-line @typescript-eslint/camelcase
+                loginWithRedirect({ redirect_uri: `${window.location.origin}/signup` })
+            }
+            className={
+                'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+            }
+            type="button"
+        >
+            Sign Up
         </button>
     );
 }
@@ -45,6 +63,11 @@ function DefaultNav() {
                     </div>
                     <div className="hidden sm:ml-6 sm:flex sm:items-center">
                         {/* Log in button */}
+                        <div className="ml-3 relative">
+                            <div>
+                                <SignupButton />
+                            </div>
+                        </div>
                         <div className="ml-3 relative">
                             <div>
                                 <LoginButton />
@@ -103,7 +126,7 @@ function DefaultNav() {
                 <div className="pt-4 pb-3 border-t border-gray-200">
                     <div className="flex items-center px-4">
                         <div className="flex-shrink-0">
-                            <LoginButton mode="mobile" />
+                            <LoginButton />
                         </div>
                     </div>
                 </div>
