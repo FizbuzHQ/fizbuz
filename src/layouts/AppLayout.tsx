@@ -16,7 +16,7 @@ const AppLayout = ({ component: Component, ...rest }) => {
                     </Helmet>
                     <div id="app">
                         <AppNav />
-                        <section id="content" style={{ margin: '16px' }}>
+                        <section id="content" className="p-4">
                             <Component {...props} />
                         </section>
                         <Footer />
