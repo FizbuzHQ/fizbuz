@@ -7,7 +7,6 @@ import { setContext } from 'apollo-link-context';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { useAuth0, Auth0Provider } from './auth/auth0';
-import AUTH_CONFIG from './auth/auth0-config';
 // NOTE: the dependency below was added to address https://github.com/parcel-bundler/parcel/issues/1762
 import 'regenerator-runtime/runtime';
 import './index.css';
@@ -44,12 +43,11 @@ const GraphQLProvider = ({ children }) => {
 
 ReactDOM.render(
     <Auth0Provider
-        domain={AUTH_CONFIG.domain}
-        client_id={AUTH_CONFIG.clientId}
-        audience={AUTH_CONFIG.audience}
-        redirect_uri={`${window.location.origin}/home`}
-        cacheLocation={AUTH_CONFIG.cacheLocation}
-        useRefreshTokens={AUTH_CONFIG.useRefreshTokens}
+        domain={process.env.AUTH0_DOMAIN}
+        client_id={process.env.AUTH0_CLIENT_ID}
+        audience={process.env.AUTH0_AUDIENCE}
+        cacheLocation={process.env.AUTH0_CACHE_LOCATION}
+        useRefreshTokens={process.env.AUTH0_USE_REFRESH_TOKENS}
     >
         <GraphQLProvider>
             <App />
