@@ -1,0 +1,23 @@
+query UserList {
+    users {
+        ...UserInfo
+    }
+}
+
+query User($auth0Sub: String!) {
+    user(where: { auth0Sub: $auth0Sub }) {
+        ...UserInfo
+    }
+}
+
+mutation CreateUser($userInput: UserCreateInput!) {
+    createOneUser(data: $userInput) {
+        ...UserInfo
+    }
+}
+
+fragment UserInfo on User {
+    id
+    email
+    auth0Sub
+}
