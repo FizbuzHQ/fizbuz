@@ -5,8 +5,10 @@ import AppLayout from './layouts/AppLayout';
 import DefaultLayout from './layouts/DefaultLayout';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
-import UserList from './components/UserList';
-import UserForm from './components/UserForm';
+import Signup from './pages/Signup';
+import UserList from './pages/UserList';
+import UserUpdate from './pages/UserUpdate';
+import OnboardingSkills from './pages/onboarding/Skills';
 
 const NoMatch = () => {
     return <div>404, sorry!</div>;
@@ -46,8 +48,10 @@ function Routes() {
         <Switch>
             <PublicRoute exact path="/" component={Landing} />
             <PrivateRoute exact path="/home" component={Home} />
+            <PrivateRoute exact path="/signup" component={Signup} />
+            <PrivateRoute exact path="/onboarding/skills" component={OnboardingSkills} />
             <PrivateRoute exact path="/users" component={UserList} />
-            <PrivateRoute exact path="/users/:id/edit" component={UserForm} />
+            <PrivateRoute exact path="/users/:id/edit" component={UserUpdate} />
             <PublicRoute path="*" component={NoMatch} />
         </Switch>
     );

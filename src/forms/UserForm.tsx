@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useForm } from 'react-hook-form';
 import { UserUpdateInput } from '../generated/graphql';
 import Input from '../components/Tailwind/Input';
-import Button from '../components/Tailwind/Button';
 
 // import './styles.css';
 

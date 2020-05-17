@@ -21,9 +21,7 @@ function LoginButton() {
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 loginWithRedirect({ redirect_uri: `${window.location.origin}/home` })
             }
-            className={
-                'text-indigo-700 bg-indigo-100 hover:bg-indigo-50 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            }
+            className="btn-secondary"
             type="button"
         >
             Log In
@@ -39,9 +37,7 @@ function SignupButton() {
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 loginWithRedirect({ redirect_uri: `${window.location.origin}/signup` })
             }
-            className={
-                'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
-            }
+            className="btn-primary"
             type="button"
         >
             Sign Up
