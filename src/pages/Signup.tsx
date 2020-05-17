@@ -1,0 +1,89 @@
+import * as React from 'react';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import gql from 'graphql-tag';
+import { useAuth0 } from '../auth/auth0';
+import { useSignupMutation, useUserQuery } from '../generated/graphql';
+import Alert from '../components/Alert';
+import Loading from '../components/Loading';
+
+gql`
+    query User($where: UserWhereUniqueInput!) {
+        user(where: $where) {
+            id
+        }
+    }
+
+    mutation Signup($userInput: UserCreateInput!) {
+        createOneUser(data: $userInput) {
+            id
+        }
+    }
+`;
+
+function Signup() {
+    // get the user info from Auth0
+    const { user } = useAuth0();
+
+    const history = useHistory();
+
+    // query to see if this user already exists in our DB
+    const { data: queryData, error: queryError, loading: queryLoading } = useUserQuery({
+        variables: {
+            where: {
+                auth0Sub: user.sub,
+            },
+        },
+    });
+
+    // mutation to create a new user
+    const [
+        createUserMutation,
+        { data: mutationData, loading: mutationLoading, error: mutationError },
+    ] = useSignupMutation({
+        variables: {
+            userInput: {
+                email: user.email,
+                auth0Sub: user.sub,
+            },
+        },
+    });
+
+    useEffect(() => {
+        // if the query has completed
+        if (!queryLoading) {
+            // if this user if already in the DB
+            if (queryData && queryData.user) {
+                console.log('user exists');
+                // re-direct to / and suggest that they try to log-in
+                history.replace('/onboarding/skills');
+            } else {
+                createUserMutation({
+                    variables: {
+                        userInput: {
+                            email: user.email,
+                            auth0Sub: user.sub,
+                        },
+                    },
+                });
+            }
+        }
+    }, [queryLoading]);
+
+    if (queryLoading || mutationLoading) {
+        return <Loading />;
+    }
+
+    if (queryError || mutationError) {
+        return <Alert title="Error" message={queryError.message || mutationError.message} />;
+    }
+
+    return (
+        <pre>
+            queryData: {JSON.stringify(queryData, null, 2)}
+            mutationData: {JSON.stringify(mutationData, null, 2)}
+        </pre>
+    );
+}
+
+export default Signup;
