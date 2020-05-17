@@ -1,6 +1,8 @@
 overwrite: true
-schema: "http://localhost:4000/graphql"
-documents: "./src/graphql/*.graphql"
+schema: ${API_URL}
+documents: 
+  - "./src/graphql/common.graphql"
+  - "./src/pages/*.tsx"
 generates:
   src/generated/graphql.tsx:
     plugins:

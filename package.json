@@ -8,7 +8,7 @@
     "build": "parcel build src/index.html --no-source-maps --out-dir build/release --public-url ./",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "codegen": "graphql-codegen --config codegen.yml"
+    "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },
   "keywords": [],
   "author": "Carter Rabasa",
