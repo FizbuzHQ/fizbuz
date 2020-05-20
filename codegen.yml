@@ -1,14 +1,16 @@
 overwrite: true
-schema: ${API_URL}
+schema: 
+  - ${API_URL}
+  - ./src/graphql/client.graphql
 documents: 
-  - "./src/graphql/common.graphql"
-  - "./src/pages/*.tsx"
+  - ./src/graphql/common.graphql
+  - ./src/pages/**/*.tsx
 generates:
   src/generated/graphql.tsx:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-react-apollo"
+      - typescript
+      - typescript-operations
+      - typescript-react-apollo
     config:
       withHooks: true
       withHoc: false
