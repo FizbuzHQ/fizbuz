@@ -15,8 +15,8 @@ export type Scalars = {
 
 export type Query = {
    __typename?: 'Query';
-  activity?: Maybe<Activity>;
   activities: Array<Activity>;
+  activity?: Maybe<Activity>;
   experience?: Maybe<Experience>;
   experiences: Array<Experience>;
   place?: Maybe<Place>;
@@ -32,12 +32,8 @@ export type Query = {
   trait?: Maybe<Trait>;
   traits: Array<Trait>;
   user?: Maybe<User>;
+  userId?: Maybe<Scalars['String']>;
   users: Array<User>;
-};
-
-
-export type QueryActivityArgs = {
-  where: ActivityWhereUniqueInput;
 };
 
 
@@ -48,6 +44,11 @@ export type QueryActivitiesArgs = {
   before?: Maybe<ActivityWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
+};
+
+
+export type QueryActivityArgs = {
+  where: ActivityWhereUniqueInput;
 };
 
 
@@ -2720,6 +2721,25 @@ export type UpdateUserMutation = (
   )> }
 );
 
+export type UserIdQueryVariables = {};
+
+
+export type UserIdQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'userId'>
+);
+
+export type ToolListQueryVariables = {};
+
+
+export type ToolListQuery = (
+  { __typename?: 'Query' }
+  & { tools: Array<(
+    { __typename?: 'Tool' }
+    & Pick<Tool, 'id' | 'name' | 'kind'>
+  )> }
+);
+
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on User {
   id
@@ -2909,3 +2929,93 @@ export function useUpdateUserMutation(baseOptions?: ApolloReactHooks.MutationHoo
 export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
 export type UpdateUserMutationResult = ApolloReactCommon.MutationResult<UpdateUserMutation>;
 export type UpdateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const UserIdDocument = gql`
+    query UserId {
+  userId @client
+}
+    `;
+export type UserIdProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<UserIdQuery, UserIdQueryVariables>
+    } & TChildProps;
+export function withUserId<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UserIdQuery,
+  UserIdQueryVariables,
+  UserIdProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, UserIdQuery, UserIdQueryVariables, UserIdProps<TChildProps, TDataName>>(UserIdDocument, {
+      alias: 'userId',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUserIdQuery__
+ *
+ * To run a query within a React component, call `useUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserIdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserIdQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UserIdQuery, UserIdQueryVariables>) {
+        return ApolloReactHooks.useQuery<UserIdQuery, UserIdQueryVariables>(UserIdDocument, baseOptions);
+      }
+export function useUserIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UserIdQuery, UserIdQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<UserIdQuery, UserIdQueryVariables>(UserIdDocument, baseOptions);
+        }
+export type UserIdQueryHookResult = ReturnType<typeof useUserIdQuery>;
+export type UserIdLazyQueryHookResult = ReturnType<typeof useUserIdLazyQuery>;
+export type UserIdQueryResult = ApolloReactCommon.QueryResult<UserIdQuery, UserIdQueryVariables>;
+export const ToolListDocument = gql`
+    query ToolList {
+  tools {
+    id
+    name
+    kind
+  }
+}
+    `;
+export type ToolListProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<ToolListQuery, ToolListQueryVariables>
+    } & TChildProps;
+export function withToolList<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  ToolListQuery,
+  ToolListQueryVariables,
+  ToolListProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, ToolListQuery, ToolListQueryVariables, ToolListProps<TChildProps, TDataName>>(ToolListDocument, {
+      alias: 'toolList',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useToolListQuery__
+ *
+ * To run a query within a React component, call `useToolListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useToolListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useToolListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useToolListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ToolListQuery, ToolListQueryVariables>) {
+        return ApolloReactHooks.useQuery<ToolListQuery, ToolListQueryVariables>(ToolListDocument, baseOptions);
+      }
+export function useToolListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ToolListQuery, ToolListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ToolListQuery, ToolListQueryVariables>(ToolListDocument, baseOptions);
+        }
+export type ToolListQueryHookResult = ReturnType<typeof useToolListQuery>;
+export type ToolListLazyQueryHookResult = ReturnType<typeof useToolListLazyQuery>;
+export type ToolListQueryResult = ApolloReactCommon.QueryResult<ToolListQuery, ToolListQueryVariables>;
