@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Transition from '../Tailwind/Transition';
+import Transition from '../tailwind/Transition';
 import { useAuth0 } from '../../auth/auth0';
 
 function Logo() {

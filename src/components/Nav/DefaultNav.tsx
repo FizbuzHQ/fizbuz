@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from '../../auth/auth0';
+import Button from '../ui/Button';
 
 function Logo() {
     const logo = '/logo.png';
@@ -16,32 +17,30 @@ function Logo() {
 function LoginButton() {
     const { loginWithRedirect } = useAuth0();
     return (
-        <button
+        <Button
             onClick={() =>
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 loginWithRedirect({ redirect_uri: `${window.location.origin}/home` })
             }
             className="btn-secondary"
-            type="button"
         >
             Log In
-        </button>
+        </Button>
     );
 }
 
 function SignupButton() {
     const { loginWithRedirect } = useAuth0();
     return (
-        <button
+        <Button
             onClick={() =>
                 // eslint-disable-next-line @typescript-eslint/camelcase
                 loginWithRedirect({ redirect_uri: `${window.location.origin}/signup` })
             }
             className="btn-primary"
-            type="button"
         >
             Sign Up
-        </button>
+        </Button>
     );
 }
 

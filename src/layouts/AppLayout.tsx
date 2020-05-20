@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import AppNav from '../components/Nav/AppNav';
-import Footer from '../components/Nav/Footer';
+import AppNav from '../components/nav/AppNav';
+import Footer from '../components/nav/Footer';
 import './AppLayout.css';
 
 const AppLayout = ({ component: Component, ...rest }) => {

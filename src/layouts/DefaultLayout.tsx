@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import DefaultNav from '../components/Nav/DefaultNav';
-import Alert from '../components/Alert';
-import Footer from '../components/Nav/Footer';
+import DefaultNav from '../components/nav/DefaultNav';
+import Alert from '../components/ui/Alert';
+import Footer from '../components/nav/Footer';
 import './DefaultLayout.css';
 
 const DefaultLayout = ({ component: Component, ...rest }) => {
