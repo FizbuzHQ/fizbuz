@@ -20,9 +20,9 @@ function LoginButton() {
         <Button
             onClick={() =>
                 // eslint-disable-next-line @typescript-eslint/camelcase
-                loginWithRedirect({ redirect_uri: `${window.location.origin}/home` })
+                loginWithRedirect({ redirect_uri: `${window.location.origin}${process.env.AUTH0_CALLBACK}` })
             }
-            className="btn-secondary"
+            mode="secondary"
         >
             Log In
         </Button>
@@ -35,9 +35,9 @@ function SignupButton() {
         <Button
             onClick={() =>
                 // eslint-disable-next-line @typescript-eslint/camelcase
-                loginWithRedirect({ redirect_uri: `${window.location.origin}/signup` })
+                loginWithRedirect({ redirect_uri: `${window.location.origin}${process.env.AUTH0_CALLBACK}` })
             }
-            className="btn-primary"
+            mode="primary"
         >
             Sign Up
         </Button>
