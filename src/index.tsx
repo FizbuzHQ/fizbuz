@@ -10,9 +10,7 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import { useAuth0, Auth0Provider } from './auth/auth0';
 import Loading from './components/Loading';
-// NOTE: the dependency below was added to address https://github.com/parcel-bundler/parcel/issues/1762
-import 'regenerator-runtime/runtime';
-import './index.pcss';
+import './index.css';
 import App from './App';
 
 const httpLink = new HttpLink({ uri: process.env.API_URL });
@@ -24,6 +22,7 @@ const GraphQLProvider = ({ children }) => {
 
     const authLink = setContext(async (_, { headers }) => {
         const token = isAuthenticated ? await getTokenSilently() : null;
+
         return {
             headers: {
                 ...headers,
@@ -73,7 +72,7 @@ ReactDOM.render(
         client_id={process.env.AUTH0_CLIENT_ID}
         audience={process.env.AUTH0_AUDIENCE}
         cacheLocation={process.env.AUTH0_CACHE_LOCATION}
-        useRefreshTokens={process.env.AUTH0_USE_REFRESH_TOKENS}
+        redirect_uri={`${window.location.origin}${process.env.AUTH0_CALLBACK}`}
     >
         <GraphQLProvider>
             <App />
