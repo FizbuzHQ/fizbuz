@@ -8,8 +8,6 @@ import './DefaultLayout.css';
 
 const DefaultLayout = ({ component: Component, ...rest }) => {
     const location = useLocation();
-    // console.log(location);
-    // const q = new URLSearchParams(location.search);
     return (
         <Route
             {...rest}
