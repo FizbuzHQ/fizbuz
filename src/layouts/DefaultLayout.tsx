@@ -24,7 +24,7 @@ const DefaultLayout = ({ component: Component, ...rest }) => {
                                 padding: '1px',
                             }}
                         >
-                            {location?.state?.message && (
+                            {location && location.state && location.state.message && (
                                 <div style={{ padding: '10px' }}>
                                     <Alert message={location.state.message} />
                                 </div>

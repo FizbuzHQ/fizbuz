@@ -76,8 +76,8 @@ function Signup() {
         // if the mutation has completed
         if (!mutationLoading) {
             // if there wasn't an error
-            if (!mutationError && mutationData?.createOneUser?.id) {
-                const userId = mutationData?.createOneUser?.id;
+            if (!mutationError && mutationData && mutationData.createOneUser && mutationData.createOneUser.id) {
+                const userId = mutationData.createOneUser.id;
                 // store the user id in the local cache
                 apolloClient.writeData({ data: { userId } });
                 // re-direct to onboarding process

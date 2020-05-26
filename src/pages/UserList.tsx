@@ -26,7 +26,7 @@ const UserList = () => {
         <div>
             <h3>Users</h3>
             <ol>
-                {data?.users.map((user, i) => (
+                {data.users.map((user, i) => (
                     <li key={i}>
                         <Link to={`/users/${user.id}/edit`}>
                             {user.id} {user.email}

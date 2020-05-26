@@ -10,6 +10,10 @@
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
   },
+  "browserslist": [
+    "last 1 chrome version",
+    "last 1 firefox version"
+  ],
   "keywords": [],
   "author": "Carter Rabasa",
   "license": "MIT",
