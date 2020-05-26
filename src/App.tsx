@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from 'r
 import { useAuth0 } from './auth/auth0';
 import AppLayout from './layouts/AppLayout';
 import DefaultLayout from './layouts/DefaultLayout';
+import Callback from './pages/Callback';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
@@ -47,6 +48,7 @@ function Routes() {
     return (
         <Switch>
             <PublicRoute exact path="/" component={Landing} />
+            <PrivateRoute exact path="/callback" component={Callback} />
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/signup" component={Signup} />
             <PrivateRoute exact path="/onboarding/skills" component={OnboardingSkills} />
