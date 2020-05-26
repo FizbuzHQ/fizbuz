@@ -11,6 +11,7 @@
 # parcel
 /dist
 /.cache
+/.parcel-cache
 
 # production
 /build
