@@ -1,6 +1,6 @@
 [build]
   command = "yarn build"
-  publish = "build/release"
+  publish = "dist"
 
 [dev]
   command = "yarn dev"
