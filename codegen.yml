@@ -4,7 +4,7 @@ schema:
   - ./src/graphql/client.graphql
 documents: 
   - ./src/graphql/common.graphql
-  - ./src/pages/**/*.tsx
+  - ./src/**/*.tsx
 generates:
   src/generated/graphql.tsx:
     plugins:
