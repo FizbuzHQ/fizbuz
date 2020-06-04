@@ -1,22 +1,25 @@
 import * as React from 'react';
-import { useState } from 'react';
 import gql from 'graphql-tag';
-// import { useQuery } from '@apollo/react-hooks';
-import { useUserIdQuery, useToolListQuery } from '../../generated/graphql';
-import { stringCompare } from '../../utils/strings';
-import Button from '../../components/ui/Button';
-import Tag from '../../components/ui/Tag';
-
-// import { useUpdateUserMutation, useUserQuery } from '../../generated/graphql';
-// import UserForm from '../../forms/UserForm';
+import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
+import { useUserSessionQuery, useProfileQuery, useToolListQuery, useCreateSkillsMutation } from 'src/generated/graphql';
+import { stringCompare } from 'src/utils/strings';
+import Button from 'src/components/ui/Button';
+import Checkbox from 'src/components/ui/Checkbox';
+import Loading from 'src/components/ui/Loading';
+import Alert from 'src/components/ui/Alert';
 
 gql`
-    query UserId {
-        userId @client
+    mutation CreateSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+            skills {
+                tool {
+                    name
+                }
+            }
+        }
     }
-`;
 
-gql`
     query ToolList {
         tools {
             id
@@ -26,46 +29,73 @@ gql`
     }
 `;
 
-/* gql`
-    mutation UpdateUser($userInput: UserUpdateInput!, $id: String!) {
-        updateOneUser(data: $userInput, where: { id: $id }) {
-            id
-        }
-    }
-`; */
-
 const OnboardingSkills = () => {
-    const { data: userData } = useUserIdQuery(/*{ fetchPolicy: 'cache-only' }*/);
-    const { loading: toolsLoading, data: toolsData, error: toolsError } = useToolListQuery();
-    const [skills, setSkills] = useState({});
+    const { data: userSessionData } = useUserSessionQuery();
+    const { data: profileData } = useProfileQuery({
+        skip: userSessionData === undefined,
+        variables: {
+            userId: userSessionData && userSessionData.userSession.userId,
+        },
+    });
+    const { data: toolsData } = useToolListQuery();
 
-    const toggleSkill = (tool) => {
-        console.log(skills, tool);
-        const temp = { ...skills };
-        temp[tool.id] = temp[tool.id] ? false : true;
-        setSkills(temp);
+    const [createSkill] = useCreateSkillsMutation();
+
+    const { register, handleSubmit } = useForm();
+
+    const [flash, setFlash] = React.useState(undefined);
+
+    const history = useHistory();
+
+    const onSubmit = async (formData) => {
+        try {
+            const create = formData.tools.map((id) => {
+                return {
+                    tool: {
+                        connect: {
+                            id,
+                        },
+                    },
+                };
+            });
+
+            await createSkill({
+                variables: {
+                    id: profileData.user.profile.id,
+                    profileUpdateInput: {
+                        skills: {
+                            create,
+                        },
+                    },
+                },
+            });
+
+            history.push('/home');
+        } catch (error) {
+            setFlash('mutation failed, possibly because of validation errors');
+        }
     };
 
-    const saveSkills = (skills) => {
-        console.log(skills);
-    };
+    if (!toolsData || !profileData) {
+        return <Loading />;
+    } else {
+        // group the tools by kind
+        const kindList = toolsData.tools.reduce((acc, tool) => {
+            (acc[tool.kind] = acc[tool.kind] || []).push(tool);
+            return acc;
+        }, {});
 
-    // group the traits by "kind
-    const kindList = toolsData.tools.reduce((acc, tool) => {
-        (acc[tool.kind] = acc[tool.kind] || []).push(tool);
-        return acc;
-    }, {});
+        // define which "kinds" of Tools to display on this page
+        const kindsToDisplay = ['Language'];
 
-    console.log(skills);
-    console.log(kindList);
-
-    // define which "kinds" of Tools to display on this page
-    const kindsToDisplay = ['Language'];
-
-    return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto">
+        return (
+            <>
                 <h1>Select Tools</h1>
+                {flash && (
+                    <div className="p-1">
+                        <Alert message={flash} />
+                    </div>
+                )}
                 <p>
                     Please select some tools that you use when coding. Don&apos;t worry if a tool you use isn&apos;t
                     listed here, you&apos;ll have an opportunity to add it to your profile later.
@@ -74,31 +104,31 @@ const OnboardingSkills = () => {
                     {kindsToDisplay.map((kind, i) => (
                         <div key={i}>
                             <h2>{kind}</h2>
-                            {kindList[kind]
-                                .sort((a, b) => stringCompare(a.name, b.name))
-                                .map((tool, j) => (
-                                    <Tag
-                                        key={j}
-                                        mode={skills[tool.id] ? 'on' : 'off'}
-                                        /*interactive={true}
-                                        minimal={true}
-                                        large={true}*/
-                                        onClick={() => {
-                                            toggleSkill(tool);
-                                        }}
-                                    >
-                                        {tool.name}
-                                    </Tag>
-                                ))}
+                            <div className="flex mb-4">
+                                {kindList[kind]
+                                    .sort((a, b) => stringCompare(a.name, b.name))
+                                    .map((tool, j) => (
+                                        <div key={j} className="mr-2">
+                                            <Checkbox
+                                                display={tool.name}
+                                                register={register}
+                                                name="tools"
+                                                value={tool.id}
+                                            />
+                                        </div>
+                                    ))}
+                            </div>
                         </div>
                     ))}
                 </div>
                 <p>
-                    <Button /*intent={Intent.PRIMARY}*/ onClick={() => saveSkills(skills)}>Next</Button>
+                    <Button mode="primary" onClick={handleSubmit(onSubmit)}>
+                        Next
+                    </Button>
                 </p>
-            </div>
-        </div>
-    );
+            </>
+        );
+    }
 };
 
 export default OnboardingSkills;
