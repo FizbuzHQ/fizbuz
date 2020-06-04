@@ -4,12 +4,11 @@ import { useAuth0 } from './auth/auth0';
 import AppLayout from './layouts/AppLayout';
 import DefaultLayout from './layouts/DefaultLayout';
 import Callback from './pages/Callback';
+import OnboardingProfile from './pages/onboarding/Profile';
+import OnboardingSkills from './pages/onboarding/Skills';
 import Landing from './pages/Landing';
 import Home from './pages/Home';
-import Signup from './pages/Signup';
-import UserList from './pages/UserList';
-import UserUpdate from './pages/UserUpdate';
-import OnboardingSkills from './pages/onboarding/Skills';
+import Error from './pages/Error';
 
 const NoMatch = () => {
     return <div>404, sorry!</div>;
@@ -49,11 +48,10 @@ function Routes() {
         <Switch>
             <PublicRoute exact path="/" component={Landing} />
             <PrivateRoute exact path="/callback" component={Callback} />
+            <PrivateRoute exact path="/onboarding/profile" component={OnboardingProfile} />
             <PrivateRoute exact path="/home" component={Home} />
-            <PrivateRoute exact path="/signup" component={Signup} />
             <PrivateRoute exact path="/onboarding/skills" component={OnboardingSkills} />
-            <PrivateRoute exact path="/users" component={UserList} />
-            <PrivateRoute exact path="/users/:id/edit" component={UserUpdate} />
+            <PublicRoute path="/error" component={Error} />
             <PublicRoute path="*" component={NoMatch} />
         </Switch>
     );
@@ -61,9 +59,9 @@ function Routes() {
 
 function App() {
     return (
-        <Router>
+        <>
             <Routes />
-        </Router>
+        </>
     );
 }
 
