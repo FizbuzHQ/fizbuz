@@ -1,3 +1,6 @@
+// NOTE: Parcel seems to auto-detect this configuration file and apply it. This in turn applies our Tailwind config.
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const purgecss = require('@fullhuman/postcss-purgecss')({
     // Specify the paths to all of the template files in your project
     content: ['./src/**/*.html', './src/**/*.tsx'],
@@ -14,6 +17,6 @@ module.exports = {
         require('tailwindcss'),
         //'@fullhuman/postcss-purgecss': process.env.NODE_ENV === 'production',
         require('autoprefixer'),
-        ...(process.env.NODE_ENV == 'production' ? [purgecss] : []),
+        ...(process.env.NODE_ENV === 'production' ? [purgecss] : []),
     ],
 };
