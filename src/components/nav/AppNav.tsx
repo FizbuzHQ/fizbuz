@@ -32,6 +32,7 @@ function DashboardLinks({ mode }: { mode?: string }) {
 function ProfileActions({ mode }: { mode?: string }) {
     const { logout } = useAuth0();
     const logoutWithRedirect = () => {
+        localStorage.clear();
         logout({
             returnTo: window.location.origin,
         });
