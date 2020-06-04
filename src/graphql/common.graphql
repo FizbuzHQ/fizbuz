@@ -1,5 +1,24 @@
 fragment UserInfo on User {
     id
     email
-    auth0Sub
+}
+
+query UserSession {
+    userSession @client {
+        userId
+    }
+}
+
+fragment ProfileInfo on Profile {
+    id
+    nickname
+    name
+}
+
+query Profile($userId: String!) {
+    user(where: { id: $userId }) {
+        profile {
+            ...ProfileInfo
+        }
+    }
 }
