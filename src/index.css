@@ -1,11 +1,11 @@
 @tailwind base;
 
 h1 {
-  @apply text-2xl font-bold leading-7 text-gray-900;
+  @apply text-2xl font-bold leading-7 text-gray-900 mb-4;
 }
 
 h2 {
-  @apply text-xl font-bold leading-7 text-gray-900;
+  @apply text-xl font-bold leading-7 text-gray-900 mb-4;
 }
 
 @tailwind components;
