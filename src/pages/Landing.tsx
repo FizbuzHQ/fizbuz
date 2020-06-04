@@ -3,20 +3,17 @@ import { Link } from 'react-router-dom';
 
 function Landing() {
     return (
-        <div>
+        <>
             <h1>Welcome to Fizbuz!</h1>
-            <p>Here are some things you can do to test that things are running properly:</p>
-            <ul className="list-disc list-inside">
-                <li>Log in</li>
+            <p>This is pre-Alpha! Here are some things you can do to test that things are running properly:</p>
+            <ul className="list-disc m-4">
+                <li>Sign-up</li>
+                <li>Login-in</li>
                 <li>
-                    View your Auth0 data at <Link to="/home">/home</Link>
+                    <Link to="/home">Dashboard</Link>
                 </li>
-                <li>
-                    View data from the Fizbuz GraphQL API at <Link to="/users">/users</Link>
-                </li>
-                <li>Log out</li>
             </ul>
-        </div>
+        </>
     );
 }
 

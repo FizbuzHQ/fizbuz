@@ -1,10 +1,26 @@
 import * as React from 'react';
-import { useAuth0 } from '../auth/auth0';
+import gql from 'graphql-tag';
+import { useHomeQuery } from 'src/generated/graphql';
 
+gql`
+    query Home {
+        currentUser {
+            profile {
+                nickname
+                name
+                skills {
+                    tool {
+                        name
+                    }
+                }
+            }
+        }
+    }
+`;
 function Home() {
-    const { user } = useAuth0();
+    const { data } = useHomeQuery();
 
-    return <pre>{JSON.stringify(user, null, 2)}</pre>;
+    return <pre>{JSON.stringify(data, null, 2)}</pre>;
 }
 
 export default Home;

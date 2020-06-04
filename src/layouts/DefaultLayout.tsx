@@ -30,7 +30,7 @@ const DefaultLayout = ({ component: Component, ...rest }) => {
                                 </div>
                             )}
                         </section>
-                        <section id="content" style={{ margin: '16px' }}>
+                        <section id="content" className="m-4">
                             <Component {...props} />
                         </section>
                         <Footer />

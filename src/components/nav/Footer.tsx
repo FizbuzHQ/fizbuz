@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function Footer() {
     return (
-        <div className="bg-white">
+        <div>
             <div className="max-w-screen-xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
                 <div className="mt-8 flex justify-center">
                     <a href="https://twitter.com/fizbuzhq" className="ml-6 text-gray-400 hover:text-gray-500">
