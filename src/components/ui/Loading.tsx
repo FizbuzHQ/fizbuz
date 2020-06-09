@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-function Loading() {
+function Loading({ debug = undefined }) {
+    if (debug) console.log(debug);
     return <div>Loading...</div>;
 }
 
