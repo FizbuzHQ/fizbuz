@@ -110,7 +110,7 @@ const Account = () => {
                         size="xs"
                         onClick={() => {
                             localStorage.clear();
-                            logout();
+                            logout({ returnTo: window.location.origin });
                         }}
                     >
                         Log Out
