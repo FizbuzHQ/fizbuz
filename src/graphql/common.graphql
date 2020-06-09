@@ -1,8 +1,3 @@
-fragment UserInfo on User {
-    id
-    email
-}
-
 fragment FullProfile on User {
     id
     profile {
@@ -17,22 +12,3 @@ fragment FullProfile on User {
     }
 }
 
-query UserSession {
-    userSession @client {
-        userId
-    }
-}
-
-fragment ProfileInfo on Profile {
-    id
-    nickname
-    name
-}
-
-query Profile($userId: String!) {
-    user(where: { id: $userId }) {
-        profile {
-            ...ProfileInfo
-        }
-    }
-}

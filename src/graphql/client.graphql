@@ -1,9 +1,11 @@
 # https://graphql-code-generator.com/docs/integrations/apollo-local-state
 
-type UserSession {
-  userId: String
-}
+# commenting this out for now
 
-type Query {
-  userSession: UserSession
-}
+#type UserSession {
+#  userId: String
+#}
+
+#type Query {
+#  userSession: UserSession
+#}
