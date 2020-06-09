@@ -4,11 +4,12 @@
   "description": "",
   "main": "dist/index.html",
   "scripts": {
-    "dev": "parcel src/index.html",
-    "build": "parcel build src/index.html && cp -Rv ./static/* ./dist",
+    "clean": "rm -rf .parcel-cache dist",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
-    "codegen": "graphql-codegen --require dotenv/config --config codegen.yml"
+    "codegen": "graphql-codegen --require dotenv/config --config codegen.yml",
+    "dev": "parcel src/index.html",
+    "build": "yarn clean && yarn codegen && parcel build src/index.html && cp -Rv ./static/* ./dist"
   },
   "alias": {
     "src": "./src"
