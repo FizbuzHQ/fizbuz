@@ -5,7 +5,7 @@ import { useAuth0 } from '../../auth/auth0';
 import Button from '../ui/Button';
 
 function Logo() {
-    const logo = '/logo.png';
+    const logo = '/fizbuz-logo.svg';
     return (
         <Link to="/">
             <img className="block lg:hidden h-8 w-auto" src={logo} alt="logo" />
