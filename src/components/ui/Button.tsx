@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const Button = (props) => {
-    const { mode, children, ...rest } = props;
+    const { mode, size, children, ...rest } = props;
 
     const modeClasses = ((mode) => {
         switch (mode) {
@@ -14,7 +14,16 @@ const Button = (props) => {
         }
     })(mode);
 
-    const className = `inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md ${modeClasses} transition ease-in-out duration-150`;
+    const sizeClasses = ((size) => {
+        switch (size) {
+            case 'xs':
+                return 'px-2.5 py-1.5 text-xs leading-4';
+            default:
+                return 'px-4 py-2 text-base leading-6';
+        }
+    })(size);
+
+    const className = `inline-flex items-center border border-transparent ${sizeClasses} font-medium rounded-md ${modeClasses} transition ease-in-out duration-150`;
 
     return (
         <button type="button" className={className} {...rest}>
