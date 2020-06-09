@@ -1,29 +1,36 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useHistory /*, useLocation*/ } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import gql from 'graphql-tag';
 import { useApolloClient } from '@apollo/react-hooks';
-import { useUserSessionQuery, useProfileQuery, useUpdateProfileMutation } from 'src/generated/graphql';
+import { useGetOnboardingProfileQuery, useUpdateOnboardingProfileMutation } from 'src/generated/graphql';
+import { CHECK_NICKNAME_QUERY } from 'src/graphql/common';
 import Input from 'src/components/ui/Input';
 import Button from 'src/components/ui/Button';
 import Loading from 'src/components/ui/Loading';
-import Alert from 'src/components/ui/Alert';
+import { Alert, Mode } from 'src/components/ui/Alert';
 
 gql`
-    mutation UpdateProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
-            nickname
-            name
+    fragment OnboardingProfileInfo on Profile {
+        id
+        nickname
+        name
+    }
+
+    query GetOnboardingProfile {
+        currentUser {
+            id
+            profile {
+                ...OnboardingProfileInfo
+            }
         }
     }
-`;
 
-const CHECK_NICKNAME_QUERY = gql`
-    query ProfileByNickname($nickname: String!) {
-        profile(where: { nickname: $nickname }) {
-            nickname
+    mutation UpdateOnboardingProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+            ...OnboardingProfileInfo
         }
     }
 `;
@@ -31,23 +38,9 @@ const CHECK_NICKNAME_QUERY = gql`
 const OnboardingProfile = () => {
     const [flash, setFlash] = useState(undefined);
 
-    //const location = useLocation();
+    const { data } = useGetOnboardingProfileQuery();
 
-    // get user ID from global state
-    const { data: userSessionData } = useUserSessionQuery();
-
-    //console.log(userSessionData);
-
-    // if no profile data in location.state (i.e. page re-load) use user ID to load profile record from DB
-    const { data: profileData } = useProfileQuery({
-        skip: userSessionData === undefined,
-        variables: {
-            userId: userSessionData && userSessionData.userSession.userId,
-        },
-    });
-
-    // mutation to update the profile
-    const [updateProfileMutation] = useUpdateProfileMutation();
+    const [updateProfileMutation] = useUpdateOnboardingProfileMutation();
 
     const apolloClient = useApolloClient();
 
@@ -104,12 +97,12 @@ const OnboardingProfile = () => {
 
     // set the data in the form based on the profile data from the DB
     useEffect(() => {
-        //console.log('useEffect, profileData has changed: ', profileData);
-        if (profileData) {
-            reset({ ...profileData.user.profile, originalNickname: profileData.user.profile.nickname });
+        //console.log('useEffect, data has changed: ', data);
+        if (data) {
+            reset({ ...data.currentUser.profile, originalNickname: data.currentUser.profile.nickname });
             setFormReady(true);
         }
-    }, [profileData]);
+    }, [data]);
 
     // execute the profile update mutation
     const onSubmit = async (data) => {
@@ -126,7 +119,7 @@ const OnboardingProfile = () => {
                 });
                 history.push('/onboarding/skills');
             } catch (error) {
-                setFlash('mutation failed, possibly because of validation errors');
+                setFlash({ mode: Mode.ERROR, message: 'mutation failed, possibly because of validation errors' });
             }
         }
     };

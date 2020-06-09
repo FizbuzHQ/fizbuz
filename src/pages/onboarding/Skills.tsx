@@ -2,16 +2,17 @@ import * as React from 'react';
 import gql from 'graphql-tag';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { useUserSessionQuery, useProfileQuery, useToolListQuery, useCreateSkillsMutation } from 'src/generated/graphql';
+import { useCurrentUserQuery, useToolListQuery, useCreateOnboardingSkillsMutation } from 'src/generated/graphql';
 import { stringCompare } from 'src/utils/strings';
 import Button from 'src/components/ui/Button';
 import Checkbox from 'src/components/ui/Checkbox';
 import Loading from 'src/components/ui/Loading';
-import Alert from 'src/components/ui/Alert';
+import { Alert, Mode } from 'src/components/ui/Alert';
 
 gql`
-    mutation CreateSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+    mutation CreateOnboardingSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
         updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+            id
             skills {
                 tool {
                     name
@@ -30,16 +31,10 @@ gql`
 `;
 
 const OnboardingSkills = () => {
-    const { data: userSessionData } = useUserSessionQuery();
-    const { data: profileData } = useProfileQuery({
-        skip: userSessionData === undefined,
-        variables: {
-            userId: userSessionData && userSessionData.userSession.userId,
-        },
-    });
+    const { data: currentUserData } = useCurrentUserQuery();
     const { data: toolsData } = useToolListQuery();
 
-    const [createSkill] = useCreateSkillsMutation();
+    const [createSkill] = useCreateOnboardingSkillsMutation();
 
     const { register, handleSubmit } = useForm();
 
@@ -61,7 +56,7 @@ const OnboardingSkills = () => {
 
             await createSkill({
                 variables: {
-                    id: profileData.user.profile.id,
+                    id: currentUserData.currentUser.profile.id,
                     profileUpdateInput: {
                         skills: {
                             create,
@@ -72,11 +67,11 @@ const OnboardingSkills = () => {
 
             history.push('/home');
         } catch (error) {
-            setFlash('mutation failed, possibly because of validation errors');
+            setFlash({ mode: Mode.ERROR, message: 'mutation failed, possibly because of validation errors' });
         }
     };
 
-    if (!toolsData || !profileData) {
+    if (!toolsData || !currentUserData) {
         return <Loading />;
     } else {
         // group the tools by kind
@@ -93,7 +88,7 @@ const OnboardingSkills = () => {
                 <h1>Select Tools</h1>
                 {flash && (
                     <div className="p-1">
-                        <Alert message={flash} />
+                        <Alert mode={flash.mode} message={flash.message} />
                     </div>
                 )}
                 <p>
