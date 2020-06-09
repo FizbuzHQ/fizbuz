@@ -3,6 +3,20 @@ fragment UserInfo on User {
     email
 }
 
+fragment FullProfile on User {
+    id
+    profile {
+        id
+        nickname
+        name
+        skills {
+            tool {
+                name
+            }
+        }
+    }
+}
+
 query UserSession {
     userSession @client {
         userId
