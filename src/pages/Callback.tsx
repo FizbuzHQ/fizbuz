@@ -2,11 +2,11 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import gql from 'graphql-tag';
-import { useApolloClient } from '@apollo/react-hooks';
 import { useAuth0 } from 'src/auth/auth0';
-import { useSignupMutation, useUserSessionQuery } from 'src/generated/graphql';
-import Alert from 'src/components/ui/Alert';
+import { useSignupMutation, useCurrentUserQuery } from 'src/generated/graphql';
+import { Alert, Mode } from 'src/components/ui/Alert';
 import Loading from 'src/components/ui/Loading';
+import { CURRENT_USER_QUERY } from 'src/graphql/common';
 
 gql`
     mutation Signup($userInput: UserCreateInput!) {
@@ -24,11 +24,9 @@ gql`
 function Callback() {
     const { user } = useAuth0();
 
-    const apolloClient = useApolloClient();
-
     const history = useHistory();
 
-    const { data: queryData, loading: queryLoading } = useUserSessionQuery();
+    const { data: queryData, loading: queryLoading } = useCurrentUserQuery();
 
     // mutation to create a new user in the event the user doesn't exist
     const [
@@ -39,7 +37,7 @@ function Callback() {
     // query effect
     useEffect(() => {
         // if the query has completed the user already exists in our system
-        if (!queryLoading && queryData && queryData.userSession.userId) {
+        if (!queryLoading && queryData && queryData.currentUser) {
             history.push('/home');
         } else if (!queryLoading) {
             // else the user isn't in our system, so let's create the user & associated identity and profile records
@@ -62,6 +60,11 @@ function Callback() {
                         },
                     },
                 },
+                refetchQueries: [
+                    {
+                        query: CURRENT_USER_QUERY,
+                    },
+                ],
             });
         } else {
             // noop
@@ -74,10 +77,6 @@ function Callback() {
         if (!mutationLoading) {
             // if there wasn't an error
             if (!mutationError && mutationData && mutationData.createOneUser && mutationData.createOneUser.id) {
-                const userId = mutationData.createOneUser.id;
-                // store the user id in the local cache
-                const __typename = 'UserSession';
-                apolloClient.writeData({ data: { userSession: { userId, __typename } } });
                 // re-direct to onboarding process
                 history.push('/onboarding/profile');
             }
@@ -85,7 +84,7 @@ function Callback() {
     }, [mutationLoading]);
 
     if (mutationError) {
-        return <Alert title="Error" message={mutationError.message} />;
+        return <Alert mode={Mode.ERROR} title="Error" message={mutationError.message} />;
     } else {
         return <Loading />;
     }
