@@ -43,14 +43,14 @@ const Sidebar = ({ setMenuOpen }) => {
                     Profile
                 </Link>
                 <Link
-                    to="/onboarding/skills"
+                    to="/home/skills"
                     className="mt-1 group flex items-center px-2 py-2 text-base leading-6 font-medium text-gray-600 rounded-md hover:text-gray-900 hover:bg-gray-50 focus:outline-none focus:text-gray-900 focus:bg-gray-100 transition ease-in-out duration-150"
                     onClick={() => {
                         setMenuOpen(false);
                     }}
                 >
                     <FolderIcon />
-                    Onboard / Skills
+                    Skills
                 </Link>
                 <a
                     href="#"
@@ -135,63 +135,66 @@ const AppLayout = ({ component: Component }) => {
             </Helmet>
             <div>
                 <div className="h-screen flex overflow-hidden bg-white">
-                    <div className={`md:hidden ${!menuOpen && 'hidden'}`}>
-                        <div className="fixed inset-0 flex z-40">
-                            {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
-                            <Transition
-                                show={menuOpen}
-                                enter="transition-opacity ease-linear duration-300"
-                                enterFrom="opacity-0"
-                                enterTo="opacity-100"
-                                leave="transition-opacity ease-linear duration-300"
-                                leaveFrom="opacity-100"
-                                leaveTo="opacity-0"
-                            >
-                                <div className="fixed inset-0">
-                                    <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
-                                </div>
-                            </Transition>
-                            <Transition
-                                show={menuOpen}
-                                enter="transition ease-in-out duration-300 transform"
-                                enterFrom="-translate-x-full"
-                                enterTo="translate-x-0"
-                                leave="transition ease-in-out duration-300 transform"
-                                leaveFrom="translate-x-0"
-                                leaveTo="-translate-x-full"
-                            >
-                                <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
-                                    <div className="absolute top-0 right-0 -mr-14 p-1">
-                                        <button
-                                            className="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
-                                            aria-label="Close sidebar"
-                                            onClick={() => {
-                                                setMenuOpen(false);
-                                            }}
-                                        >
-                                            <svg
-                                                className="h-6 w-6 text-white"
-                                                stroke="currentColor"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="2"
-                                                    d="M6 18L18 6M6 6l12 12"
-                                                />
-                                            </svg>
-                                        </button>
+                    <Transition show={menuOpen}>
+                        <div className={`md:hidden`}>
+                            <div className="fixed inset-0 flex z-40">
+                                {/* Off-canvas menu overlay, show/hide based on off-canvas menu state. */}
+                                <Transition
+                                    enter="transition-opacity ease-linear duration-300"
+                                    enterFrom="opacity-0"
+                                    enterTo="opacity-100"
+                                    leave="transition-opacity ease-linear duration-300"
+                                    leaveFrom="opacity-100"
+                                    leaveTo="opacity-0"
+                                >
+                                    <div className="fixed inset-0">
+                                        <div className="absolute inset-0 bg-gray-600 opacity-75"></div>
                                     </div>
-                                    <Sidebar setMenuOpen={setMenuOpen} />
-                                    <Account />
+                                </Transition>
+                                <Transition
+                                    enter="transition ease-in-out duration-300 transform"
+                                    enterFrom="-translate-x-full"
+                                    enterTo="translate-x-0"
+                                    leave="transition ease-in-out duration-300 transform"
+                                    leaveFrom="translate-x-0"
+                                    leaveTo="-translate-x-full"
+                                >
+                                    <div className="flex" style={{ height: '100%' }}>
+                                        <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+                                            <div className="absolute top-0 right-0 -mr-14 p-1">
+                                                <button
+                                                    className="flex items-center justify-center h-12 w-12 rounded-full focus:outline-none focus:bg-gray-600"
+                                                    aria-label="Close sidebar"
+                                                    onClick={() => {
+                                                        setMenuOpen(false);
+                                                    }}
+                                                >
+                                                    <svg
+                                                        className="h-6 w-6 text-white"
+                                                        stroke="currentColor"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2"
+                                                            d="M6 18L18 6M6 6l12 12"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <Sidebar setMenuOpen={setMenuOpen} />
+                                            <Account />
+                                        </div>
+                                    </div>
+                                </Transition>
+                                <div className="flex-shrink-0 w-14">
+                                    {/* Force sidebar to shrink to fit close icon */}
                                 </div>
-                            </Transition>
-                            <div className="flex-shrink-0 w-14">{/* Force sidebar to shrink to fit close icon */}</div>
+                            </div>
                         </div>
-                    </div>
-
+                    </Transition>
                     {/* Static sidebar for desktop */}
                     <div className="hidden md:flex md:flex-shrink-0">
                         <div className="flex flex-col w-64 border-r border-gray-200 bg-white">

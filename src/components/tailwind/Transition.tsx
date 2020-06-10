@@ -27,7 +27,7 @@ function useIsInitialRender(): boolean {
 }
 
 interface TransitionProps {
-    show: boolean;
+    show?: boolean;
     enter?: string;
     enterFrom?: string;
     enterTo?: string;
@@ -144,7 +144,7 @@ function Transition({ show, appear, ...rest }: TransitionProps): ReactElement {
         <TransitionContext.Provider
             value={{
                 parent: {
-                    show,
+                    show: Boolean(show),
                     isInitialRender,
                     appear,
                 },
