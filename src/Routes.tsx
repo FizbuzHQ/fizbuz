@@ -11,6 +11,7 @@ import Home from 'src/pages/home';
 import HomeProfile from 'src/pages/home/Profile';
 import Error from 'src/pages/Error';
 import { Mode } from 'src/components/ui/Alert';
+import HomeSkills from './pages/home/Skills';
 
 const NoMatch = () => {
     return <div>404, sorry!</div>;
@@ -49,9 +50,10 @@ function Routes() {
         <Switch>
             <Route exact path="/callback" component={Callback} />
             <PrivateRoute exact path="/onboarding/profile" component={OnboardingProfile} />
+            <PrivateRoute exact path="/onboarding/skills" component={OnboardingSkills} />
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/home/profile" component={HomeProfile} />
-            <PrivateRoute exact path="/onboarding/skills" component={OnboardingSkills} />
+            <PrivateRoute exact path="/home/skills" component={HomeSkills} />
             <PublicRoute exact path="/" component={Landing} />
             <PublicRoute path="/error" component={Error} />
             <PublicRoute path="*" component={NoMatch} />

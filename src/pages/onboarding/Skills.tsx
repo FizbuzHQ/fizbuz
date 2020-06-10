@@ -20,14 +20,6 @@ gql`
             }
         }
     }
-
-    query ToolList {
-        tools {
-            id
-            name
-            kind
-        }
-    }
 `;
 
 const OnboardingSkills = () => {

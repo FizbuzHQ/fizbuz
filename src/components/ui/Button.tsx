@@ -6,11 +6,13 @@ const Button = (props) => {
     const modeClasses = ((mode) => {
         switch (mode) {
             case 'primary':
-                return 'text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700';
+                return 'text-white bg-indigo-600 hover:bg-indigo-500 focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700';
             case 'secondary':
-                return 'text-indigo-700 bg-indigo-100 hover:bg-indigo-50 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200';
+                return 'text-indigo-700 bg-indigo-100 hover:bg-indigo-50 focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200';
+            case 'danger':
+                return 'text-white bg-red-600 hover:bg-red-500 focus:border-red-700 focus:shadow-outline-red';
             default:
-                return 'text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50';
+                return 'text-gray-700 bg-white hover:text-gray-500 focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50';
         }
     })(mode);
 
@@ -23,7 +25,7 @@ const Button = (props) => {
         }
     })(size);
 
-    const className = `inline-flex items-center border border-transparent ${sizeClasses} font-medium rounded-md ${modeClasses} transition ease-in-out duration-150`;
+    const className = `focus:outline-none inline-flex items-center border border-transparent ${sizeClasses} font-medium rounded-md ${modeClasses} transition ease-in-out duration-150`;
 
     return (
         <button type="button" className={className} {...rest}>

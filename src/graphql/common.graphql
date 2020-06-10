@@ -12,3 +12,10 @@ fragment FullProfile on User {
     }
 }
 
+query ToolList {
+    tools {
+        id
+        kind
+        name
+    }
+}
