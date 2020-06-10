@@ -1,17 +1,33 @@
 import * as React from 'react';
 import { useState } from 'react';
 import gql from 'graphql-tag';
-import { useHomeQuery, useUpdateProfileHomeMutation } from 'src/generated/graphql';
+import { useGetHomeProfileQuery, useUpdateHomeProfileMutation } from 'src/generated/graphql';
 import ProfileForm from 'src/forms/ProfileForm';
+import { updateOneProfileSchema } from 'src/forms/validation';
 import { Alert, Mode } from 'src/components/ui/Alert';
 import Loading from 'src/components/ui/Loading';
 
 gql`
-    mutation UpdateProfileHome($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+    fragment HomeProfileInfo on Profile {
+        id
+        nickname
+        name
+        photo
+        about
+    }
+
+    query GetHomeProfile {
+        currentUser {
             id
-            nickname
-            name
+            profile {
+                ...HomeProfileInfo
+            }
+        }
+    }
+
+    mutation UpdateHomeProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+            ...HomeProfileInfo
         }
     }
 `;
@@ -19,21 +35,21 @@ gql`
 const HomeProfile = () => {
     const [flash, setFlash] = useState(undefined);
 
-    const { data: currentUserData } = useHomeQuery();
+    const { data: currentUserData } = useGetHomeProfileQuery();
 
     // mutation to update the profile
-    const [updateProfileMutation] = useUpdateProfileHomeMutation();
+    const [updateProfileMutation] = useUpdateHomeProfileMutation();
 
     // execute the profile update mutation
     const updateProfile = async (data) => {
+        const values = updateOneProfileSchema.cast(data);
+        // delete this pseudo attribute from the data to submit
+        delete values.originalNickname;
         try {
             await updateProfileMutation({
                 variables: {
                     id: data.id,
-                    profileUpdateInput: {
-                        nickname: data.nickname,
-                        name: data.name,
-                    },
+                    profileUpdateInput: values,
                 },
             });
             setFlash({ mode: Mode.SUCCESS, message: 'Profile updated successfully!' });

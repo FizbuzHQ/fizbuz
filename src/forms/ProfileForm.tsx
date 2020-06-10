@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { useApolloClient } from '@apollo/react-hooks';
 import { CHECK_NICKNAME_QUERY } from 'src/graphql/common';
 import Input from 'src/components/ui/Input';
+import TextArea from 'src/components/ui/TextArea';
 import Button from 'src/components/ui/Button';
 import Loading from 'src/components/ui/Loading';
 
@@ -33,7 +34,6 @@ const ProfileForm = ({ profile, updateProfile }) => {
     yup.addMethod(yup.string, 'uniqueNickname', function (message) {
         return this.test({
             name: 'uniqueNickname',
-            //exclusive: true,
             message,
             test: async function (value) {
                 if (this.parent.nickname !== this.parent.originalNickname) {
@@ -45,10 +45,12 @@ const ProfileForm = ({ profile, updateProfile }) => {
         });
     });
 
-    //
+    // defining a CUSTOM schema here (instead of using one from forms/validation) due to the custom "uniqueNickname" method
     const updateOneProfileSchema = yup.object().shape({
         name: yup.string().min(3).required(),
         nickname: yup.string().min(5).uniqueNickname('Sorry, that nickname is taken').required(),
+        photo: yup.string().url(),
+        about: yup.string(),
     });
 
     // profile form
@@ -88,6 +90,8 @@ const ProfileForm = ({ profile, updateProfile }) => {
                     errors={errors}
                 />
                 <Input display="Full Name" field="name" register={register} errors={errors} />
+                <Input display="Photo" field="photo" register={register} errors={errors} />
+                <TextArea display="About" field="about" register={register} errors={errors} />
                 <p className="">
                     <Button mode="primary" onClick={handleSubmit(onSubmit)}>
                         Update

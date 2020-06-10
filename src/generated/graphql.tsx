@@ -138,6 +138,7 @@ export type Profile = {
   name: Scalars['String'];
   nickname: Scalars['String'];
   photo?: Maybe<Scalars['String']>;
+  about?: Maybe<Scalars['String']>;
   preferences: Array<Preference>;
   preview?: Maybe<Scalars['String']>;
   pronouns?: Maybe<Scalars['String']>;
@@ -1716,6 +1717,17 @@ export type FullProfileFragment = (
   )> }
 );
 
+export type ToolListQueryVariables = {};
+
+
+export type ToolListQuery = (
+  { __typename?: 'Query' }
+  & { tools: Array<(
+    { __typename?: 'Tool' }
+    & Pick<Tool, 'id' | 'kind' | 'name'>
+  )> }
+);
+
 export type ProfileByNicknameQueryVariables = {
   nickname: Scalars['String'];
 };
@@ -1761,17 +1773,79 @@ export type SignupMutation = (
   ) }
 );
 
-export type UpdateProfileHomeMutationVariables = {
+export type HomeProfileInfoFragment = (
+  { __typename?: 'Profile' }
+  & Pick<Profile, 'id' | 'nickname' | 'name' | 'photo' | 'about'>
+);
+
+export type GetHomeProfileQueryVariables = {};
+
+
+export type GetHomeProfileQuery = (
+  { __typename?: 'Query' }
+  & { currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { profile?: Maybe<(
+      { __typename?: 'Profile' }
+      & HomeProfileInfoFragment
+    )> }
+  )> }
+);
+
+export type UpdateHomeProfileMutationVariables = {
   profileUpdateInput: ProfileUpdateInput;
   id: Scalars['String'];
 };
 
 
-export type UpdateProfileHomeMutation = (
+export type UpdateHomeProfileMutation = (
   { __typename?: 'Mutation' }
   & { updateOneProfile?: Maybe<(
     { __typename?: 'Profile' }
-    & Pick<Profile, 'id' | 'nickname' | 'name'>
+    & HomeProfileInfoFragment
+  )> }
+);
+
+export type HomeSkillsInfoFragment = (
+  { __typename?: 'Profile' }
+  & Pick<Profile, 'id'>
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & Pick<Skill, 'id' | 'level' | 'comment'>
+    & { tool: (
+      { __typename?: 'Tool' }
+      & Pick<Tool, 'id' | 'name'>
+    ) }
+  )> }
+);
+
+export type GetHomeSkillsQueryVariables = {};
+
+
+export type GetHomeSkillsQuery = (
+  { __typename?: 'Query' }
+  & { currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { profile?: Maybe<(
+      { __typename?: 'Profile' }
+      & HomeSkillsInfoFragment
+    )> }
+  )> }
+);
+
+export type CreateHomeSkillMutationVariables = {
+  profileUpdateInput: ProfileUpdateInput;
+  id: Scalars['String'];
+};
+
+
+export type CreateHomeSkillMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOneProfile?: Maybe<(
+    { __typename?: 'Profile' }
+    & HomeSkillsInfoFragment
   )> }
 );
 
@@ -1841,17 +1915,6 @@ export type CreateOnboardingSkillsMutation = (
   )> }
 );
 
-export type ToolListQueryVariables = {};
-
-
-export type ToolListQuery = (
-  { __typename?: 'Query' }
-  & { tools: Array<(
-    { __typename?: 'Tool' }
-    & Pick<Tool, 'id' | 'name' | 'kind'>
-  )> }
-);
-
 export const FullProfileFragmentDoc = gql`
     fragment FullProfile on User {
   id
@@ -1867,6 +1930,29 @@ export const FullProfileFragmentDoc = gql`
   }
 }
     `;
+export const HomeProfileInfoFragmentDoc = gql`
+    fragment HomeProfileInfo on Profile {
+  id
+  nickname
+  name
+  photo
+  about
+}
+    `;
+export const HomeSkillsInfoFragmentDoc = gql`
+    fragment HomeSkillsInfo on Profile {
+  id
+  skills {
+    id
+    level
+    comment
+    tool {
+      id
+      name
+    }
+  }
+}
+    `;
 export const OnboardingProfileInfoFragmentDoc = gql`
     fragment OnboardingProfileInfo on Profile {
   id
@@ -1874,6 +1960,53 @@ export const OnboardingProfileInfoFragmentDoc = gql`
   name
 }
     `;
+export const ToolListDocument = gql`
+    query ToolList {
+  tools {
+    id
+    kind
+    name
+  }
+}
+    `;
+export type ToolListProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<ToolListQuery, ToolListQueryVariables>
+    } & TChildProps;
+export function withToolList<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  ToolListQuery,
+  ToolListQueryVariables,
+  ToolListProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, ToolListQuery, ToolListQueryVariables, ToolListProps<TChildProps, TDataName>>(ToolListDocument, {
+      alias: 'toolList',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useToolListQuery__
+ *
+ * To run a query within a React component, call `useToolListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useToolListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useToolListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useToolListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ToolListQuery, ToolListQueryVariables>) {
+        return ApolloReactHooks.useQuery<ToolListQuery, ToolListQueryVariables>(ToolListDocument, baseOptions);
+      }
+export function useToolListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ToolListQuery, ToolListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ToolListQuery, ToolListQueryVariables>(ToolListDocument, baseOptions);
+        }
+export type ToolListQueryHookResult = ReturnType<typeof useToolListQuery>;
+export type ToolListLazyQueryHookResult = ReturnType<typeof useToolListLazyQuery>;
+export type ToolListQueryResult = ApolloReactCommon.QueryResult<ToolListQuery, ToolListQueryVariables>;
 export const ProfileByNicknameDocument = gql`
     query ProfileByNickname($nickname: String!) {
   profile(where: {nickname: $nickname}) {
@@ -2020,54 +2153,194 @@ export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
-export const UpdateProfileHomeDocument = gql`
-    mutation UpdateProfileHome($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+export const GetHomeProfileDocument = gql`
+    query GetHomeProfile {
+  currentUser {
     id
-    nickname
-    name
+    profile {
+      ...HomeProfileInfo
+    }
   }
 }
-    `;
-export type UpdateProfileHomeMutationFn = ApolloReactCommon.MutationFunction<UpdateProfileHomeMutation, UpdateProfileHomeMutationVariables>;
-export type UpdateProfileHomeProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateProfileHomeMutation, UpdateProfileHomeMutationVariables>
+    ${HomeProfileInfoFragmentDoc}`;
+export type GetHomeProfileProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetHomeProfileQuery, GetHomeProfileQueryVariables>
     } & TChildProps;
-export function withUpdateProfileHome<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withGetHomeProfile<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  UpdateProfileHomeMutation,
-  UpdateProfileHomeMutationVariables,
-  UpdateProfileHomeProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, UpdateProfileHomeMutation, UpdateProfileHomeMutationVariables, UpdateProfileHomeProps<TChildProps, TDataName>>(UpdateProfileHomeDocument, {
-      alias: 'updateProfileHome',
+  GetHomeProfileQuery,
+  GetHomeProfileQueryVariables,
+  GetHomeProfileProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetHomeProfileQuery, GetHomeProfileQueryVariables, GetHomeProfileProps<TChildProps, TDataName>>(GetHomeProfileDocument, {
+      alias: 'getHomeProfile',
       ...operationOptions
     });
 };
 
 /**
- * __useUpdateProfileHomeMutation__
+ * __useGetHomeProfileQuery__
  *
- * To run a mutation, you first call `useUpdateProfileHomeMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateProfileHomeMutation` returns a tuple that includes:
+ * To run a query within a React component, call `useGetHomeProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHomeProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHomeProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetHomeProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetHomeProfileQuery, GetHomeProfileQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetHomeProfileQuery, GetHomeProfileQueryVariables>(GetHomeProfileDocument, baseOptions);
+      }
+export function useGetHomeProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetHomeProfileQuery, GetHomeProfileQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetHomeProfileQuery, GetHomeProfileQueryVariables>(GetHomeProfileDocument, baseOptions);
+        }
+export type GetHomeProfileQueryHookResult = ReturnType<typeof useGetHomeProfileQuery>;
+export type GetHomeProfileLazyQueryHookResult = ReturnType<typeof useGetHomeProfileLazyQuery>;
+export type GetHomeProfileQueryResult = ApolloReactCommon.QueryResult<GetHomeProfileQuery, GetHomeProfileQueryVariables>;
+export const UpdateHomeProfileDocument = gql`
+    mutation UpdateHomeProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+    ...HomeProfileInfo
+  }
+}
+    ${HomeProfileInfoFragmentDoc}`;
+export type UpdateHomeProfileMutationFn = ApolloReactCommon.MutationFunction<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>;
+export type UpdateHomeProfileProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>
+    } & TChildProps;
+export function withUpdateHomeProfile<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateHomeProfileMutation,
+  UpdateHomeProfileMutationVariables,
+  UpdateHomeProfileProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables, UpdateHomeProfileProps<TChildProps, TDataName>>(UpdateHomeProfileDocument, {
+      alias: 'updateHomeProfile',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdateHomeProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateHomeProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateHomeProfileMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [updateProfileHomeMutation, { data, loading, error }] = useUpdateProfileHomeMutation({
+ * const [updateHomeProfileMutation, { data, loading, error }] = useUpdateHomeProfileMutation({
  *   variables: {
  *      profileUpdateInput: // value for 'profileUpdateInput'
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useUpdateProfileHomeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateProfileHomeMutation, UpdateProfileHomeMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateProfileHomeMutation, UpdateProfileHomeMutationVariables>(UpdateProfileHomeDocument, baseOptions);
+export function useUpdateHomeProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>(UpdateHomeProfileDocument, baseOptions);
       }
-export type UpdateProfileHomeMutationHookResult = ReturnType<typeof useUpdateProfileHomeMutation>;
-export type UpdateProfileHomeMutationResult = ApolloReactCommon.MutationResult<UpdateProfileHomeMutation>;
-export type UpdateProfileHomeMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProfileHomeMutation, UpdateProfileHomeMutationVariables>;
+export type UpdateHomeProfileMutationHookResult = ReturnType<typeof useUpdateHomeProfileMutation>;
+export type UpdateHomeProfileMutationResult = ApolloReactCommon.MutationResult<UpdateHomeProfileMutation>;
+export type UpdateHomeProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>;
+export const GetHomeSkillsDocument = gql`
+    query GetHomeSkills {
+  currentUser {
+    id
+    profile {
+      ...HomeSkillsInfo
+    }
+  }
+}
+    ${HomeSkillsInfoFragmentDoc}`;
+export type GetHomeSkillsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>
+    } & TChildProps;
+export function withGetHomeSkills<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetHomeSkillsQuery,
+  GetHomeSkillsQueryVariables,
+  GetHomeSkillsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetHomeSkillsQuery, GetHomeSkillsQueryVariables, GetHomeSkillsProps<TChildProps, TDataName>>(GetHomeSkillsDocument, {
+      alias: 'getHomeSkills',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetHomeSkillsQuery__
+ *
+ * To run a query within a React component, call `useGetHomeSkillsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHomeSkillsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHomeSkillsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetHomeSkillsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>(GetHomeSkillsDocument, baseOptions);
+      }
+export function useGetHomeSkillsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>(GetHomeSkillsDocument, baseOptions);
+        }
+export type GetHomeSkillsQueryHookResult = ReturnType<typeof useGetHomeSkillsQuery>;
+export type GetHomeSkillsLazyQueryHookResult = ReturnType<typeof useGetHomeSkillsLazyQuery>;
+export type GetHomeSkillsQueryResult = ApolloReactCommon.QueryResult<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>;
+export const CreateHomeSkillDocument = gql`
+    mutation CreateHomeSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+    ...HomeSkillsInfo
+  }
+}
+    ${HomeSkillsInfoFragmentDoc}`;
+export type CreateHomeSkillMutationFn = ApolloReactCommon.MutationFunction<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>;
+export type CreateHomeSkillProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>
+    } & TChildProps;
+export function withCreateHomeSkill<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  CreateHomeSkillMutation,
+  CreateHomeSkillMutationVariables,
+  CreateHomeSkillProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, CreateHomeSkillMutation, CreateHomeSkillMutationVariables, CreateHomeSkillProps<TChildProps, TDataName>>(CreateHomeSkillDocument, {
+      alias: 'createHomeSkill',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useCreateHomeSkillMutation__
+ *
+ * To run a mutation, you first call `useCreateHomeSkillMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateHomeSkillMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createHomeSkillMutation, { data, loading, error }] = useCreateHomeSkillMutation({
+ *   variables: {
+ *      profileUpdateInput: // value for 'profileUpdateInput'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCreateHomeSkillMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>(CreateHomeSkillDocument, baseOptions);
+      }
+export type CreateHomeSkillMutationHookResult = ReturnType<typeof useCreateHomeSkillMutation>;
+export type CreateHomeSkillMutationResult = ApolloReactCommon.MutationResult<CreateHomeSkillMutation>;
+export type CreateHomeSkillMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>;
 export const HomeDocument = gql`
     query Home {
   currentUser {
@@ -2258,50 +2531,3 @@ export function useCreateOnboardingSkillsMutation(baseOptions?: ApolloReactHooks
 export type CreateOnboardingSkillsMutationHookResult = ReturnType<typeof useCreateOnboardingSkillsMutation>;
 export type CreateOnboardingSkillsMutationResult = ApolloReactCommon.MutationResult<CreateOnboardingSkillsMutation>;
 export type CreateOnboardingSkillsMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables>;
-export const ToolListDocument = gql`
-    query ToolList {
-  tools {
-    id
-    name
-    kind
-  }
-}
-    `;
-export type ToolListProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<ToolListQuery, ToolListQueryVariables>
-    } & TChildProps;
-export function withToolList<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  ToolListQuery,
-  ToolListQueryVariables,
-  ToolListProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, ToolListQuery, ToolListQueryVariables, ToolListProps<TChildProps, TDataName>>(ToolListDocument, {
-      alias: 'toolList',
-      ...operationOptions
-    });
-};
-
-/**
- * __useToolListQuery__
- *
- * To run a query within a React component, call `useToolListQuery` and pass it any options that fit your needs.
- * When your component renders, `useToolListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useToolListQuery({
- *   variables: {
- *   },
- * });
- */
-export function useToolListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ToolListQuery, ToolListQueryVariables>) {
-        return ApolloReactHooks.useQuery<ToolListQuery, ToolListQueryVariables>(ToolListDocument, baseOptions);
-      }
-export function useToolListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ToolListQuery, ToolListQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<ToolListQuery, ToolListQueryVariables>(ToolListDocument, baseOptions);
-        }
-export type ToolListQueryHookResult = ReturnType<typeof useToolListQuery>;
-export type ToolListLazyQueryHookResult = ReturnType<typeof useToolListLazyQuery>;
-export type ToolListQueryResult = ApolloReactCommon.QueryResult<ToolListQuery, ToolListQueryVariables>;
