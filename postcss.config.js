@@ -13,10 +13,9 @@ const purgecss = require('@fullhuman/postcss-purgecss')({
 module.exports = {
     plugins: [
         require('postcss-import'),
-        //'postcss-fontpath': { checkFiles: true, ie8Fix: true },
         require('tailwindcss'),
-        //'@fullhuman/postcss-purgecss': process.env.NODE_ENV === 'production',
         require('autoprefixer'),
+        // for some reason, NODE_ENV is always "production", even on localhost :(
         ...(process.env.NODE_ENV === 'production' ? [purgecss] : []),
     ],
 };
