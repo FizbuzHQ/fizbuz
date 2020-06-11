@@ -17,11 +17,13 @@ const UserProvider = ({ children }) => {
     if (authLoading || dataLoading) {
         return <Loading />;
     } else if (authError || dataError) {
+        const message = authError ? authError.message : dataError.message;
+        const from = location.pathname;
         return (
             <Redirect
                 to={{
                     pathname: '/error',
-                    state: { message: authError.message || dataError.message, from: location.pathname },
+                    state: { message, from },
                 }}
             />
         );
