@@ -1,21 +1,40 @@
-fragment FullProfile on User {
+fragment ToolInfo on Tool {
     id
+    name
+    kind
+}
+
+fragment UserInfo on User {
+    id
+}
+
+fragment SkillInfo on Skill {
+    id
+    level
+    comment
+    tool {
+        ...ToolInfo
+    }
+}
+
+fragment ProfileInfo on Profile {
+    id
+    nickname
+    name
+}
+
+fragment FullProfile on User {
+    ...UserInfo
     profile {
-        id
-        nickname
-        name
+        ...ProfileInfo
         skills {
-            tool {
-                name
-            }
+            ...SkillInfo
         }
     }
 }
 
 query ToolList {
-    tools {
-        id
-        kind
-        name
+    tools(where: {verified: {equals: true}}) {
+        ...ToolInfo
     }
 }

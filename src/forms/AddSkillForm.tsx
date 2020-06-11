@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import CreatableSelect from 'react-select/creatable';
 import { useToolListQuery } from 'src/generated/graphql';
+import { stringCompare } from 'src/utils/strings';
 
 const AddSkillForm = ({ skills, createSkill }) => {
     const { data } = useToolListQuery();
@@ -22,6 +23,7 @@ const AddSkillForm = ({ skills, createSkill }) => {
             label: k,
             options: tools
                 .filter((o) => o.kind === k)
+                .sort((a, b) => stringCompare(a.name, b.name))
                 .map((o) => ({ label: o.name, value: o.id, isDisabled: toolIds.indexOf(o.id) >= 0 })),
         }));
         setOptions(groupedOptions);

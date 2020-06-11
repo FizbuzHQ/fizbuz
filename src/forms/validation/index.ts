@@ -7,4 +7,14 @@ const updateOneProfileSchema = yup.object().shape({
     about: yup.string(),
 });
 
-export { updateOneProfileSchema };
+const updateSkillSchema = yup.object().shape({
+    level: yup
+        .number()
+        .min(0)
+        .max(10)
+        .nullable(true)
+        .transform((v, o) => (o === '' ? null : v)), // https://github.com/jquense/yup/issues/500
+    comment: yup.string(),
+});
+
+export { updateOneProfileSchema, updateSkillSchema };

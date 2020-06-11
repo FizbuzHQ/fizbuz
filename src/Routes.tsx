@@ -12,6 +12,7 @@ import HomeProfile from 'src/pages/home/Profile';
 import Error from 'src/pages/Error';
 import { Mode } from 'src/components/ui/Alert';
 import HomeSkills from './pages/home/Skills';
+import HomeSkillEdit from './pages/home/EditSkill';
 
 const NoMatch = () => {
     return <div>404, sorry!</div>;
@@ -54,6 +55,7 @@ function Routes() {
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/home/profile" component={HomeProfile} />
             <PrivateRoute exact path="/home/skills" component={HomeSkills} />
+            <PrivateRoute path="/home/skills/:id" component={HomeSkillEdit} />
             <PublicRoute exact path="/" component={Landing} />
             <PublicRoute path="/error" component={Error} />
             <PublicRoute path="*" component={NoMatch} />

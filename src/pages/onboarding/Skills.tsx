@@ -91,11 +91,11 @@ const OnboardingSkills = () => {
                     {kindsToDisplay.map((kind, i) => (
                         <div key={i}>
                             <h2>{kind}</h2>
-                            <div className="flex mb-4">
+                            <div className="w-full flex flex-wrap mb-4">
                                 {kindList[kind]
                                     .sort((a, b) => stringCompare(a.name, b.name))
                                     .map((tool, j) => (
-                                        <div key={j} className="mr-2">
+                                        <div key={j} className="mr-4 mb-4">
                                             <Checkbox
                                                 display={tool.name}
                                                 register={register}
