@@ -45,6 +45,7 @@ function Callback() {
                 variables: {
                     userInput: {
                         email: user.email,
+                        emailSearch: user.email.toLowerCase(),
                         identities: {
                             create: [
                                 {
@@ -56,6 +57,7 @@ function Callback() {
                             create: {
                                 name: user.name,
                                 nickname: user.nickname,
+                                nicknameSearch: user.nickname.toLowerCase(),
                             },
                         },
                     },

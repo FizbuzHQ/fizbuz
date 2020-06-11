@@ -55,7 +55,7 @@ const OnboardingProfile = () => {
             const result = await apolloClient.query({
                 query: CHECK_NICKNAME_QUERY,
                 variables: {
-                    nickname,
+                    nickname: nickname.toLowerCase(),
                 },
             });
             check = !(result.data && result.data.profile);
@@ -105,17 +105,17 @@ const OnboardingProfile = () => {
     }, [data]);
 
     // execute the profile update mutation
-    const onSubmit = async (data) => {
+    const onSubmit = async (formData) => {
         if (isValid) {
             try {
+                const id = data.currentUser.profile.id;
+                const profileUpdateInput = {
+                    nickname: formData.nickname,
+                    nicknameSearch: formData.nicknameSearch,
+                    name: formData.name,
+                };
                 await updateProfileMutation({
-                    variables: {
-                        id: data.id,
-                        profileUpdateInput: {
-                            nickname: data.nickname,
-                            name: data.name,
-                        },
-                    },
+                    variables: { id, profileUpdateInput },
                 });
                 history.push('/onboarding/skills');
             } catch (error) {
@@ -137,7 +137,6 @@ const OnboardingProfile = () => {
                 )}
                 <p className="p-1 my-2">Blah blah blah</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <input type="hidden" name="id" ref={register} />
                     <input type="hidden" name="originalNickname" ref={register} />
                     <Input
                         addOn="https://fizbuz.com/u/"

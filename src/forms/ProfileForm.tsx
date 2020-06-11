@@ -22,7 +22,7 @@ const ProfileForm = ({ profile, updateProfile }) => {
             const result = await apolloClient.query({
                 query: CHECK_NICKNAME_QUERY,
                 variables: {
-                    nickname,
+                    nickname: nickname.toLowerCase(),
                 },
             });
             check = !(result.data && result.data.profile);

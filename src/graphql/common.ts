@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 
 const CHECK_NICKNAME_QUERY = gql`
     query ProfileByNickname($nickname: String!) {
-        profile(where: { nickname: $nickname }) {
-            nickname
+        profile(where: { nicknameSearch: $nickname }) {
+            id
         }
     }
 `;

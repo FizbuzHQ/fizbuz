@@ -15,11 +15,22 @@ export type Scalars = {
 
 export type Query = {
    __typename?: 'Query';
+  tools: Array<Tool>;
   user?: Maybe<User>;
   profile?: Maybe<Profile>;
   identity?: Maybe<Identity>;
-  tools: Array<Tool>;
+  skill?: Maybe<Skill>;
   currentUser?: Maybe<User>;
+};
+
+
+export type QueryToolsArgs = {
+  where?: Maybe<ToolWhereInput>;
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<ToolWhereUniqueInput>;
+  before?: Maybe<ToolWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
 };
 
 
@@ -38,94 +49,430 @@ export type QueryIdentityArgs = {
 };
 
 
-export type QueryToolsArgs = {
-  where?: Maybe<ToolWhereInput>;
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<ToolWhereUniqueInput>;
-  before?: Maybe<ToolWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
+export type QuerySkillArgs = {
+  where: SkillWhereUniqueInput;
 };
 
-export type UserWhereUniqueInput = {
+export type ToolWhereInput = {
+  id?: Maybe<StringFilter>;
+  name?: Maybe<StringFilter>;
+  nameSearch?: Maybe<StringFilter>;
+  kind?: Maybe<ToolKind>;
+  description?: Maybe<NullableStringFilter>;
+  url?: Maybe<NullableStringFilter>;
+  verified?: Maybe<BooleanFilter>;
+  skills?: Maybe<SkillFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<ToolWhereInput>>;
+  OR?: Maybe<Array<ToolWhereInput>>;
+  NOT?: Maybe<Array<ToolWhereInput>>;
+};
+
+export type StringFilter = {
+  equals?: Maybe<Scalars['String']>;
+  not?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  contains?: Maybe<Scalars['String']>;
+  startsWith?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+};
+
+export enum ToolKind {
+  Language = 'Language',
+  Framework = 'Framework',
+  Library = 'Library',
+  Device = 'Device',
+  Service = 'Service',
+  Software = 'Software',
+  Specialty = 'Specialty'
+}
+
+export type NullableStringFilter = {
+  equals?: Maybe<Scalars['String']>;
+  not?: Maybe<Scalars['String']>;
+  in?: Maybe<Array<Scalars['String']>>;
+  notIn?: Maybe<Array<Scalars['String']>>;
+  lt?: Maybe<Scalars['String']>;
+  lte?: Maybe<Scalars['String']>;
+  gt?: Maybe<Scalars['String']>;
+  gte?: Maybe<Scalars['String']>;
+  contains?: Maybe<Scalars['String']>;
+  startsWith?: Maybe<Scalars['String']>;
+  endsWith?: Maybe<Scalars['String']>;
+};
+
+export type BooleanFilter = {
+  equals?: Maybe<Scalars['Boolean']>;
+  not?: Maybe<Scalars['Boolean']>;
+};
+
+export type SkillFilter = {
+  every?: Maybe<SkillWhereInput>;
+  some?: Maybe<SkillWhereInput>;
+  none?: Maybe<SkillWhereInput>;
+};
+
+export type SkillWhereInput = {
+  id?: Maybe<StringFilter>;
+  profileId?: Maybe<StringFilter>;
+  toolId?: Maybe<StringFilter>;
+  level?: Maybe<NullableIntFilter>;
+  comment?: Maybe<NullableStringFilter>;
+  published?: Maybe<BooleanFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<SkillWhereInput>>;
+  OR?: Maybe<Array<SkillWhereInput>>;
+  NOT?: Maybe<Array<SkillWhereInput>>;
+  profile?: Maybe<ProfileWhereInput>;
+  tool?: Maybe<ToolWhereInput>;
+};
+
+export type NullableIntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  not?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+};
+
+export type DateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+};
+
+
+export type NullableDateTimeFilter = {
+  equals?: Maybe<Scalars['DateTime']>;
+  not?: Maybe<Scalars['DateTime']>;
+  in?: Maybe<Array<Scalars['DateTime']>>;
+  notIn?: Maybe<Array<Scalars['DateTime']>>;
+  lt?: Maybe<Scalars['DateTime']>;
+  lte?: Maybe<Scalars['DateTime']>;
+  gt?: Maybe<Scalars['DateTime']>;
+  gte?: Maybe<Scalars['DateTime']>;
+};
+
+export type ProfileWhereInput = {
+  id?: Maybe<StringFilter>;
+  userId?: Maybe<StringFilter>;
+  nickname?: Maybe<StringFilter>;
+  nicknameSearch?: Maybe<StringFilter>;
+  name?: Maybe<StringFilter>;
+  photo?: Maybe<NullableStringFilter>;
+  location?: Maybe<NullableStringFilter>;
+  image?: Maybe<NullableStringFilter>;
+  about?: Maybe<NullableStringFilter>;
+  pronouns?: Maybe<NullableStringFilter>;
+  preview?: Maybe<NullableStringFilter>;
+  published?: Maybe<BooleanFilter>;
+  skills?: Maybe<SkillFilter>;
+  externals?: Maybe<ExternalFilter>;
+  preferences?: Maybe<PreferenceFilter>;
+  experiences?: Maybe<ExperienceFilter>;
+  activities?: Maybe<ActivityFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<ProfileWhereInput>>;
+  OR?: Maybe<Array<ProfileWhereInput>>;
+  NOT?: Maybe<Array<ProfileWhereInput>>;
+  user?: Maybe<UserWhereInput>;
+};
+
+export type ExternalFilter = {
+  every?: Maybe<ExternalWhereInput>;
+  some?: Maybe<ExternalWhereInput>;
+  none?: Maybe<ExternalWhereInput>;
+};
+
+export type ExternalWhereInput = {
+  id?: Maybe<StringFilter>;
+  profileId?: Maybe<StringFilter>;
+  service?: Maybe<StringFilter>;
+  nickname?: Maybe<StringFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<ExternalWhereInput>>;
+  OR?: Maybe<Array<ExternalWhereInput>>;
+  NOT?: Maybe<Array<ExternalWhereInput>>;
+  profile?: Maybe<ProfileWhereInput>;
+};
+
+export type PreferenceFilter = {
+  every?: Maybe<PreferenceWhereInput>;
+  some?: Maybe<PreferenceWhereInput>;
+  none?: Maybe<PreferenceWhereInput>;
+};
+
+export type PreferenceWhereInput = {
+  id?: Maybe<StringFilter>;
+  profileId?: Maybe<StringFilter>;
+  traitId?: Maybe<StringFilter>;
+  feels?: Maybe<IntFilter>;
+  comment?: Maybe<NullableStringFilter>;
+  published?: Maybe<BooleanFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<PreferenceWhereInput>>;
+  OR?: Maybe<Array<PreferenceWhereInput>>;
+  NOT?: Maybe<Array<PreferenceWhereInput>>;
+  profile?: Maybe<ProfileWhereInput>;
+  trait?: Maybe<TraitWhereInput>;
+};
+
+export type IntFilter = {
+  equals?: Maybe<Scalars['Int']>;
+  not?: Maybe<Scalars['Int']>;
+  in?: Maybe<Array<Scalars['Int']>>;
+  notIn?: Maybe<Array<Scalars['Int']>>;
+  lt?: Maybe<Scalars['Int']>;
+  lte?: Maybe<Scalars['Int']>;
+  gt?: Maybe<Scalars['Int']>;
+  gte?: Maybe<Scalars['Int']>;
+};
+
+export type TraitWhereInput = {
+  id?: Maybe<StringFilter>;
+  kind?: Maybe<TraitKind>;
+  name?: Maybe<StringFilter>;
+  nameSearch?: Maybe<StringFilter>;
+  description?: Maybe<NullableStringFilter>;
+  verified?: Maybe<BooleanFilter>;
+  preferences?: Maybe<PreferenceFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<TraitWhereInput>>;
+  OR?: Maybe<Array<TraitWhereInput>>;
+  NOT?: Maybe<Array<TraitWhereInput>>;
+};
+
+export enum TraitKind {
+  Role = 'Role',
+  Team = 'Team',
+  Workplace = 'Workplace',
+  Company = 'Company'
+}
+
+export type ExperienceFilter = {
+  every?: Maybe<ExperienceWhereInput>;
+  some?: Maybe<ExperienceWhereInput>;
+  none?: Maybe<ExperienceWhereInput>;
+};
+
+export type ExperienceWhereInput = {
+  id?: Maybe<StringFilter>;
+  profileId?: Maybe<StringFilter>;
+  placeId?: Maybe<StringFilter>;
+  kind?: Maybe<ExperienceKind>;
+  title?: Maybe<StringFilter>;
+  start?: Maybe<DateTimeFilter>;
+  end?: Maybe<NullableDateTimeFilter>;
+  comment?: Maybe<NullableStringFilter>;
+  published?: Maybe<BooleanFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<ExperienceWhereInput>>;
+  OR?: Maybe<Array<ExperienceWhereInput>>;
+  NOT?: Maybe<Array<ExperienceWhereInput>>;
+  profile?: Maybe<ProfileWhereInput>;
+  place?: Maybe<PlaceWhereInput>;
+};
+
+export enum ExperienceKind {
+  Employee = 'Employee',
+  Student = 'Student',
+  Attendee = 'Attendee',
+  Speaker = 'Speaker',
+  Instructor = 'Instructor',
+  Organizer = 'Organizer'
+}
+
+export type PlaceWhereInput = {
+  id?: Maybe<StringFilter>;
+  kind?: Maybe<PlaceKind>;
+  name?: Maybe<StringFilter>;
+  nameSearch?: Maybe<StringFilter>;
+  url?: Maybe<NullableStringFilter>;
+  description?: Maybe<NullableStringFilter>;
+  experiences?: Maybe<ExperienceFilter>;
+  verified?: Maybe<BooleanFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<PlaceWhereInput>>;
+  OR?: Maybe<Array<PlaceWhereInput>>;
+  NOT?: Maybe<Array<PlaceWhereInput>>;
+};
+
+export enum PlaceKind {
+  Company = 'Company',
+  School = 'School',
+  Class = 'Class',
+  Bootcamp = 'Bootcamp',
+  Conference = 'Conference',
+  Hackathon = 'Hackathon',
+  Meetup = 'Meetup'
+}
+
+export type ActivityFilter = {
+  every?: Maybe<ActivityWhereInput>;
+  some?: Maybe<ActivityWhereInput>;
+  none?: Maybe<ActivityWhereInput>;
+};
+
+export type ActivityWhereInput = {
+  id?: Maybe<StringFilter>;
+  profileId?: Maybe<StringFilter>;
+  kind?: Maybe<ActivityKind>;
+  title?: Maybe<StringFilter>;
+  description?: Maybe<NullableStringFilter>;
+  image?: Maybe<NullableStringFilter>;
+  url?: Maybe<NullableStringFilter>;
+  date?: Maybe<DateTimeFilter>;
+  published?: Maybe<BooleanFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<ActivityWhereInput>>;
+  OR?: Maybe<Array<ActivityWhereInput>>;
+  NOT?: Maybe<Array<ActivityWhereInput>>;
+  profile?: Maybe<ProfileWhereInput>;
+};
+
+export enum ActivityKind {
+  Project = 'Project',
+  Writing = 'Writing',
+  Video = 'Video'
+}
+
+export type UserWhereInput = {
+  id?: Maybe<StringFilter>;
+  email?: Maybe<StringFilter>;
+  emailSearch?: Maybe<StringFilter>;
+  productEmail?: Maybe<BooleanFilter>;
+  promotionalEmail?: Maybe<BooleanFilter>;
+  outboundConnections?: Maybe<ConnectionFilter>;
+  inboundConnections?: Maybe<ConnectionFilter>;
+  identities?: Maybe<IdentityFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<UserWhereInput>>;
+  OR?: Maybe<Array<UserWhereInput>>;
+  NOT?: Maybe<Array<UserWhereInput>>;
+  profile?: Maybe<ProfileWhereInput>;
+};
+
+export type ConnectionFilter = {
+  every?: Maybe<ConnectionWhereInput>;
+  some?: Maybe<ConnectionWhereInput>;
+  none?: Maybe<ConnectionWhereInput>;
+};
+
+export type ConnectionWhereInput = {
+  id?: Maybe<StringFilter>;
+  userId?: Maybe<StringFilter>;
+  connectedId?: Maybe<StringFilter>;
+  pin?: Maybe<StringFilter>;
+  comment?: Maybe<NullableStringFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<ConnectionWhereInput>>;
+  OR?: Maybe<Array<ConnectionWhereInput>>;
+  NOT?: Maybe<Array<ConnectionWhereInput>>;
+  user?: Maybe<UserWhereInput>;
+  connected?: Maybe<UserWhereInput>;
+};
+
+export type IdentityFilter = {
+  every?: Maybe<IdentityWhereInput>;
+  some?: Maybe<IdentityWhereInput>;
+  none?: Maybe<IdentityWhereInput>;
+};
+
+export type IdentityWhereInput = {
+  id?: Maybe<StringFilter>;
+  userId?: Maybe<StringFilter>;
+  auth0Sub?: Maybe<StringFilter>;
+  createdAt?: Maybe<DateTimeFilter>;
+  updatedAt?: Maybe<NullableDateTimeFilter>;
+  deletedAt?: Maybe<NullableDateTimeFilter>;
+  AND?: Maybe<Array<IdentityWhereInput>>;
+  OR?: Maybe<Array<IdentityWhereInput>>;
+  NOT?: Maybe<Array<IdentityWhereInput>>;
+  user?: Maybe<UserWhereInput>;
+};
+
+export type ToolWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  nameSearch?: Maybe<Scalars['String']>;
 };
 
-export type User = {
-   __typename?: 'User';
+export type Tool = {
+   __typename?: 'Tool';
   id: Scalars['String'];
-  email: Scalars['String'];
-  productEmail: Scalars['Boolean'];
-  promotionalEmail: Scalars['Boolean'];
-  inboundConnections: Array<Connection>;
-  outboundConnections: Array<Connection>;
-  identities: Array<Identity>;
-  profile?: Maybe<Profile>;
+  description?: Maybe<Scalars['String']>;
+  kind: ToolKind;
+  name: Scalars['String'];
+  skills: Array<Skill>;
+  url?: Maybe<Scalars['String']>;
+  verified: Scalars['Boolean'];
   createdAt: Scalars['DateTime'];
   updatedAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
 
-export type UserInboundConnectionsArgs = {
+export type ToolSkillsArgs = {
   skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<ConnectionWhereUniqueInput>;
-  before?: Maybe<ConnectionWhereUniqueInput>;
+  after?: Maybe<SkillWhereUniqueInput>;
+  before?: Maybe<SkillWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
 };
 
-
-export type UserOutboundConnectionsArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<ConnectionWhereUniqueInput>;
-  before?: Maybe<ConnectionWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-
-export type UserIdentitiesArgs = {
-  skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<IdentityWhereUniqueInput>;
-  before?: Maybe<IdentityWhereUniqueInput>;
-  first?: Maybe<Scalars['Int']>;
-  last?: Maybe<Scalars['Int']>;
-};
-
-export type ConnectionWhereUniqueInput = {
+export type SkillWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
-  userId_connectedId?: Maybe<UserIdConnectedIdCompoundUniqueInput>;
+  profileId_toolId?: Maybe<ProfileIdToolIdCompoundUniqueInput>;
 };
 
-export type UserIdConnectedIdCompoundUniqueInput = {
-  userId: Scalars['String'];
-  connectedId: Scalars['String'];
+export type ProfileIdToolIdCompoundUniqueInput = {
+  profileId: Scalars['String'];
+  toolId: Scalars['String'];
 };
 
-export type Connection = {
-   __typename?: 'Connection';
+export type Skill = {
+   __typename?: 'Skill';
   id: Scalars['String'];
-  connected: User;
-  pin: Scalars['String'];
-  user: User;
-  createdAt: Scalars['DateTime'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  deletedAt?: Maybe<Scalars['DateTime']>;
-};
-
-
-export type IdentityWhereUniqueInput = {
-  id?: Maybe<Scalars['String']>;
-  auth0Sub?: Maybe<Scalars['String']>;
-};
-
-export type Identity = {
-   __typename?: 'Identity';
-  id: Scalars['String'];
-  user: User;
-  auth0Sub: Scalars['String'];
+  comment?: Maybe<Scalars['String']>;
+  level?: Maybe<Scalars['Int']>;
+  profile: Profile;
+  published: Scalars['Boolean'];
+  tool: Tool;
   createdAt: Scalars['DateTime'];
   updatedAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
@@ -212,427 +559,94 @@ export type TraitPreferencesArgs = {
   last?: Maybe<Scalars['Int']>;
 };
 
-export enum TraitKind {
-  Role = 'Role',
-  Team = 'Team',
-  Workplace = 'Workplace',
-  Company = 'Company'
-}
-
-export type SkillWhereUniqueInput = {
-  id?: Maybe<Scalars['String']>;
-  profileId_toolId?: Maybe<ProfileIdToolIdCompoundUniqueInput>;
-};
-
-export type ProfileIdToolIdCompoundUniqueInput = {
-  profileId: Scalars['String'];
-  toolId: Scalars['String'];
-};
-
-export type Skill = {
-   __typename?: 'Skill';
+export type User = {
+   __typename?: 'User';
   id: Scalars['String'];
-  comment?: Maybe<Scalars['String']>;
-  level?: Maybe<Scalars['Int']>;
-  profile: Profile;
-  published: Scalars['Boolean'];
-  tool: Tool;
-  createdAt: Scalars['DateTime'];
-  updatedAt?: Maybe<Scalars['DateTime']>;
-  deletedAt?: Maybe<Scalars['DateTime']>;
-};
-
-export type Tool = {
-   __typename?: 'Tool';
-  id: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
-  kind: ToolKind;
-  name: Scalars['String'];
-  skills: Array<Skill>;
-  url?: Maybe<Scalars['String']>;
-  verified: Scalars['Boolean'];
+  email: Scalars['String'];
+  productEmail: Scalars['Boolean'];
+  promotionalEmail: Scalars['Boolean'];
+  inboundConnections: Array<Connection>;
+  outboundConnections: Array<Connection>;
+  identities: Array<Identity>;
+  profile?: Maybe<Profile>;
   createdAt: Scalars['DateTime'];
   updatedAt?: Maybe<Scalars['DateTime']>;
   deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
 
-export type ToolSkillsArgs = {
+export type UserInboundConnectionsArgs = {
   skip?: Maybe<Scalars['Int']>;
-  after?: Maybe<SkillWhereUniqueInput>;
-  before?: Maybe<SkillWhereUniqueInput>;
+  after?: Maybe<ConnectionWhereUniqueInput>;
+  before?: Maybe<ConnectionWhereUniqueInput>;
   first?: Maybe<Scalars['Int']>;
   last?: Maybe<Scalars['Int']>;
 };
 
-export enum ToolKind {
-  Language = 'Language',
-  Framework = 'Framework',
-  Library = 'Library',
-  Device = 'Device',
-  Service = 'Service',
-  Software = 'Software',
-  Specialty = 'Specialty'
-}
+
+export type UserOutboundConnectionsArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<ConnectionWhereUniqueInput>;
+  before?: Maybe<ConnectionWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+
+export type UserIdentitiesArgs = {
+  skip?: Maybe<Scalars['Int']>;
+  after?: Maybe<IdentityWhereUniqueInput>;
+  before?: Maybe<IdentityWhereUniqueInput>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+};
+
+export type ConnectionWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+  userId_connectedId?: Maybe<UserIdConnectedIdCompoundUniqueInput>;
+};
+
+export type UserIdConnectedIdCompoundUniqueInput = {
+  userId: Scalars['String'];
+  connectedId: Scalars['String'];
+};
+
+export type Connection = {
+   __typename?: 'Connection';
+  id: Scalars['String'];
+  connected: User;
+  pin: Scalars['String'];
+  user: User;
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type IdentityWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+  auth0Sub?: Maybe<Scalars['String']>;
+};
+
+export type Identity = {
+   __typename?: 'Identity';
+  id: Scalars['String'];
+  user: User;
+  auth0Sub: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type UserWhereUniqueInput = {
+  id?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  emailSearch?: Maybe<Scalars['String']>;
+};
 
 export type ProfileWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
   nickname?: Maybe<Scalars['String']>;
-};
-
-export type ToolWhereInput = {
-  id?: Maybe<StringFilter>;
-  name?: Maybe<StringFilter>;
-  kind?: Maybe<ToolKind>;
-  description?: Maybe<NullableStringFilter>;
-  url?: Maybe<NullableStringFilter>;
-  verified?: Maybe<BooleanFilter>;
-  skills?: Maybe<SkillFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<ToolWhereInput>>;
-  OR?: Maybe<Array<ToolWhereInput>>;
-  NOT?: Maybe<Array<ToolWhereInput>>;
-};
-
-export type StringFilter = {
-  equals?: Maybe<Scalars['String']>;
-  not?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  contains?: Maybe<Scalars['String']>;
-  startsWith?: Maybe<Scalars['String']>;
-  endsWith?: Maybe<Scalars['String']>;
-};
-
-export type NullableStringFilter = {
-  equals?: Maybe<Scalars['String']>;
-  not?: Maybe<Scalars['String']>;
-  in?: Maybe<Array<Scalars['String']>>;
-  notIn?: Maybe<Array<Scalars['String']>>;
-  lt?: Maybe<Scalars['String']>;
-  lte?: Maybe<Scalars['String']>;
-  gt?: Maybe<Scalars['String']>;
-  gte?: Maybe<Scalars['String']>;
-  contains?: Maybe<Scalars['String']>;
-  startsWith?: Maybe<Scalars['String']>;
-  endsWith?: Maybe<Scalars['String']>;
-};
-
-export type BooleanFilter = {
-  equals?: Maybe<Scalars['Boolean']>;
-  not?: Maybe<Scalars['Boolean']>;
-};
-
-export type SkillFilter = {
-  every?: Maybe<SkillWhereInput>;
-  some?: Maybe<SkillWhereInput>;
-  none?: Maybe<SkillWhereInput>;
-};
-
-export type SkillWhereInput = {
-  id?: Maybe<StringFilter>;
-  profileId?: Maybe<StringFilter>;
-  toolId?: Maybe<StringFilter>;
-  level?: Maybe<NullableIntFilter>;
-  comment?: Maybe<NullableStringFilter>;
-  published?: Maybe<BooleanFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<SkillWhereInput>>;
-  OR?: Maybe<Array<SkillWhereInput>>;
-  NOT?: Maybe<Array<SkillWhereInput>>;
-  profile?: Maybe<ProfileWhereInput>;
-  tool?: Maybe<ToolWhereInput>;
-};
-
-export type NullableIntFilter = {
-  equals?: Maybe<Scalars['Int']>;
-  not?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Scalars['Int']>>;
-  notIn?: Maybe<Array<Scalars['Int']>>;
-  lt?: Maybe<Scalars['Int']>;
-  lte?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  gte?: Maybe<Scalars['Int']>;
-};
-
-export type DateTimeFilter = {
-  equals?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-};
-
-export type NullableDateTimeFilter = {
-  equals?: Maybe<Scalars['DateTime']>;
-  not?: Maybe<Scalars['DateTime']>;
-  in?: Maybe<Array<Scalars['DateTime']>>;
-  notIn?: Maybe<Array<Scalars['DateTime']>>;
-  lt?: Maybe<Scalars['DateTime']>;
-  lte?: Maybe<Scalars['DateTime']>;
-  gt?: Maybe<Scalars['DateTime']>;
-  gte?: Maybe<Scalars['DateTime']>;
-};
-
-export type ProfileWhereInput = {
-  id?: Maybe<StringFilter>;
-  userId?: Maybe<StringFilter>;
-  nickname?: Maybe<StringFilter>;
-  name?: Maybe<StringFilter>;
-  photo?: Maybe<NullableStringFilter>;
-  location?: Maybe<NullableStringFilter>;
-  image?: Maybe<NullableStringFilter>;
-  about?: Maybe<NullableStringFilter>;
-  pronouns?: Maybe<NullableStringFilter>;
-  preview?: Maybe<NullableStringFilter>;
-  published?: Maybe<BooleanFilter>;
-  skills?: Maybe<SkillFilter>;
-  externals?: Maybe<ExternalFilter>;
-  preferences?: Maybe<PreferenceFilter>;
-  experiences?: Maybe<ExperienceFilter>;
-  activities?: Maybe<ActivityFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<ProfileWhereInput>>;
-  OR?: Maybe<Array<ProfileWhereInput>>;
-  NOT?: Maybe<Array<ProfileWhereInput>>;
-  user?: Maybe<UserWhereInput>;
-};
-
-export type ExternalFilter = {
-  every?: Maybe<ExternalWhereInput>;
-  some?: Maybe<ExternalWhereInput>;
-  none?: Maybe<ExternalWhereInput>;
-};
-
-export type ExternalWhereInput = {
-  id?: Maybe<StringFilter>;
-  profileId?: Maybe<StringFilter>;
-  service?: Maybe<StringFilter>;
-  nickname?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<ExternalWhereInput>>;
-  OR?: Maybe<Array<ExternalWhereInput>>;
-  NOT?: Maybe<Array<ExternalWhereInput>>;
-  profile?: Maybe<ProfileWhereInput>;
-};
-
-export type PreferenceFilter = {
-  every?: Maybe<PreferenceWhereInput>;
-  some?: Maybe<PreferenceWhereInput>;
-  none?: Maybe<PreferenceWhereInput>;
-};
-
-export type PreferenceWhereInput = {
-  id?: Maybe<StringFilter>;
-  profileId?: Maybe<StringFilter>;
-  traitId?: Maybe<StringFilter>;
-  feels?: Maybe<IntFilter>;
-  comment?: Maybe<NullableStringFilter>;
-  published?: Maybe<BooleanFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<PreferenceWhereInput>>;
-  OR?: Maybe<Array<PreferenceWhereInput>>;
-  NOT?: Maybe<Array<PreferenceWhereInput>>;
-  profile?: Maybe<ProfileWhereInput>;
-  trait?: Maybe<TraitWhereInput>;
-};
-
-export type IntFilter = {
-  equals?: Maybe<Scalars['Int']>;
-  not?: Maybe<Scalars['Int']>;
-  in?: Maybe<Array<Scalars['Int']>>;
-  notIn?: Maybe<Array<Scalars['Int']>>;
-  lt?: Maybe<Scalars['Int']>;
-  lte?: Maybe<Scalars['Int']>;
-  gt?: Maybe<Scalars['Int']>;
-  gte?: Maybe<Scalars['Int']>;
-};
-
-export type TraitWhereInput = {
-  id?: Maybe<StringFilter>;
-  kind?: Maybe<TraitKind>;
-  name?: Maybe<StringFilter>;
-  description?: Maybe<NullableStringFilter>;
-  verified?: Maybe<BooleanFilter>;
-  preferences?: Maybe<PreferenceFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<TraitWhereInput>>;
-  OR?: Maybe<Array<TraitWhereInput>>;
-  NOT?: Maybe<Array<TraitWhereInput>>;
-};
-
-export type ExperienceFilter = {
-  every?: Maybe<ExperienceWhereInput>;
-  some?: Maybe<ExperienceWhereInput>;
-  none?: Maybe<ExperienceWhereInput>;
-};
-
-export type ExperienceWhereInput = {
-  id?: Maybe<StringFilter>;
-  profileId?: Maybe<StringFilter>;
-  placeId?: Maybe<StringFilter>;
-  kind?: Maybe<ExperienceKind>;
-  title?: Maybe<StringFilter>;
-  start?: Maybe<DateTimeFilter>;
-  end?: Maybe<NullableDateTimeFilter>;
-  comment?: Maybe<NullableStringFilter>;
-  published?: Maybe<BooleanFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<ExperienceWhereInput>>;
-  OR?: Maybe<Array<ExperienceWhereInput>>;
-  NOT?: Maybe<Array<ExperienceWhereInput>>;
-  profile?: Maybe<ProfileWhereInput>;
-  place?: Maybe<PlaceWhereInput>;
-};
-
-export enum ExperienceKind {
-  Employee = 'Employee',
-  Student = 'Student',
-  Attendee = 'Attendee',
-  Speaker = 'Speaker',
-  Instructor = 'Instructor',
-  Organizer = 'Organizer'
-}
-
-export type PlaceWhereInput = {
-  id?: Maybe<StringFilter>;
-  kind?: Maybe<PlaceKind>;
-  name?: Maybe<StringFilter>;
-  url?: Maybe<NullableStringFilter>;
-  description?: Maybe<NullableStringFilter>;
-  experiences?: Maybe<ExperienceFilter>;
-  verified?: Maybe<BooleanFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<PlaceWhereInput>>;
-  OR?: Maybe<Array<PlaceWhereInput>>;
-  NOT?: Maybe<Array<PlaceWhereInput>>;
-};
-
-export enum PlaceKind {
-  Company = 'Company',
-  School = 'School',
-  Class = 'Class',
-  Bootcamp = 'Bootcamp',
-  Conference = 'Conference',
-  Hackathon = 'Hackathon',
-  Meetup = 'Meetup'
-}
-
-export type ActivityFilter = {
-  every?: Maybe<ActivityWhereInput>;
-  some?: Maybe<ActivityWhereInput>;
-  none?: Maybe<ActivityWhereInput>;
-};
-
-export type ActivityWhereInput = {
-  id?: Maybe<StringFilter>;
-  profileId?: Maybe<StringFilter>;
-  kind?: Maybe<ActivityKind>;
-  title?: Maybe<StringFilter>;
-  description?: Maybe<NullableStringFilter>;
-  image?: Maybe<NullableStringFilter>;
-  url?: Maybe<NullableStringFilter>;
-  date?: Maybe<DateTimeFilter>;
-  published?: Maybe<BooleanFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<ActivityWhereInput>>;
-  OR?: Maybe<Array<ActivityWhereInput>>;
-  NOT?: Maybe<Array<ActivityWhereInput>>;
-  profile?: Maybe<ProfileWhereInput>;
-};
-
-export enum ActivityKind {
-  Project = 'Project',
-  Writing = 'Writing',
-  Video = 'Video'
-}
-
-export type UserWhereInput = {
-  id?: Maybe<StringFilter>;
-  email?: Maybe<StringFilter>;
-  productEmail?: Maybe<BooleanFilter>;
-  promotionalEmail?: Maybe<BooleanFilter>;
-  outboundConnections?: Maybe<ConnectionFilter>;
-  inboundConnections?: Maybe<ConnectionFilter>;
-  identities?: Maybe<IdentityFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<UserWhereInput>>;
-  OR?: Maybe<Array<UserWhereInput>>;
-  NOT?: Maybe<Array<UserWhereInput>>;
-  profile?: Maybe<ProfileWhereInput>;
-};
-
-export type ConnectionFilter = {
-  every?: Maybe<ConnectionWhereInput>;
-  some?: Maybe<ConnectionWhereInput>;
-  none?: Maybe<ConnectionWhereInput>;
-};
-
-export type ConnectionWhereInput = {
-  id?: Maybe<StringFilter>;
-  userId?: Maybe<StringFilter>;
-  connectedId?: Maybe<StringFilter>;
-  pin?: Maybe<StringFilter>;
-  comment?: Maybe<NullableStringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<ConnectionWhereInput>>;
-  OR?: Maybe<Array<ConnectionWhereInput>>;
-  NOT?: Maybe<Array<ConnectionWhereInput>>;
-  user?: Maybe<UserWhereInput>;
-  connected?: Maybe<UserWhereInput>;
-};
-
-export type IdentityFilter = {
-  every?: Maybe<IdentityWhereInput>;
-  some?: Maybe<IdentityWhereInput>;
-  none?: Maybe<IdentityWhereInput>;
-};
-
-export type IdentityWhereInput = {
-  id?: Maybe<StringFilter>;
-  userId?: Maybe<StringFilter>;
-  auth0Sub?: Maybe<StringFilter>;
-  createdAt?: Maybe<DateTimeFilter>;
-  updatedAt?: Maybe<NullableDateTimeFilter>;
-  deletedAt?: Maybe<NullableDateTimeFilter>;
-  AND?: Maybe<Array<IdentityWhereInput>>;
-  OR?: Maybe<Array<IdentityWhereInput>>;
-  NOT?: Maybe<Array<IdentityWhereInput>>;
-  user?: Maybe<UserWhereInput>;
-};
-
-export type ToolWhereUniqueInput = {
-  id?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
+  nicknameSearch?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
@@ -655,6 +669,7 @@ export type MutationUpdateOneProfileArgs = {
 export type UserCreateInput = {
   id?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  emailSearch: Scalars['String'];
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -674,6 +689,7 @@ export type ProfileCreateOneWithoutUserInput = {
 export type ProfileCreateWithoutUserInput = {
   id?: Maybe<Scalars['String']>;
   nickname: Scalars['String'];
+  nicknameSearch: Scalars['String'];
   name: Scalars['String'];
   photo?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
@@ -716,6 +732,7 @@ export type ToolCreateOneWithoutSkillsInput = {
 export type ToolCreateWithoutSkillsInput = {
   id?: Maybe<Scalars['String']>;
   name: Scalars['String'];
+  nameSearch: Scalars['String'];
   kind: ToolKind;
   description?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
@@ -768,6 +785,7 @@ export type TraitCreateWithoutPreferencesInput = {
   id?: Maybe<Scalars['String']>;
   kind: TraitKind;
   name: Scalars['String'];
+  nameSearch: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -777,6 +795,8 @@ export type TraitCreateWithoutPreferencesInput = {
 
 export type TraitWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  nameSearch?: Maybe<Scalars['String']>;
 };
 
 export type ExperienceCreateManyWithoutProfileInput = {
@@ -807,6 +827,7 @@ export type PlaceCreateWithoutExperiencesInput = {
   id?: Maybe<Scalars['String']>;
   kind: PlaceKind;
   name: Scalars['String'];
+  nameSearch: Scalars['String'];
   url?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
@@ -818,6 +839,7 @@ export type PlaceCreateWithoutExperiencesInput = {
 export type PlaceWhereUniqueInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  nameSearch?: Maybe<Scalars['String']>;
 };
 
 export type ExperienceWhereUniqueInput = {
@@ -870,6 +892,7 @@ export type UserCreateOneWithoutInboundConnectionsInput = {
 export type UserCreateWithoutInboundConnectionsInput = {
   id?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  emailSearch: Scalars['String'];
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -916,6 +939,7 @@ export type UserCreateOneWithoutOutboundConnectionsInput = {
 export type UserCreateWithoutOutboundConnectionsInput = {
   id?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  emailSearch: Scalars['String'];
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -929,6 +953,7 @@ export type UserCreateWithoutOutboundConnectionsInput = {
 export type ProfileUpdateInput = {
   id?: Maybe<Scalars['String']>;
   nickname?: Maybe<Scalars['String']>;
+  nicknameSearch?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
@@ -958,6 +983,7 @@ export type UserUpdateOneRequiredWithoutProfileInput = {
 export type UserCreateWithoutProfileInput = {
   id?: Maybe<Scalars['String']>;
   email: Scalars['String'];
+  emailSearch: Scalars['String'];
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -971,6 +997,7 @@ export type UserCreateWithoutProfileInput = {
 export type UserUpdateWithoutProfileDataInput = {
   id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  emailSearch?: Maybe<Scalars['String']>;
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1018,6 +1045,7 @@ export type UserUpdateOneRequiredWithoutInboundConnectionsInput = {
 export type UserUpdateWithoutInboundConnectionsDataInput = {
   id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  emailSearch?: Maybe<Scalars['String']>;
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1040,6 +1068,7 @@ export type ProfileUpdateOneWithoutUserInput = {
 export type ProfileUpdateWithoutUserDataInput = {
   id?: Maybe<Scalars['String']>;
   nickname?: Maybe<Scalars['String']>;
+  nicknameSearch?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
@@ -1096,6 +1125,7 @@ export type ToolUpdateOneRequiredWithoutSkillsInput = {
 export type ToolUpdateWithoutSkillsDataInput = {
   id?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;
+  nameSearch?: Maybe<Scalars['String']>;
   kind?: Maybe<ToolKind>;
   description?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
@@ -1244,6 +1274,7 @@ export type TraitUpdateWithoutPreferencesDataInput = {
   id?: Maybe<Scalars['String']>;
   kind?: Maybe<TraitKind>;
   name?: Maybe<Scalars['String']>;
+  nameSearch?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1334,6 +1365,7 @@ export type PlaceUpdateWithoutExperiencesDataInput = {
   id?: Maybe<Scalars['String']>;
   kind?: Maybe<PlaceKind>;
   name?: Maybe<Scalars['String']>;
+  nameSearch?: Maybe<Scalars['String']>;
   url?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   verified?: Maybe<Scalars['Boolean']>;
@@ -1600,6 +1632,7 @@ export type UserUpdateOneRequiredWithoutOutboundConnectionsInput = {
 export type UserUpdateWithoutOutboundConnectionsDataInput = {
   id?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  emailSearch?: Maybe<Scalars['String']>;
   productEmail?: Maybe<Scalars['Boolean']>;
   promotionalEmail?: Maybe<Scalars['Boolean']>;
   createdAt?: Maybe<Scalars['DateTime']>;
@@ -1701,20 +1734,41 @@ export type External = {
   deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
-export type FullProfileFragment = (
+export type ToolInfoFragment = (
+  { __typename?: 'Tool' }
+  & Pick<Tool, 'id' | 'name' | 'kind'>
+);
+
+export type UserInfoFragment = (
   { __typename?: 'User' }
   & Pick<User, 'id'>
+);
+
+export type SkillInfoFragment = (
+  { __typename?: 'Skill' }
+  & Pick<Skill, 'id' | 'level' | 'comment'>
+  & { tool: (
+    { __typename?: 'Tool' }
+    & ToolInfoFragment
+  ) }
+);
+
+export type ProfileInfoFragment = (
+  { __typename?: 'Profile' }
+  & Pick<Profile, 'id' | 'nickname' | 'name'>
+);
+
+export type FullProfileFragment = (
+  { __typename?: 'User' }
   & { profile?: Maybe<(
     { __typename?: 'Profile' }
-    & Pick<Profile, 'id' | 'nickname' | 'name'>
     & { skills: Array<(
       { __typename?: 'Skill' }
-      & { tool: (
-        { __typename?: 'Tool' }
-        & Pick<Tool, 'name'>
-      ) }
+      & SkillInfoFragment
     )> }
+    & ProfileInfoFragment
   )> }
+  & UserInfoFragment
 );
 
 export type ToolListQueryVariables = {};
@@ -1724,7 +1778,7 @@ export type ToolListQuery = (
   { __typename?: 'Query' }
   & { tools: Array<(
     { __typename?: 'Tool' }
-    & Pick<Tool, 'id' | 'kind' | 'name'>
+    & ToolInfoFragment
   )> }
 );
 
@@ -1737,7 +1791,7 @@ export type ProfileByNicknameQuery = (
   { __typename?: 'Query' }
   & { profile?: Maybe<(
     { __typename?: 'Profile' }
-    & Pick<Profile, 'nickname'>
+    & Pick<Profile, 'id'>
   )> }
 );
 
@@ -1771,6 +1825,37 @@ export type SignupMutation = (
       & Pick<Profile, 'id' | 'name' | 'nickname'>
     )> }
   ) }
+);
+
+export type GetSkillQueryVariables = {
+  skillWhereUniqueInput: SkillWhereUniqueInput;
+};
+
+
+export type GetSkillQuery = (
+  { __typename?: 'Query' }
+  & { skill?: Maybe<(
+    { __typename?: 'Skill' }
+    & SkillInfoFragment
+  )> }
+);
+
+export type UpdateSkillMutationVariables = {
+  profileUpdateInput: ProfileUpdateInput;
+  id: Scalars['String'];
+};
+
+
+export type UpdateSkillMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOneProfile?: Maybe<(
+    { __typename?: 'Profile' }
+    & Pick<Profile, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & SkillInfoFragment
+    )> }
+  )> }
 );
 
 export type HomeProfileInfoFragment = (
@@ -1807,45 +1892,41 @@ export type UpdateHomeProfileMutation = (
   )> }
 );
 
-export type HomeSkillsInfoFragment = (
+export type ProfileSkillsInfoFragment = (
   { __typename?: 'Profile' }
   & Pick<Profile, 'id'>
   & { skills: Array<(
     { __typename?: 'Skill' }
-    & Pick<Skill, 'id' | 'level' | 'comment'>
-    & { tool: (
-      { __typename?: 'Tool' }
-      & Pick<Tool, 'id' | 'name'>
-    ) }
+    & SkillInfoFragment
   )> }
 );
 
-export type GetHomeSkillsQueryVariables = {};
+export type GetUserSkillsQueryVariables = {};
 
 
-export type GetHomeSkillsQuery = (
+export type GetUserSkillsQuery = (
   { __typename?: 'Query' }
   & { currentUser?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id'>
     & { profile?: Maybe<(
       { __typename?: 'Profile' }
-      & HomeSkillsInfoFragment
+      & ProfileSkillsInfoFragment
     )> }
   )> }
 );
 
-export type CreateHomeSkillMutationVariables = {
+export type UpdateProfileSkillsMutationVariables = {
   profileUpdateInput: ProfileUpdateInput;
   id: Scalars['String'];
 };
 
 
-export type CreateHomeSkillMutation = (
+export type UpdateProfileSkillsMutation = (
   { __typename?: 'Mutation' }
   & { updateOneProfile?: Maybe<(
     { __typename?: 'Profile' }
-    & HomeSkillsInfoFragment
+    & ProfileSkillsInfoFragment
   )> }
 );
 
@@ -1915,21 +1996,48 @@ export type CreateOnboardingSkillsMutation = (
   )> }
 );
 
+export const UserInfoFragmentDoc = gql`
+    fragment UserInfo on User {
+  id
+}
+    `;
+export const ProfileInfoFragmentDoc = gql`
+    fragment ProfileInfo on Profile {
+  id
+  nickname
+  name
+}
+    `;
+export const ToolInfoFragmentDoc = gql`
+    fragment ToolInfo on Tool {
+  id
+  name
+  kind
+}
+    `;
+export const SkillInfoFragmentDoc = gql`
+    fragment SkillInfo on Skill {
+  id
+  level
+  comment
+  tool {
+    ...ToolInfo
+  }
+}
+    ${ToolInfoFragmentDoc}`;
 export const FullProfileFragmentDoc = gql`
     fragment FullProfile on User {
-  id
+  ...UserInfo
   profile {
-    id
-    nickname
-    name
+    ...ProfileInfo
     skills {
-      tool {
-        name
-      }
+      ...SkillInfo
     }
   }
 }
-    `;
+    ${UserInfoFragmentDoc}
+${ProfileInfoFragmentDoc}
+${SkillInfoFragmentDoc}`;
 export const HomeProfileInfoFragmentDoc = gql`
     fragment HomeProfileInfo on Profile {
   id
@@ -1939,20 +2047,14 @@ export const HomeProfileInfoFragmentDoc = gql`
   about
 }
     `;
-export const HomeSkillsInfoFragmentDoc = gql`
-    fragment HomeSkillsInfo on Profile {
+export const ProfileSkillsInfoFragmentDoc = gql`
+    fragment ProfileSkillsInfo on Profile {
   id
   skills {
-    id
-    level
-    comment
-    tool {
-      id
-      name
-    }
+    ...SkillInfo
   }
 }
-    `;
+    ${SkillInfoFragmentDoc}`;
 export const OnboardingProfileInfoFragmentDoc = gql`
     fragment OnboardingProfileInfo on Profile {
   id
@@ -1962,13 +2064,11 @@ export const OnboardingProfileInfoFragmentDoc = gql`
     `;
 export const ToolListDocument = gql`
     query ToolList {
-  tools {
-    id
-    kind
-    name
+  tools(where: {verified: {equals: true}}) {
+    ...ToolInfo
   }
 }
-    `;
+    ${ToolInfoFragmentDoc}`;
 export type ToolListProps<TChildProps = {}, TDataName extends string = 'data'> = {
       [key in TDataName]: ApolloReactHoc.DataValue<ToolListQuery, ToolListQueryVariables>
     } & TChildProps;
@@ -2009,8 +2109,8 @@ export type ToolListLazyQueryHookResult = ReturnType<typeof useToolListLazyQuery
 export type ToolListQueryResult = ApolloReactCommon.QueryResult<ToolListQuery, ToolListQueryVariables>;
 export const ProfileByNicknameDocument = gql`
     query ProfileByNickname($nickname: String!) {
-  profile(where: {nickname: $nickname}) {
-    nickname
+  profile(where: {nicknameSearch: $nickname}) {
+    id
   }
 }
     `;
@@ -2153,6 +2253,101 @@ export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const GetSkillDocument = gql`
+    query GetSkill($skillWhereUniqueInput: SkillWhereUniqueInput!) {
+  skill(where: $skillWhereUniqueInput) {
+    ...SkillInfo
+  }
+}
+    ${SkillInfoFragmentDoc}`;
+export type GetSkillProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetSkillQuery, GetSkillQueryVariables>
+    } & TChildProps;
+export function withGetSkill<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetSkillQuery,
+  GetSkillQueryVariables,
+  GetSkillProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetSkillQuery, GetSkillQueryVariables, GetSkillProps<TChildProps, TDataName>>(GetSkillDocument, {
+      alias: 'getSkill',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetSkillQuery__
+ *
+ * To run a query within a React component, call `useGetSkillQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSkillQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSkillQuery({
+ *   variables: {
+ *      skillWhereUniqueInput: // value for 'skillWhereUniqueInput'
+ *   },
+ * });
+ */
+export function useGetSkillQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSkillQuery, GetSkillQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetSkillQuery, GetSkillQueryVariables>(GetSkillDocument, baseOptions);
+      }
+export function useGetSkillLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSkillQuery, GetSkillQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetSkillQuery, GetSkillQueryVariables>(GetSkillDocument, baseOptions);
+        }
+export type GetSkillQueryHookResult = ReturnType<typeof useGetSkillQuery>;
+export type GetSkillLazyQueryHookResult = ReturnType<typeof useGetSkillLazyQuery>;
+export type GetSkillQueryResult = ApolloReactCommon.QueryResult<GetSkillQuery, GetSkillQueryVariables>;
+export const UpdateSkillDocument = gql`
+    mutation UpdateSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+    id
+    skills {
+      ...SkillInfo
+    }
+  }
+}
+    ${SkillInfoFragmentDoc}`;
+export type UpdateSkillMutationFn = ApolloReactCommon.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>;
+export type UpdateSkillProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>
+    } & TChildProps;
+export function withUpdateSkill<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateSkillMutation,
+  UpdateSkillMutationVariables,
+  UpdateSkillProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateSkillMutation, UpdateSkillMutationVariables, UpdateSkillProps<TChildProps, TDataName>>(UpdateSkillDocument, {
+      alias: 'updateSkill',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdateSkillMutation__
+ *
+ * To run a mutation, you first call `useUpdateSkillMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSkillMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSkillMutation, { data, loading, error }] = useUpdateSkillMutation({
+ *   variables: {
+ *      profileUpdateInput: // value for 'profileUpdateInput'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateSkillMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateSkillMutation, UpdateSkillMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateSkillMutation, UpdateSkillMutationVariables>(UpdateSkillDocument, baseOptions);
+      }
+export type UpdateSkillMutationHookResult = ReturnType<typeof useUpdateSkillMutation>;
+export type UpdateSkillMutationResult = ApolloReactCommon.MutationResult<UpdateSkillMutation>;
+export type UpdateSkillMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateSkillMutation, UpdateSkillMutationVariables>;
 export const GetHomeProfileDocument = gql`
     query GetHomeProfile {
   currentUser {
@@ -2247,100 +2442,100 @@ export function useUpdateHomeProfileMutation(baseOptions?: ApolloReactHooks.Muta
 export type UpdateHomeProfileMutationHookResult = ReturnType<typeof useUpdateHomeProfileMutation>;
 export type UpdateHomeProfileMutationResult = ApolloReactCommon.MutationResult<UpdateHomeProfileMutation>;
 export type UpdateHomeProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>;
-export const GetHomeSkillsDocument = gql`
-    query GetHomeSkills {
+export const GetUserSkillsDocument = gql`
+    query GetUserSkills {
   currentUser {
     id
     profile {
-      ...HomeSkillsInfo
+      ...ProfileSkillsInfo
     }
   }
 }
-    ${HomeSkillsInfoFragmentDoc}`;
-export type GetHomeSkillsProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>
+    ${ProfileSkillsInfoFragmentDoc}`;
+export type GetUserSkillsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetUserSkillsQuery, GetUserSkillsQueryVariables>
     } & TChildProps;
-export function withGetHomeSkills<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withGetUserSkills<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  GetHomeSkillsQuery,
-  GetHomeSkillsQueryVariables,
-  GetHomeSkillsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetHomeSkillsQuery, GetHomeSkillsQueryVariables, GetHomeSkillsProps<TChildProps, TDataName>>(GetHomeSkillsDocument, {
-      alias: 'getHomeSkills',
+  GetUserSkillsQuery,
+  GetUserSkillsQueryVariables,
+  GetUserSkillsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetUserSkillsQuery, GetUserSkillsQueryVariables, GetUserSkillsProps<TChildProps, TDataName>>(GetUserSkillsDocument, {
+      alias: 'getUserSkills',
       ...operationOptions
     });
 };
 
 /**
- * __useGetHomeSkillsQuery__
+ * __useGetUserSkillsQuery__
  *
- * To run a query within a React component, call `useGetHomeSkillsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetHomeSkillsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUserSkillsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserSkillsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetHomeSkillsQuery({
+ * const { data, loading, error } = useGetUserSkillsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetHomeSkillsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>(GetHomeSkillsDocument, baseOptions);
+export function useGetUserSkillsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserSkillsQuery, GetUserSkillsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserSkillsQuery, GetUserSkillsQueryVariables>(GetUserSkillsDocument, baseOptions);
       }
-export function useGetHomeSkillsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>(GetHomeSkillsDocument, baseOptions);
+export function useGetUserSkillsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserSkillsQuery, GetUserSkillsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserSkillsQuery, GetUserSkillsQueryVariables>(GetUserSkillsDocument, baseOptions);
         }
-export type GetHomeSkillsQueryHookResult = ReturnType<typeof useGetHomeSkillsQuery>;
-export type GetHomeSkillsLazyQueryHookResult = ReturnType<typeof useGetHomeSkillsLazyQuery>;
-export type GetHomeSkillsQueryResult = ApolloReactCommon.QueryResult<GetHomeSkillsQuery, GetHomeSkillsQueryVariables>;
-export const CreateHomeSkillDocument = gql`
-    mutation CreateHomeSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+export type GetUserSkillsQueryHookResult = ReturnType<typeof useGetUserSkillsQuery>;
+export type GetUserSkillsLazyQueryHookResult = ReturnType<typeof useGetUserSkillsLazyQuery>;
+export type GetUserSkillsQueryResult = ApolloReactCommon.QueryResult<GetUserSkillsQuery, GetUserSkillsQueryVariables>;
+export const UpdateProfileSkillsDocument = gql`
+    mutation UpdateProfileSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
   updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
-    ...HomeSkillsInfo
+    ...ProfileSkillsInfo
   }
 }
-    ${HomeSkillsInfoFragmentDoc}`;
-export type CreateHomeSkillMutationFn = ApolloReactCommon.MutationFunction<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>;
-export type CreateHomeSkillProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>
+    ${ProfileSkillsInfoFragmentDoc}`;
+export type UpdateProfileSkillsMutationFn = ApolloReactCommon.MutationFunction<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>;
+export type UpdateProfileSkillsProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>
     } & TChildProps;
-export function withCreateHomeSkill<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+export function withUpdateProfileSkills<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
   TProps,
-  CreateHomeSkillMutation,
-  CreateHomeSkillMutationVariables,
-  CreateHomeSkillProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreateHomeSkillMutation, CreateHomeSkillMutationVariables, CreateHomeSkillProps<TChildProps, TDataName>>(CreateHomeSkillDocument, {
-      alias: 'createHomeSkill',
+  UpdateProfileSkillsMutation,
+  UpdateProfileSkillsMutationVariables,
+  UpdateProfileSkillsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables, UpdateProfileSkillsProps<TChildProps, TDataName>>(UpdateProfileSkillsDocument, {
+      alias: 'updateProfileSkills',
       ...operationOptions
     });
 };
 
 /**
- * __useCreateHomeSkillMutation__
+ * __useUpdateProfileSkillsMutation__
  *
- * To run a mutation, you first call `useCreateHomeSkillMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateHomeSkillMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateProfileSkillsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileSkillsMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createHomeSkillMutation, { data, loading, error }] = useCreateHomeSkillMutation({
+ * const [updateProfileSkillsMutation, { data, loading, error }] = useUpdateProfileSkillsMutation({
  *   variables: {
  *      profileUpdateInput: // value for 'profileUpdateInput'
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useCreateHomeSkillMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>(CreateHomeSkillDocument, baseOptions);
+export function useUpdateProfileSkillsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>(UpdateProfileSkillsDocument, baseOptions);
       }
-export type CreateHomeSkillMutationHookResult = ReturnType<typeof useCreateHomeSkillMutation>;
-export type CreateHomeSkillMutationResult = ApolloReactCommon.MutationResult<CreateHomeSkillMutation>;
-export type CreateHomeSkillMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateHomeSkillMutation, CreateHomeSkillMutationVariables>;
+export type UpdateProfileSkillsMutationHookResult = ReturnType<typeof useUpdateProfileSkillsMutation>;
+export type UpdateProfileSkillsMutationResult = ApolloReactCommon.MutationResult<UpdateProfileSkillsMutation>;
+export type UpdateProfileSkillsMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>;
 export const HomeDocument = gql`
     query Home {
   currentUser {
