@@ -178,7 +178,6 @@ export type ProfileWhereInput = {
   name?: Maybe<StringFilter>;
   photo?: Maybe<NullableStringFilter>;
   location?: Maybe<NullableStringFilter>;
-  image?: Maybe<NullableStringFilter>;
   about?: Maybe<NullableStringFilter>;
   pronouns?: Maybe<NullableStringFilter>;
   preview?: Maybe<NullableStringFilter>;
@@ -653,6 +652,7 @@ export type Mutation = {
    __typename?: 'Mutation';
   createOneUser: User;
   updateOneProfile?: Maybe<Profile>;
+  createOneTool: Tool;
 };
 
 
@@ -664,6 +664,11 @@ export type MutationCreateOneUserArgs = {
 export type MutationUpdateOneProfileArgs = {
   data: ProfileUpdateInput;
   where: ProfileWhereUniqueInput;
+};
+
+
+export type MutationCreateOneToolArgs = {
+  data: ToolCreateInput;
 };
 
 export type UserCreateInput = {
@@ -693,7 +698,6 @@ export type ProfileCreateWithoutUserInput = {
   name: Scalars['String'];
   photo?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
   about?: Maybe<Scalars['String']>;
   pronouns?: Maybe<Scalars['String']>;
   preview?: Maybe<Scalars['String']>;
@@ -957,7 +961,6 @@ export type ProfileUpdateInput = {
   name?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
   about?: Maybe<Scalars['String']>;
   pronouns?: Maybe<Scalars['String']>;
   preview?: Maybe<Scalars['String']>;
@@ -1072,7 +1075,6 @@ export type ProfileUpdateWithoutUserDataInput = {
   name?: Maybe<Scalars['String']>;
   photo?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
   about?: Maybe<Scalars['String']>;
   pronouns?: Maybe<Scalars['String']>;
   preview?: Maybe<Scalars['String']>;
@@ -1659,6 +1661,67 @@ export type UserUpsertWithoutProfileInput = {
   create: UserCreateWithoutProfileInput;
 };
 
+export type ToolCreateInput = {
+  id?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  nameSearch: Scalars['String'];
+  kind: ToolKind;
+  description?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  verified?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  skills?: Maybe<SkillCreateManyWithoutToolInput>;
+};
+
+export type SkillCreateManyWithoutToolInput = {
+  create?: Maybe<Array<SkillCreateWithoutToolInput>>;
+  connect?: Maybe<Array<SkillWhereUniqueInput>>;
+};
+
+export type SkillCreateWithoutToolInput = {
+  id?: Maybe<Scalars['String']>;
+  level?: Maybe<Scalars['Int']>;
+  comment?: Maybe<Scalars['String']>;
+  published?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  profile: ProfileCreateOneWithoutSkillsInput;
+};
+
+export type ProfileCreateOneWithoutSkillsInput = {
+  create?: Maybe<ProfileCreateWithoutSkillsInput>;
+  connect?: Maybe<ProfileWhereUniqueInput>;
+};
+
+export type ProfileCreateWithoutSkillsInput = {
+  id?: Maybe<Scalars['String']>;
+  nickname: Scalars['String'];
+  nicknameSearch: Scalars['String'];
+  name: Scalars['String'];
+  photo?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  about?: Maybe<Scalars['String']>;
+  pronouns?: Maybe<Scalars['String']>;
+  preview?: Maybe<Scalars['String']>;
+  published?: Maybe<Scalars['Boolean']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  deletedAt?: Maybe<Scalars['DateTime']>;
+  user: UserCreateOneWithoutProfileInput;
+  externals?: Maybe<ExternalCreateManyWithoutProfileInput>;
+  preferences?: Maybe<PreferenceCreateManyWithoutProfileInput>;
+  experiences?: Maybe<ExperienceCreateManyWithoutProfileInput>;
+  activities?: Maybe<ActivityCreateManyWithoutProfileInput>;
+};
+
+export type UserCreateOneWithoutProfileInput = {
+  create?: Maybe<UserCreateWithoutProfileInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+};
+
 export type OpenGraph = {
    __typename?: 'OpenGraph';
   id: Scalars['String'];
@@ -1734,6 +1797,94 @@ export type External = {
   deletedAt?: Maybe<Scalars['DateTime']>;
 };
 
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ * 
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __Type = {
+   __typename?: '__Type';
+  kind: __TypeKind;
+  name?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  fields?: Maybe<Array<__Field>>;
+  interfaces?: Maybe<Array<__Type>>;
+  possibleTypes?: Maybe<Array<__Type>>;
+  enumValues?: Maybe<Array<__EnumValue>>;
+  inputFields?: Maybe<Array<__InputValue>>;
+  ofType?: Maybe<__Type>;
+};
+
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ * 
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeFieldsArgs = {
+  includeDeprecated?: Maybe<Scalars['Boolean']>;
+};
+
+
+/**
+ * The fundamental unit of any GraphQL Schema is the type. There are many kinds of types in GraphQL as represented by the `__TypeKind` enum.
+ * 
+ * Depending on the kind of a type, certain fields describe information about that type. Scalar types provide no information beyond a name and description, while Enum types provide their values. Object and Interface types provide the fields they describe. Abstract types, Union and Interface, provide the Object types possible at runtime. List and NonNull types compose other types.
+ */
+export type __TypeEnumValuesArgs = {
+  includeDeprecated?: Maybe<Scalars['Boolean']>;
+};
+
+/** An enum describing what kind of type a given `__Type` is. */
+export enum __TypeKind {
+  /** Indicates this type is a scalar. */
+  Scalar = 'SCALAR',
+  /** Indicates this type is an object. `fields` and `interfaces` are valid fields. */
+  Object = 'OBJECT',
+  /** Indicates this type is an interface. `fields`, `interfaces`, and `possibleTypes` are valid fields. */
+  Interface = 'INTERFACE',
+  /** Indicates this type is a union. `possibleTypes` is a valid field. */
+  Union = 'UNION',
+  /** Indicates this type is an enum. `enumValues` is a valid field. */
+  Enum = 'ENUM',
+  /** Indicates this type is an input object. `inputFields` is a valid field. */
+  InputObject = 'INPUT_OBJECT',
+  /** Indicates this type is a list. `ofType` is a valid field. */
+  List = 'LIST',
+  /** Indicates this type is a non-null. `ofType` is a valid field. */
+  NonNull = 'NON_NULL'
+}
+
+/** Object and Interface types are described by a list of Fields, each of which has a name, potentially a list of arguments, and a return type. */
+export type __Field = {
+   __typename?: '__Field';
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  args: Array<__InputValue>;
+  type: __Type;
+  isDeprecated: Scalars['Boolean'];
+  deprecationReason?: Maybe<Scalars['String']>;
+};
+
+/** Arguments provided to Fields or Directives and the input fields of an InputObject are represented as Input Values which describe their type and optionally a default value. */
+export type __InputValue = {
+   __typename?: '__InputValue';
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  type: __Type;
+  /** A GraphQL-formatted string representing the default value for this input value. */
+  defaultValue?: Maybe<Scalars['String']>;
+};
+
+/** One possible value for a given Enum. Enum values are unique values, not a placeholder for a string or numeric value. However an Enum value is returned in a JSON response as a string. */
+export type __EnumValue = {
+   __typename?: '__EnumValue';
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  isDeprecated: Scalars['Boolean'];
+  deprecationReason?: Maybe<Scalars['String']>;
+};
+
 export type ToolInfoFragment = (
   { __typename?: 'Tool' }
   & Pick<Tool, 'id' | 'name' | 'kind'>
@@ -1755,7 +1906,7 @@ export type SkillInfoFragment = (
 
 export type ProfileInfoFragment = (
   { __typename?: 'Profile' }
-  & Pick<Profile, 'id' | 'nickname' | 'name'>
+  & Pick<Profile, 'id' | 'nickname' | 'name' | 'photo' | 'about'>
 );
 
 export type FullProfileFragment = (
@@ -1771,6 +1922,20 @@ export type FullProfileFragment = (
   & UserInfoFragment
 );
 
+export type ToolKindListQueryVariables = {};
+
+
+export type ToolKindListQuery = (
+  { __typename?: 'Query' }
+  & { __type?: Maybe<(
+    { __typename?: '__Type' }
+    & { enumValues?: Maybe<Array<(
+      { __typename?: '__EnumValue' }
+      & Pick<__EnumValue, 'name'>
+    )>> }
+  )> }
+);
+
 export type ToolListQueryVariables = {};
 
 
@@ -1780,6 +1945,117 @@ export type ToolListQuery = (
     { __typename?: 'Tool' }
     & ToolInfoFragment
   )> }
+);
+
+export type GetCurrentUserProfileQueryVariables = {};
+
+
+export type GetCurrentUserProfileQuery = (
+  { __typename?: 'Query' }
+  & { currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { profile?: Maybe<(
+      { __typename?: 'Profile' }
+      & ProfileInfoFragment
+    )> }
+  )> }
+);
+
+export type UpdateProfileMutationVariables = {
+  profileUpdateInput: ProfileUpdateInput;
+  id: Scalars['String'];
+};
+
+
+export type UpdateProfileMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOneProfile?: Maybe<(
+    { __typename?: 'Profile' }
+    & ProfileInfoFragment
+  )> }
+);
+
+export type ProfileSkillsInfoFragment = (
+  { __typename?: 'Profile' }
+  & Pick<Profile, 'id'>
+  & { skills: Array<(
+    { __typename?: 'Skill' }
+    & SkillInfoFragment
+  )> }
+);
+
+export type GetUserSkillsQueryVariables = {};
+
+
+export type GetUserSkillsQuery = (
+  { __typename?: 'Query' }
+  & { currentUser?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+    & { profile?: Maybe<(
+      { __typename?: 'Profile' }
+      & ProfileSkillsInfoFragment
+    )> }
+  )> }
+);
+
+export type GetSkillQueryVariables = {
+  skillWhereUniqueInput: SkillWhereUniqueInput;
+};
+
+
+export type GetSkillQuery = (
+  { __typename?: 'Query' }
+  & { skill?: Maybe<(
+    { __typename?: 'Skill' }
+    & SkillInfoFragment
+  )> }
+);
+
+export type UpdateSkillMutationVariables = {
+  profileUpdateInput: ProfileUpdateInput;
+  id: Scalars['String'];
+};
+
+
+export type UpdateSkillMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOneProfile?: Maybe<(
+    { __typename?: 'Profile' }
+    & Pick<Profile, 'id'>
+    & { skills: Array<(
+      { __typename?: 'Skill' }
+      & SkillInfoFragment
+    )> }
+  )> }
+);
+
+export type UpdateProfileSkillsMutationVariables = {
+  profileUpdateInput: ProfileUpdateInput;
+  id: Scalars['String'];
+};
+
+
+export type UpdateProfileSkillsMutation = (
+  { __typename?: 'Mutation' }
+  & { updateOneProfile?: Maybe<(
+    { __typename?: 'Profile' }
+    & ProfileSkillsInfoFragment
+  )> }
+);
+
+export type CreateToolMutationVariables = {
+  toolCreateInput: ToolCreateInput;
+};
+
+
+export type CreateToolMutation = (
+  { __typename?: 'Mutation' }
+  & { createOneTool: (
+    { __typename?: 'Tool' }
+    & ToolInfoFragment
+  ) }
 );
 
 export type ProfileByNicknameQueryVariables = {
@@ -1822,112 +2098,9 @@ export type SignupMutation = (
     & Pick<User, 'id'>
     & { profile?: Maybe<(
       { __typename?: 'Profile' }
-      & Pick<Profile, 'id' | 'name' | 'nickname'>
+      & Pick<Profile, 'id' | 'name' | 'nickname' | 'photo'>
     )> }
   ) }
-);
-
-export type GetSkillQueryVariables = {
-  skillWhereUniqueInput: SkillWhereUniqueInput;
-};
-
-
-export type GetSkillQuery = (
-  { __typename?: 'Query' }
-  & { skill?: Maybe<(
-    { __typename?: 'Skill' }
-    & SkillInfoFragment
-  )> }
-);
-
-export type UpdateSkillMutationVariables = {
-  profileUpdateInput: ProfileUpdateInput;
-  id: Scalars['String'];
-};
-
-
-export type UpdateSkillMutation = (
-  { __typename?: 'Mutation' }
-  & { updateOneProfile?: Maybe<(
-    { __typename?: 'Profile' }
-    & Pick<Profile, 'id'>
-    & { skills: Array<(
-      { __typename?: 'Skill' }
-      & SkillInfoFragment
-    )> }
-  )> }
-);
-
-export type HomeProfileInfoFragment = (
-  { __typename?: 'Profile' }
-  & Pick<Profile, 'id' | 'nickname' | 'name' | 'photo' | 'about'>
-);
-
-export type GetHomeProfileQueryVariables = {};
-
-
-export type GetHomeProfileQuery = (
-  { __typename?: 'Query' }
-  & { currentUser?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-    & { profile?: Maybe<(
-      { __typename?: 'Profile' }
-      & HomeProfileInfoFragment
-    )> }
-  )> }
-);
-
-export type UpdateHomeProfileMutationVariables = {
-  profileUpdateInput: ProfileUpdateInput;
-  id: Scalars['String'];
-};
-
-
-export type UpdateHomeProfileMutation = (
-  { __typename?: 'Mutation' }
-  & { updateOneProfile?: Maybe<(
-    { __typename?: 'Profile' }
-    & HomeProfileInfoFragment
-  )> }
-);
-
-export type ProfileSkillsInfoFragment = (
-  { __typename?: 'Profile' }
-  & Pick<Profile, 'id'>
-  & { skills: Array<(
-    { __typename?: 'Skill' }
-    & SkillInfoFragment
-  )> }
-);
-
-export type GetUserSkillsQueryVariables = {};
-
-
-export type GetUserSkillsQuery = (
-  { __typename?: 'Query' }
-  & { currentUser?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-    & { profile?: Maybe<(
-      { __typename?: 'Profile' }
-      & ProfileSkillsInfoFragment
-    )> }
-  )> }
-);
-
-export type UpdateProfileSkillsMutationVariables = {
-  profileUpdateInput: ProfileUpdateInput;
-  id: Scalars['String'];
-};
-
-
-export type UpdateProfileSkillsMutation = (
-  { __typename?: 'Mutation' }
-  & { updateOneProfile?: Maybe<(
-    { __typename?: 'Profile' }
-    & ProfileSkillsInfoFragment
-  )> }
 );
 
 export type HomeQueryVariables = {};
@@ -1941,61 +2114,6 @@ export type HomeQuery = (
   )> }
 );
 
-export type OnboardingProfileInfoFragment = (
-  { __typename?: 'Profile' }
-  & Pick<Profile, 'id' | 'nickname' | 'name'>
-);
-
-export type GetOnboardingProfileQueryVariables = {};
-
-
-export type GetOnboardingProfileQuery = (
-  { __typename?: 'Query' }
-  & { currentUser?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-    & { profile?: Maybe<(
-      { __typename?: 'Profile' }
-      & OnboardingProfileInfoFragment
-    )> }
-  )> }
-);
-
-export type UpdateOnboardingProfileMutationVariables = {
-  profileUpdateInput: ProfileUpdateInput;
-  id: Scalars['String'];
-};
-
-
-export type UpdateOnboardingProfileMutation = (
-  { __typename?: 'Mutation' }
-  & { updateOneProfile?: Maybe<(
-    { __typename?: 'Profile' }
-    & OnboardingProfileInfoFragment
-  )> }
-);
-
-export type CreateOnboardingSkillsMutationVariables = {
-  profileUpdateInput: ProfileUpdateInput;
-  id: Scalars['String'];
-};
-
-
-export type CreateOnboardingSkillsMutation = (
-  { __typename?: 'Mutation' }
-  & { updateOneProfile?: Maybe<(
-    { __typename?: 'Profile' }
-    & Pick<Profile, 'id'>
-    & { skills: Array<(
-      { __typename?: 'Skill' }
-      & { tool: (
-        { __typename?: 'Tool' }
-        & Pick<Tool, 'name'>
-      ) }
-    )> }
-  )> }
-);
-
 export const UserInfoFragmentDoc = gql`
     fragment UserInfo on User {
   id
@@ -2006,6 +2124,8 @@ export const ProfileInfoFragmentDoc = gql`
   id
   nickname
   name
+  photo
+  about
 }
     `;
 export const ToolInfoFragmentDoc = gql`
@@ -2038,15 +2158,6 @@ export const FullProfileFragmentDoc = gql`
     ${UserInfoFragmentDoc}
 ${ProfileInfoFragmentDoc}
 ${SkillInfoFragmentDoc}`;
-export const HomeProfileInfoFragmentDoc = gql`
-    fragment HomeProfileInfo on Profile {
-  id
-  nickname
-  name
-  photo
-  about
-}
-    `;
 export const ProfileSkillsInfoFragmentDoc = gql`
     fragment ProfileSkillsInfo on Profile {
   id
@@ -2055,13 +2166,53 @@ export const ProfileSkillsInfoFragmentDoc = gql`
   }
 }
     ${SkillInfoFragmentDoc}`;
-export const OnboardingProfileInfoFragmentDoc = gql`
-    fragment OnboardingProfileInfo on Profile {
-  id
-  nickname
-  name
+export const ToolKindListDocument = gql`
+    query ToolKindList {
+  __type(name: "ToolKind") {
+    enumValues {
+      name
+    }
+  }
 }
     `;
+export type ToolKindListProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<ToolKindListQuery, ToolKindListQueryVariables>
+    } & TChildProps;
+export function withToolKindList<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  ToolKindListQuery,
+  ToolKindListQueryVariables,
+  ToolKindListProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, ToolKindListQuery, ToolKindListQueryVariables, ToolKindListProps<TChildProps, TDataName>>(ToolKindListDocument, {
+      alias: 'toolKindList',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useToolKindListQuery__
+ *
+ * To run a query within a React component, call `useToolKindListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useToolKindListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useToolKindListQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useToolKindListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<ToolKindListQuery, ToolKindListQueryVariables>) {
+        return ApolloReactHooks.useQuery<ToolKindListQuery, ToolKindListQueryVariables>(ToolKindListDocument, baseOptions);
+      }
+export function useToolKindListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<ToolKindListQuery, ToolKindListQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<ToolKindListQuery, ToolKindListQueryVariables>(ToolKindListDocument, baseOptions);
+        }
+export type ToolKindListQueryHookResult = ReturnType<typeof useToolKindListQuery>;
+export type ToolKindListLazyQueryHookResult = ReturnType<typeof useToolKindListLazyQuery>;
+export type ToolKindListQueryResult = ApolloReactCommon.QueryResult<ToolKindListQuery, ToolKindListQueryVariables>;
 export const ToolListDocument = gql`
     query ToolList {
   tools(where: {verified: {equals: true}}) {
@@ -2107,6 +2258,334 @@ export function useToolListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHoo
 export type ToolListQueryHookResult = ReturnType<typeof useToolListQuery>;
 export type ToolListLazyQueryHookResult = ReturnType<typeof useToolListLazyQuery>;
 export type ToolListQueryResult = ApolloReactCommon.QueryResult<ToolListQuery, ToolListQueryVariables>;
+export const GetCurrentUserProfileDocument = gql`
+    query GetCurrentUserProfile {
+  currentUser {
+    id
+    profile {
+      ...ProfileInfo
+    }
+  }
+}
+    ${ProfileInfoFragmentDoc}`;
+export type GetCurrentUserProfileProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>
+    } & TChildProps;
+export function withGetCurrentUserProfile<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetCurrentUserProfileQuery,
+  GetCurrentUserProfileQueryVariables,
+  GetCurrentUserProfileProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables, GetCurrentUserProfileProps<TChildProps, TDataName>>(GetCurrentUserProfileDocument, {
+      alias: 'getCurrentUserProfile',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetCurrentUserProfileQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentUserProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentUserProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>(GetCurrentUserProfileDocument, baseOptions);
+      }
+export function useGetCurrentUserProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>(GetCurrentUserProfileDocument, baseOptions);
+        }
+export type GetCurrentUserProfileQueryHookResult = ReturnType<typeof useGetCurrentUserProfileQuery>;
+export type GetCurrentUserProfileLazyQueryHookResult = ReturnType<typeof useGetCurrentUserProfileLazyQuery>;
+export type GetCurrentUserProfileQueryResult = ApolloReactCommon.QueryResult<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>;
+export const UpdateProfileDocument = gql`
+    mutation UpdateProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+    ...ProfileInfo
+  }
+}
+    ${ProfileInfoFragmentDoc}`;
+export type UpdateProfileMutationFn = ApolloReactCommon.MutationFunction<UpdateProfileMutation, UpdateProfileMutationVariables>;
+export type UpdateProfileProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateProfileMutation, UpdateProfileMutationVariables>
+    } & TChildProps;
+export function withUpdateProfile<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateProfileMutation,
+  UpdateProfileMutationVariables,
+  UpdateProfileProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateProfileMutation, UpdateProfileMutationVariables, UpdateProfileProps<TChildProps, TDataName>>(UpdateProfileDocument, {
+      alias: 'updateProfile',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdateProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileMutation, { data, loading, error }] = useUpdateProfileMutation({
+ *   variables: {
+ *      profileUpdateInput: // value for 'profileUpdateInput'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateProfileMutation, UpdateProfileMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument, baseOptions);
+      }
+export type UpdateProfileMutationHookResult = ReturnType<typeof useUpdateProfileMutation>;
+export type UpdateProfileMutationResult = ApolloReactCommon.MutationResult<UpdateProfileMutation>;
+export type UpdateProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProfileMutation, UpdateProfileMutationVariables>;
+export const GetUserSkillsDocument = gql`
+    query GetUserSkills {
+  currentUser {
+    id
+    profile {
+      ...ProfileSkillsInfo
+    }
+  }
+}
+    ${ProfileSkillsInfoFragmentDoc}`;
+export type GetUserSkillsProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetUserSkillsQuery, GetUserSkillsQueryVariables>
+    } & TChildProps;
+export function withGetUserSkills<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetUserSkillsQuery,
+  GetUserSkillsQueryVariables,
+  GetUserSkillsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetUserSkillsQuery, GetUserSkillsQueryVariables, GetUserSkillsProps<TChildProps, TDataName>>(GetUserSkillsDocument, {
+      alias: 'getUserSkills',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetUserSkillsQuery__
+ *
+ * To run a query within a React component, call `useGetUserSkillsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserSkillsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserSkillsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserSkillsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserSkillsQuery, GetUserSkillsQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetUserSkillsQuery, GetUserSkillsQueryVariables>(GetUserSkillsDocument, baseOptions);
+      }
+export function useGetUserSkillsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserSkillsQuery, GetUserSkillsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetUserSkillsQuery, GetUserSkillsQueryVariables>(GetUserSkillsDocument, baseOptions);
+        }
+export type GetUserSkillsQueryHookResult = ReturnType<typeof useGetUserSkillsQuery>;
+export type GetUserSkillsLazyQueryHookResult = ReturnType<typeof useGetUserSkillsLazyQuery>;
+export type GetUserSkillsQueryResult = ApolloReactCommon.QueryResult<GetUserSkillsQuery, GetUserSkillsQueryVariables>;
+export const GetSkillDocument = gql`
+    query GetSkill($skillWhereUniqueInput: SkillWhereUniqueInput!) {
+  skill(where: $skillWhereUniqueInput) {
+    ...SkillInfo
+  }
+}
+    ${SkillInfoFragmentDoc}`;
+export type GetSkillProps<TChildProps = {}, TDataName extends string = 'data'> = {
+      [key in TDataName]: ApolloReactHoc.DataValue<GetSkillQuery, GetSkillQueryVariables>
+    } & TChildProps;
+export function withGetSkill<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  GetSkillQuery,
+  GetSkillQueryVariables,
+  GetSkillProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withQuery<TProps, GetSkillQuery, GetSkillQueryVariables, GetSkillProps<TChildProps, TDataName>>(GetSkillDocument, {
+      alias: 'getSkill',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useGetSkillQuery__
+ *
+ * To run a query within a React component, call `useGetSkillQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSkillQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSkillQuery({
+ *   variables: {
+ *      skillWhereUniqueInput: // value for 'skillWhereUniqueInput'
+ *   },
+ * });
+ */
+export function useGetSkillQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSkillQuery, GetSkillQueryVariables>) {
+        return ApolloReactHooks.useQuery<GetSkillQuery, GetSkillQueryVariables>(GetSkillDocument, baseOptions);
+      }
+export function useGetSkillLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSkillQuery, GetSkillQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<GetSkillQuery, GetSkillQueryVariables>(GetSkillDocument, baseOptions);
+        }
+export type GetSkillQueryHookResult = ReturnType<typeof useGetSkillQuery>;
+export type GetSkillLazyQueryHookResult = ReturnType<typeof useGetSkillLazyQuery>;
+export type GetSkillQueryResult = ApolloReactCommon.QueryResult<GetSkillQuery, GetSkillQueryVariables>;
+export const UpdateSkillDocument = gql`
+    mutation UpdateSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+    id
+    skills {
+      ...SkillInfo
+    }
+  }
+}
+    ${SkillInfoFragmentDoc}`;
+export type UpdateSkillMutationFn = ApolloReactCommon.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>;
+export type UpdateSkillProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>
+    } & TChildProps;
+export function withUpdateSkill<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateSkillMutation,
+  UpdateSkillMutationVariables,
+  UpdateSkillProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateSkillMutation, UpdateSkillMutationVariables, UpdateSkillProps<TChildProps, TDataName>>(UpdateSkillDocument, {
+      alias: 'updateSkill',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdateSkillMutation__
+ *
+ * To run a mutation, you first call `useUpdateSkillMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSkillMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSkillMutation, { data, loading, error }] = useUpdateSkillMutation({
+ *   variables: {
+ *      profileUpdateInput: // value for 'profileUpdateInput'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateSkillMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateSkillMutation, UpdateSkillMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateSkillMutation, UpdateSkillMutationVariables>(UpdateSkillDocument, baseOptions);
+      }
+export type UpdateSkillMutationHookResult = ReturnType<typeof useUpdateSkillMutation>;
+export type UpdateSkillMutationResult = ApolloReactCommon.MutationResult<UpdateSkillMutation>;
+export type UpdateSkillMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateSkillMutation, UpdateSkillMutationVariables>;
+export const UpdateProfileSkillsDocument = gql`
+    mutation UpdateProfileSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
+    ...ProfileSkillsInfo
+  }
+}
+    ${ProfileSkillsInfoFragmentDoc}`;
+export type UpdateProfileSkillsMutationFn = ApolloReactCommon.MutationFunction<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>;
+export type UpdateProfileSkillsProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>
+    } & TChildProps;
+export function withUpdateProfileSkills<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  UpdateProfileSkillsMutation,
+  UpdateProfileSkillsMutationVariables,
+  UpdateProfileSkillsProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables, UpdateProfileSkillsProps<TChildProps, TDataName>>(UpdateProfileSkillsDocument, {
+      alias: 'updateProfileSkills',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useUpdateProfileSkillsMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileSkillsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileSkillsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileSkillsMutation, { data, loading, error }] = useUpdateProfileSkillsMutation({
+ *   variables: {
+ *      profileUpdateInput: // value for 'profileUpdateInput'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateProfileSkillsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>) {
+        return ApolloReactHooks.useMutation<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>(UpdateProfileSkillsDocument, baseOptions);
+      }
+export type UpdateProfileSkillsMutationHookResult = ReturnType<typeof useUpdateProfileSkillsMutation>;
+export type UpdateProfileSkillsMutationResult = ApolloReactCommon.MutationResult<UpdateProfileSkillsMutation>;
+export type UpdateProfileSkillsMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>;
+export const CreateToolDocument = gql`
+    mutation createTool($toolCreateInput: ToolCreateInput!) {
+  createOneTool(data: $toolCreateInput) {
+    ...ToolInfo
+  }
+}
+    ${ToolInfoFragmentDoc}`;
+export type CreateToolMutationFn = ApolloReactCommon.MutationFunction<CreateToolMutation, CreateToolMutationVariables>;
+export type CreateToolProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
+      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateToolMutation, CreateToolMutationVariables>
+    } & TChildProps;
+export function withCreateTool<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
+  TProps,
+  CreateToolMutation,
+  CreateToolMutationVariables,
+  CreateToolProps<TChildProps, TDataName>>) {
+    return ApolloReactHoc.withMutation<TProps, CreateToolMutation, CreateToolMutationVariables, CreateToolProps<TChildProps, TDataName>>(CreateToolDocument, {
+      alias: 'createTool',
+      ...operationOptions
+    });
+};
+
+/**
+ * __useCreateToolMutation__
+ *
+ * To run a mutation, you first call `useCreateToolMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateToolMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createToolMutation, { data, loading, error }] = useCreateToolMutation({
+ *   variables: {
+ *      toolCreateInput: // value for 'toolCreateInput'
+ *   },
+ * });
+ */
+export function useCreateToolMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateToolMutation, CreateToolMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateToolMutation, CreateToolMutationVariables>(CreateToolDocument, baseOptions);
+      }
+export type CreateToolMutationHookResult = ReturnType<typeof useCreateToolMutation>;
+export type CreateToolMutationResult = ApolloReactCommon.MutationResult<CreateToolMutation>;
+export type CreateToolMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateToolMutation, CreateToolMutationVariables>;
 export const ProfileByNicknameDocument = gql`
     query ProfileByNickname($nickname: String!) {
   profile(where: {nicknameSearch: $nickname}) {
@@ -2211,6 +2690,7 @@ export const SignupDocument = gql`
       id
       name
       nickname
+      photo
     }
   }
 }
@@ -2253,289 +2733,6 @@ export function useSignupMutation(baseOptions?: ApolloReactHooks.MutationHookOpt
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<SignupMutation>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
-export const GetSkillDocument = gql`
-    query GetSkill($skillWhereUniqueInput: SkillWhereUniqueInput!) {
-  skill(where: $skillWhereUniqueInput) {
-    ...SkillInfo
-  }
-}
-    ${SkillInfoFragmentDoc}`;
-export type GetSkillProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetSkillQuery, GetSkillQueryVariables>
-    } & TChildProps;
-export function withGetSkill<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetSkillQuery,
-  GetSkillQueryVariables,
-  GetSkillProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetSkillQuery, GetSkillQueryVariables, GetSkillProps<TChildProps, TDataName>>(GetSkillDocument, {
-      alias: 'getSkill',
-      ...operationOptions
-    });
-};
-
-/**
- * __useGetSkillQuery__
- *
- * To run a query within a React component, call `useGetSkillQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetSkillQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetSkillQuery({
- *   variables: {
- *      skillWhereUniqueInput: // value for 'skillWhereUniqueInput'
- *   },
- * });
- */
-export function useGetSkillQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetSkillQuery, GetSkillQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetSkillQuery, GetSkillQueryVariables>(GetSkillDocument, baseOptions);
-      }
-export function useGetSkillLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetSkillQuery, GetSkillQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetSkillQuery, GetSkillQueryVariables>(GetSkillDocument, baseOptions);
-        }
-export type GetSkillQueryHookResult = ReturnType<typeof useGetSkillQuery>;
-export type GetSkillLazyQueryHookResult = ReturnType<typeof useGetSkillLazyQuery>;
-export type GetSkillQueryResult = ApolloReactCommon.QueryResult<GetSkillQuery, GetSkillQueryVariables>;
-export const UpdateSkillDocument = gql`
-    mutation UpdateSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
-    id
-    skills {
-      ...SkillInfo
-    }
-  }
-}
-    ${SkillInfoFragmentDoc}`;
-export type UpdateSkillMutationFn = ApolloReactCommon.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>;
-export type UpdateSkillProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateSkillMutation, UpdateSkillMutationVariables>
-    } & TChildProps;
-export function withUpdateSkill<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  UpdateSkillMutation,
-  UpdateSkillMutationVariables,
-  UpdateSkillProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, UpdateSkillMutation, UpdateSkillMutationVariables, UpdateSkillProps<TChildProps, TDataName>>(UpdateSkillDocument, {
-      alias: 'updateSkill',
-      ...operationOptions
-    });
-};
-
-/**
- * __useUpdateSkillMutation__
- *
- * To run a mutation, you first call `useUpdateSkillMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateSkillMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateSkillMutation, { data, loading, error }] = useUpdateSkillMutation({
- *   variables: {
- *      profileUpdateInput: // value for 'profileUpdateInput'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useUpdateSkillMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateSkillMutation, UpdateSkillMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateSkillMutation, UpdateSkillMutationVariables>(UpdateSkillDocument, baseOptions);
-      }
-export type UpdateSkillMutationHookResult = ReturnType<typeof useUpdateSkillMutation>;
-export type UpdateSkillMutationResult = ApolloReactCommon.MutationResult<UpdateSkillMutation>;
-export type UpdateSkillMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateSkillMutation, UpdateSkillMutationVariables>;
-export const GetHomeProfileDocument = gql`
-    query GetHomeProfile {
-  currentUser {
-    id
-    profile {
-      ...HomeProfileInfo
-    }
-  }
-}
-    ${HomeProfileInfoFragmentDoc}`;
-export type GetHomeProfileProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetHomeProfileQuery, GetHomeProfileQueryVariables>
-    } & TChildProps;
-export function withGetHomeProfile<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetHomeProfileQuery,
-  GetHomeProfileQueryVariables,
-  GetHomeProfileProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetHomeProfileQuery, GetHomeProfileQueryVariables, GetHomeProfileProps<TChildProps, TDataName>>(GetHomeProfileDocument, {
-      alias: 'getHomeProfile',
-      ...operationOptions
-    });
-};
-
-/**
- * __useGetHomeProfileQuery__
- *
- * To run a query within a React component, call `useGetHomeProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetHomeProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetHomeProfileQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetHomeProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetHomeProfileQuery, GetHomeProfileQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetHomeProfileQuery, GetHomeProfileQueryVariables>(GetHomeProfileDocument, baseOptions);
-      }
-export function useGetHomeProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetHomeProfileQuery, GetHomeProfileQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetHomeProfileQuery, GetHomeProfileQueryVariables>(GetHomeProfileDocument, baseOptions);
-        }
-export type GetHomeProfileQueryHookResult = ReturnType<typeof useGetHomeProfileQuery>;
-export type GetHomeProfileLazyQueryHookResult = ReturnType<typeof useGetHomeProfileLazyQuery>;
-export type GetHomeProfileQueryResult = ApolloReactCommon.QueryResult<GetHomeProfileQuery, GetHomeProfileQueryVariables>;
-export const UpdateHomeProfileDocument = gql`
-    mutation UpdateHomeProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
-    ...HomeProfileInfo
-  }
-}
-    ${HomeProfileInfoFragmentDoc}`;
-export type UpdateHomeProfileMutationFn = ApolloReactCommon.MutationFunction<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>;
-export type UpdateHomeProfileProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>
-    } & TChildProps;
-export function withUpdateHomeProfile<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  UpdateHomeProfileMutation,
-  UpdateHomeProfileMutationVariables,
-  UpdateHomeProfileProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables, UpdateHomeProfileProps<TChildProps, TDataName>>(UpdateHomeProfileDocument, {
-      alias: 'updateHomeProfile',
-      ...operationOptions
-    });
-};
-
-/**
- * __useUpdateHomeProfileMutation__
- *
- * To run a mutation, you first call `useUpdateHomeProfileMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateHomeProfileMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateHomeProfileMutation, { data, loading, error }] = useUpdateHomeProfileMutation({
- *   variables: {
- *      profileUpdateInput: // value for 'profileUpdateInput'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useUpdateHomeProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>(UpdateHomeProfileDocument, baseOptions);
-      }
-export type UpdateHomeProfileMutationHookResult = ReturnType<typeof useUpdateHomeProfileMutation>;
-export type UpdateHomeProfileMutationResult = ApolloReactCommon.MutationResult<UpdateHomeProfileMutation>;
-export type UpdateHomeProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateHomeProfileMutation, UpdateHomeProfileMutationVariables>;
-export const GetUserSkillsDocument = gql`
-    query GetUserSkills {
-  currentUser {
-    id
-    profile {
-      ...ProfileSkillsInfo
-    }
-  }
-}
-    ${ProfileSkillsInfoFragmentDoc}`;
-export type GetUserSkillsProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetUserSkillsQuery, GetUserSkillsQueryVariables>
-    } & TChildProps;
-export function withGetUserSkills<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetUserSkillsQuery,
-  GetUserSkillsQueryVariables,
-  GetUserSkillsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetUserSkillsQuery, GetUserSkillsQueryVariables, GetUserSkillsProps<TChildProps, TDataName>>(GetUserSkillsDocument, {
-      alias: 'getUserSkills',
-      ...operationOptions
-    });
-};
-
-/**
- * __useGetUserSkillsQuery__
- *
- * To run a query within a React component, call `useGetUserSkillsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserSkillsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserSkillsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetUserSkillsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetUserSkillsQuery, GetUserSkillsQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetUserSkillsQuery, GetUserSkillsQueryVariables>(GetUserSkillsDocument, baseOptions);
-      }
-export function useGetUserSkillsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetUserSkillsQuery, GetUserSkillsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetUserSkillsQuery, GetUserSkillsQueryVariables>(GetUserSkillsDocument, baseOptions);
-        }
-export type GetUserSkillsQueryHookResult = ReturnType<typeof useGetUserSkillsQuery>;
-export type GetUserSkillsLazyQueryHookResult = ReturnType<typeof useGetUserSkillsLazyQuery>;
-export type GetUserSkillsQueryResult = ApolloReactCommon.QueryResult<GetUserSkillsQuery, GetUserSkillsQueryVariables>;
-export const UpdateProfileSkillsDocument = gql`
-    mutation UpdateProfileSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
-    ...ProfileSkillsInfo
-  }
-}
-    ${ProfileSkillsInfoFragmentDoc}`;
-export type UpdateProfileSkillsMutationFn = ApolloReactCommon.MutationFunction<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>;
-export type UpdateProfileSkillsProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>
-    } & TChildProps;
-export function withUpdateProfileSkills<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  UpdateProfileSkillsMutation,
-  UpdateProfileSkillsMutationVariables,
-  UpdateProfileSkillsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables, UpdateProfileSkillsProps<TChildProps, TDataName>>(UpdateProfileSkillsDocument, {
-      alias: 'updateProfileSkills',
-      ...operationOptions
-    });
-};
-
-/**
- * __useUpdateProfileSkillsMutation__
- *
- * To run a mutation, you first call `useUpdateProfileSkillsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateProfileSkillsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateProfileSkillsMutation, { data, loading, error }] = useUpdateProfileSkillsMutation({
- *   variables: {
- *      profileUpdateInput: // value for 'profileUpdateInput'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useUpdateProfileSkillsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>(UpdateProfileSkillsDocument, baseOptions);
-      }
-export type UpdateProfileSkillsMutationHookResult = ReturnType<typeof useUpdateProfileSkillsMutation>;
-export type UpdateProfileSkillsMutationResult = ApolloReactCommon.MutationResult<UpdateProfileSkillsMutation>;
-export type UpdateProfileSkillsMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateProfileSkillsMutation, UpdateProfileSkillsMutationVariables>;
 export const HomeDocument = gql`
     query Home {
   currentUser {
@@ -2581,148 +2778,3 @@ export function useHomeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOpt
 export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
 export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
 export type HomeQueryResult = ApolloReactCommon.QueryResult<HomeQuery, HomeQueryVariables>;
-export const GetOnboardingProfileDocument = gql`
-    query GetOnboardingProfile {
-  currentUser {
-    id
-    profile {
-      ...OnboardingProfileInfo
-    }
-  }
-}
-    ${OnboardingProfileInfoFragmentDoc}`;
-export type GetOnboardingProfileProps<TChildProps = {}, TDataName extends string = 'data'> = {
-      [key in TDataName]: ApolloReactHoc.DataValue<GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables>
-    } & TChildProps;
-export function withGetOnboardingProfile<TProps, TChildProps = {}, TDataName extends string = 'data'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  GetOnboardingProfileQuery,
-  GetOnboardingProfileQueryVariables,
-  GetOnboardingProfileProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withQuery<TProps, GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables, GetOnboardingProfileProps<TChildProps, TDataName>>(GetOnboardingProfileDocument, {
-      alias: 'getOnboardingProfile',
-      ...operationOptions
-    });
-};
-
-/**
- * __useGetOnboardingProfileQuery__
- *
- * To run a query within a React component, call `useGetOnboardingProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOnboardingProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOnboardingProfileQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetOnboardingProfileQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables>(GetOnboardingProfileDocument, baseOptions);
-      }
-export function useGetOnboardingProfileLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables>(GetOnboardingProfileDocument, baseOptions);
-        }
-export type GetOnboardingProfileQueryHookResult = ReturnType<typeof useGetOnboardingProfileQuery>;
-export type GetOnboardingProfileLazyQueryHookResult = ReturnType<typeof useGetOnboardingProfileLazyQuery>;
-export type GetOnboardingProfileQueryResult = ApolloReactCommon.QueryResult<GetOnboardingProfileQuery, GetOnboardingProfileQueryVariables>;
-export const UpdateOnboardingProfileDocument = gql`
-    mutation UpdateOnboardingProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
-    ...OnboardingProfileInfo
-  }
-}
-    ${OnboardingProfileInfoFragmentDoc}`;
-export type UpdateOnboardingProfileMutationFn = ApolloReactCommon.MutationFunction<UpdateOnboardingProfileMutation, UpdateOnboardingProfileMutationVariables>;
-export type UpdateOnboardingProfileProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<UpdateOnboardingProfileMutation, UpdateOnboardingProfileMutationVariables>
-    } & TChildProps;
-export function withUpdateOnboardingProfile<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  UpdateOnboardingProfileMutation,
-  UpdateOnboardingProfileMutationVariables,
-  UpdateOnboardingProfileProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, UpdateOnboardingProfileMutation, UpdateOnboardingProfileMutationVariables, UpdateOnboardingProfileProps<TChildProps, TDataName>>(UpdateOnboardingProfileDocument, {
-      alias: 'updateOnboardingProfile',
-      ...operationOptions
-    });
-};
-
-/**
- * __useUpdateOnboardingProfileMutation__
- *
- * To run a mutation, you first call `useUpdateOnboardingProfileMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateOnboardingProfileMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateOnboardingProfileMutation, { data, loading, error }] = useUpdateOnboardingProfileMutation({
- *   variables: {
- *      profileUpdateInput: // value for 'profileUpdateInput'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useUpdateOnboardingProfileMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateOnboardingProfileMutation, UpdateOnboardingProfileMutationVariables>) {
-        return ApolloReactHooks.useMutation<UpdateOnboardingProfileMutation, UpdateOnboardingProfileMutationVariables>(UpdateOnboardingProfileDocument, baseOptions);
-      }
-export type UpdateOnboardingProfileMutationHookResult = ReturnType<typeof useUpdateOnboardingProfileMutation>;
-export type UpdateOnboardingProfileMutationResult = ApolloReactCommon.MutationResult<UpdateOnboardingProfileMutation>;
-export type UpdateOnboardingProfileMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateOnboardingProfileMutation, UpdateOnboardingProfileMutationVariables>;
-export const CreateOnboardingSkillsDocument = gql`
-    mutation CreateOnboardingSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-  updateOneProfile(data: $profileUpdateInput, where: {id: $id}) {
-    id
-    skills {
-      tool {
-        name
-      }
-    }
-  }
-}
-    `;
-export type CreateOnboardingSkillsMutationFn = ApolloReactCommon.MutationFunction<CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables>;
-export type CreateOnboardingSkillsProps<TChildProps = {}, TDataName extends string = 'mutate'> = {
-      [key in TDataName]: ApolloReactCommon.MutationFunction<CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables>
-    } & TChildProps;
-export function withCreateOnboardingSkills<TProps, TChildProps = {}, TDataName extends string = 'mutate'>(operationOptions?: ApolloReactHoc.OperationOption<
-  TProps,
-  CreateOnboardingSkillsMutation,
-  CreateOnboardingSkillsMutationVariables,
-  CreateOnboardingSkillsProps<TChildProps, TDataName>>) {
-    return ApolloReactHoc.withMutation<TProps, CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables, CreateOnboardingSkillsProps<TChildProps, TDataName>>(CreateOnboardingSkillsDocument, {
-      alias: 'createOnboardingSkills',
-      ...operationOptions
-    });
-};
-
-/**
- * __useCreateOnboardingSkillsMutation__
- *
- * To run a mutation, you first call `useCreateOnboardingSkillsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateOnboardingSkillsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createOnboardingSkillsMutation, { data, loading, error }] = useCreateOnboardingSkillsMutation({
- *   variables: {
- *      profileUpdateInput: // value for 'profileUpdateInput'
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useCreateOnboardingSkillsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables>(CreateOnboardingSkillsDocument, baseOptions);
-      }
-export type CreateOnboardingSkillsMutationHookResult = ReturnType<typeof useCreateOnboardingSkillsMutation>;
-export type CreateOnboardingSkillsMutationResult = ApolloReactCommon.MutationResult<CreateOnboardingSkillsMutation>;
-export type CreateOnboardingSkillsMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateOnboardingSkillsMutation, CreateOnboardingSkillsMutationVariables>;

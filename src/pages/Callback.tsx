@@ -16,6 +16,7 @@ gql`
                 id
                 name
                 nickname
+                photo
             }
         }
     }
@@ -23,6 +24,16 @@ gql`
 
 function Callback() {
     const { user } = useAuth0();
+
+    /**
+     * email: "foobar@gmail.com"
+     * email_verified: true
+     * name: "Foo Bar"
+     * nickname: "foobar"
+     * picture: "https://avatars3.githubusercontent.com/u/118628?v=4"
+     * sub: "github|12345"
+     * updated_at: "2020-06-11T20:05:14.340Z"
+     */
 
     const history = useHistory();
 
@@ -58,6 +69,7 @@ function Callback() {
                                 name: user.name,
                                 nickname: user.nickname,
                                 nicknameSearch: user.nickname.toLowerCase(),
+                                photo: user.picture,
                             },
                         },
                     },

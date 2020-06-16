@@ -9,8 +9,7 @@ import TextArea from 'src/components/ui/TextArea';
 import Button from 'src/components/ui/Button';
 import Loading from 'src/components/ui/Loading';
 
-const ProfileForm = ({ profile, updateProfile }) => {
-    //const [flash, setFlash] = useState(undefined);
+const ProfileForm = ({ profile, updateProfile, buttonValue = 'Update' }) => {
     const apolloClient = useApolloClient();
 
     const [formReady, setFormReady] = useState(false);
@@ -91,10 +90,13 @@ const ProfileForm = ({ profile, updateProfile }) => {
                 />
                 <Input display="Full Name" field="name" register={register} errors={errors} />
                 <Input display="Photo" field="photo" register={register} errors={errors} />
+                <div className="my-2">
+                    <img className="inline-block h-14 w-14 rounded-full" src={profile.photo} alt="photo" />
+                </div>
                 <TextArea display="About" field="about" register={register} errors={errors} />
                 <p className="">
                     <Button mode="primary" onClick={handleSubmit(onSubmit)}>
-                        Update
+                        {buttonValue}
                     </Button>
                 </p>
             </form>
