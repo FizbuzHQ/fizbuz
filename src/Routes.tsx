@@ -8,11 +8,13 @@ import OnboardingProfile from 'src/pages/onboarding/Profile';
 import OnboardingSkills from 'src/pages/onboarding/Skills';
 import Landing from 'src/pages/Landing';
 import Home from 'src/pages/home';
-import HomeProfile from 'src/pages/home/Profile';
+import HomeProfile from 'src/pages/home/profile/EditProfile';
 import Error from 'src/pages/Error';
 import { Mode } from 'src/components/ui/Alert';
-import HomeSkills from './pages/home/Skills';
-import HomeSkillEdit from './pages/home/EditSkill';
+import HomeSkills from 'src/pages/home/skills/Skills';
+import HomeSkillEdit from 'src/pages/home/skills/EditSkill';
+import CreateTool from 'src/pages/home/tools/CreateTool';
+import PublicProfile from 'src/pages/PublicProfile';
 
 const NoMatch = () => {
     return <div>404, sorry!</div>;
@@ -56,7 +58,9 @@ function Routes() {
             <PrivateRoute exact path="/home/profile" component={HomeProfile} />
             <PrivateRoute exact path="/home/skills" component={HomeSkills} />
             <PrivateRoute path="/home/skills/:id" component={HomeSkillEdit} />
+            <PrivateRoute path="/home/tools/create" component={CreateTool} />
             <PublicRoute exact path="/" component={Landing} />
+            <PublicRoute exact path="/u/:nickname" component={PublicProfile} />
             <PublicRoute path="/error" component={Error} />
             <PublicRoute path="*" component={NoMatch} />
         </Switch>

@@ -17,4 +17,9 @@ const updateSkillSchema = yup.object().shape({
     comment: yup.string(),
 });
 
-export { updateOneProfileSchema, updateSkillSchema };
+const upsertToolSchema = yup.object().shape({
+    name: yup.string().required(),
+    kind: yup.string().required(),
+});
+
+export { updateOneProfileSchema, updateSkillSchema, upsertToolSchema };

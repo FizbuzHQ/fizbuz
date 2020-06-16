@@ -21,6 +21,8 @@ fragment ProfileInfo on Profile {
     id
     nickname
     name
+    photo
+    about
 }
 
 fragment FullProfile on User {
@@ -33,8 +35,83 @@ fragment FullProfile on User {
     }
 }
 
+
+#####################################################
+# 
+# QUERIES
+# 
+#####################################################
+
+query ToolKindList {
+  __type(name:"ToolKind") {
+    enumValues{
+      name
+    }
+  }
+}
+
 query ToolList {
     tools(where: {verified: {equals: true}}) {
         ...ToolInfo
     }
+}
+
+query GetCurrentUserProfile {
+    currentUser {
+        id
+        profile {
+            ...ProfileInfo
+        }
+    }
+}
+
+mutation UpdateProfile($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+    updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+        ...ProfileInfo
+    }
+}
+
+fragment ProfileSkillsInfo on Profile {
+    id
+    skills {
+        ...SkillInfo
+    }
+}
+
+query GetUserSkills {
+    currentUser {
+        id
+        profile {
+            ...ProfileSkillsInfo
+        }
+    }
+}
+
+query GetSkill($skillWhereUniqueInput: SkillWhereUniqueInput!) {
+    skill(where: $skillWhereUniqueInput) {
+        ...SkillInfo
+    }
+}
+
+
+
+mutation UpdateSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+    updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+        id
+        skills {
+            ...SkillInfo
+        }
+    }
+}
+
+mutation UpdateProfileSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
+    updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
+        ...ProfileSkillsInfo
+    }
+}
+
+mutation createTool($toolCreateInput: ToolCreateInput!) {
+  createOneTool(data: $toolCreateInput) {
+    ...ToolInfo
+  }
 }

@@ -1,32 +1,18 @@
 import * as React from 'react';
-import gql from 'graphql-tag';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { useCurrentUserQuery, useToolListQuery, useCreateOnboardingSkillsMutation } from 'src/generated/graphql';
+import { useCurrentUserQuery, useToolListQuery, useUpdateProfileSkillsMutation } from 'src/generated/graphql';
 import { stringCompare } from 'src/utils/strings';
 import Button from 'src/components/ui/Button';
 import Checkbox from 'src/components/ui/Checkbox';
 import Loading from 'src/components/ui/Loading';
 import { Alert, Mode } from 'src/components/ui/Alert';
 
-gql`
-    mutation CreateOnboardingSkills($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
-            id
-            skills {
-                tool {
-                    name
-                }
-            }
-        }
-    }
-`;
-
 const OnboardingSkills = () => {
     const { data: currentUserData } = useCurrentUserQuery();
     const { data: toolsData } = useToolListQuery();
 
-    const [createSkill] = useCreateOnboardingSkillsMutation();
+    const [updateSkills] = useUpdateProfileSkillsMutation();
 
     const { register, handleSubmit } = useForm();
 
@@ -46,7 +32,7 @@ const OnboardingSkills = () => {
                 };
             });
 
-            await createSkill({
+            await updateSkills({
                 variables: {
                     id: currentUserData.currentUser.profile.id,
                     profileUpdateInput: {
@@ -73,7 +59,7 @@ const OnboardingSkills = () => {
         }, {});
 
         // define which "kinds" of Tools to display on this page
-        const kindsToDisplay = ['Language'];
+        const kindsToDisplay = ['Language', 'Framework'];
 
         return (
             <>

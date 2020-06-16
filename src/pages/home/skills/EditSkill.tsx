@@ -1,29 +1,11 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import gql from 'graphql-tag';
+import { useParams, useHistory } from 'react-router-dom';
 import { useCurrentUserQuery, useGetSkillQuery, useUpdateSkillMutation } from 'src/generated/graphql';
 import SkillForm from 'src/forms/SkillForm';
 import { updateSkillSchema } from 'src/forms/validation';
 import Loading from 'src/components/ui/Loading';
 import { Mode, Alert } from 'src/components/ui/Alert';
-
-gql`
-    query GetSkill($skillWhereUniqueInput: SkillWhereUniqueInput!) {
-        skill(where: $skillWhereUniqueInput) {
-            ...SkillInfo
-        }
-    }
-
-    mutation UpdateSkill($profileUpdateInput: ProfileUpdateInput!, $id: String!) {
-        updateOneProfile(data: $profileUpdateInput, where: { id: $id }) {
-            id
-            skills {
-                ...SkillInfo
-            }
-        }
-    }
-`;
 
 const EditSkill = () => {
     const { id } = useParams();
@@ -31,6 +13,7 @@ const EditSkill = () => {
     const { data: currentUserData } = useCurrentUserQuery();
     const { data: skillData } = useGetSkillQuery({ variables: { skillWhereUniqueInput: { id } } });
     const [updateSkillMutation] = useUpdateSkillMutation();
+    const history = useHistory();
 
     const updateSkill = async (formData) => {
         const data = updateSkillSchema.cast(formData);
@@ -46,7 +29,9 @@ const EditSkill = () => {
             await updateSkillMutation({
                 variables: { id, profileUpdateInput },
             });
-            setFlash({ mode: Mode.SUCCESS, message: 'Skill updated successfully!' });
+            history.push('/home/skills', {
+                flash: { mode: Mode.SUCCESS, message: 'Skill updated successfully!' },
+            });
         } catch (error) {
             setFlash({ mode: Mode.ERROR, message: 'mutation failed, possibly because of validation errors' });
         }

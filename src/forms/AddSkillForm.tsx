@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
 import { useToolListQuery } from 'src/generated/graphql';
 import { stringCompare } from 'src/utils/strings';
@@ -9,6 +10,7 @@ const AddSkillForm = ({ skills, createSkill }) => {
     const [loading, setLoading] = useState(true);
     const [options, setOptions] = useState([]);
     const [value, setValue] = useState(undefined);
+    const history = useHistory();
 
     const createOptionsList = () => {
         const { tools } = data;
@@ -36,7 +38,7 @@ const AddSkillForm = ({ skills, createSkill }) => {
         }
     }, [data, skills]);
 
-    const handleChange = (selectedOption, actionMeta) => {
+    const handleChange = (selectedOption /*, actionMeta*/) => {
         //console.log(selectedOption, actionMeta);
         if (selectedOption && selectedOption.value) {
             createSkill(selectedOption.value);
@@ -45,7 +47,7 @@ const AddSkillForm = ({ skills, createSkill }) => {
     };
 
     const handleCreate = (inputValue) => {
-        console.log(inputValue);
+        history.push(`/home/tools/create?name=${inputValue}`);
     };
 
     const formatGroupLabel = (data) => (
