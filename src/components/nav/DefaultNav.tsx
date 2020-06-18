@@ -18,10 +18,10 @@ function LoginButton() {
     const { loginWithRedirect } = useAuth0();
     return (
         <Button
-            onClick={() =>
+            onClick={() => {
                 // eslint-disable-next-line @typescript-eslint/camelcase
-                loginWithRedirect({ redirect_uri: `${window.location.origin}${process.env.AUTH0_CALLBACK}` })
-            }
+                loginWithRedirect({ redirect_uri: `${window.location.origin}${process.env.AUTH0_CALLBACK}` });
+            }}
             mode="secondary"
         >
             Log In
