@@ -1,0 +1,31 @@
+{
+  CompanyId: 'bb7f0e36-f099-4e44-868a-6468cc3aedb3',
+  SourceId: '2dc240ce-ce31-41da-8a6a-2b44981b3369',
+  Path: './src/itly',
+  Events: [
+    {
+      id: '606bc227-0d9e-49d3-9c1a-5e48571116c5',
+      name: 'Guest Clicks Register',
+      description: 'Called with the user clicks Register',
+      properties: [],
+      sources: [
+        {
+          id: '2dc240ce-ce31-41da-8a6a-2b44981b3369',
+          name: 'web',
+        },
+      ],
+    },
+    {
+      id: '2d8d9756-24b2-4c62-a9a2-f6914315f80d',
+      name: 'User Signed In',
+      description: 'Called when a user signs in',
+      properties: [],
+      sources: [
+        {
+          id: '2dc240ce-ce31-41da-8a6a-2b44981b3369',
+          name: 'web',
+        },
+      ],
+    },
+  ],
+}

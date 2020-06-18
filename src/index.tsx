@@ -8,6 +8,9 @@ import GraphQLProvider from 'src/GraphQLProvider';
 import UserProvider from 'src/UserProvider';
 import Error from 'src/pages/Error';
 import 'src/index.css';
+import itly from 'src/itly';
+
+itly.init({ environment: process.env.NODE_ENV === 'production' ? 'production' : 'development' });
 
 const Catch = ({ children }) => {
     const location = useLocation();
@@ -16,23 +19,26 @@ const Catch = ({ children }) => {
     } else return children;
 };
 
-ReactDOM.render(
-    <Router>
-        <Catch>
-            <Auth0Provider
-                domain={process.env.AUTH0_DOMAIN}
-                client_id={process.env.AUTH0_CLIENT_ID}
-                audience={process.env.AUTH0_AUDIENCE}
-                cacheLocation={process.env.AUTH0_CACHE_LOCATION}
-                redirect_uri={`${window.location.origin}${process.env.AUTH0_CALLBACK}`}
-            >
-                <GraphQLProvider>
-                    <UserProvider>
-                        <Routes />
-                    </UserProvider>
-                </GraphQLProvider>
-            </Auth0Provider>
-        </Catch>
-    </Router>,
-    document.getElementById('root'),
-);
+(window as any).analytics.ready(function () {
+    console.log('analytics ready');
+    ReactDOM.render(
+        <Router>
+            <Catch>
+                <Auth0Provider
+                    domain={process.env.AUTH0_DOMAIN}
+                    client_id={process.env.AUTH0_CLIENT_ID}
+                    audience={process.env.AUTH0_AUDIENCE}
+                    cacheLocation={process.env.AUTH0_CACHE_LOCATION}
+                    redirect_uri={`${window.location.origin}${process.env.AUTH0_CALLBACK}`}
+                >
+                    <GraphQLProvider>
+                        <UserProvider>
+                            <Routes />
+                        </UserProvider>
+                    </GraphQLProvider>
+                </Auth0Provider>
+            </Catch>
+        </Router>,
+        document.getElementById('root'),
+    );
+});

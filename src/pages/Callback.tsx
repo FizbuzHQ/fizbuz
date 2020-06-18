@@ -7,6 +7,7 @@ import { useSignupMutation, useCurrentUserQuery } from 'src/generated/graphql';
 import { Alert, Mode } from 'src/components/ui/Alert';
 import Loading from 'src/components/ui/Loading';
 import { CURRENT_USER_QUERY } from 'src/graphql/common';
+import itly from 'src/itly';
 
 gql`
     mutation Signup($userInput: UserCreateInput!) {
@@ -49,6 +50,7 @@ function Callback() {
     useEffect(() => {
         // if the query has completed the user already exists in our system
         if (!queryLoading && queryData && queryData.currentUser) {
+            itly.trackUserSignedIn();
             history.push('/home');
         } else if (!queryLoading) {
             // else the user isn't in our system, so let's create the user & associated identity and profile records
