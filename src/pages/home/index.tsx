@@ -12,9 +12,9 @@ gql`
 `;
 
 function Home() {
-    (window as any).Intercom('show');
+    // (window as any).Intercom('show');
     const { data } = useHomeQuery();
-    const { data: uploadData, uploading, upload } = useUpload();
+    const { data: uploadData, /*uploading,*/ upload } = useUpload();
     return (
         <>
             <h1>Dashboard</h1>

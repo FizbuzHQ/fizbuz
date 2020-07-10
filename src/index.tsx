@@ -19,6 +19,8 @@ const Catch = ({ children }) => {
     } else return children;
 };
 
+// NOTE: not sure if this is the best way to handle this??
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).analytics.ready(function () {
     console.log('analytics ready');
     ReactDOM.render(

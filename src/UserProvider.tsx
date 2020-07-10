@@ -14,9 +14,11 @@ const UserProvider = ({ children }) => {
     const { data: currentUserData, loading: dataLoading, error: dataError } = useCurrentUserQuery({
         skip: !isAuthenticated,
     });
+    // if the auth check or the user data is still loading, show a spinner
     if (authLoading || dataLoading) {
         return <Loading />;
     } else if (authError || dataError) {
+        // if an error loading either resource occurred
         const message = authError ? authError.message : dataError.message;
         const from = location.pathname;
         return (
@@ -28,7 +30,7 @@ const UserProvider = ({ children }) => {
             />
         );
     } else {
-        if (currentUserData.currentUser && currentUserData.currentUser.id) {
+        if (currentUserData && currentUserData.currentUser && currentUserData.currentUser.id) {
             itly.identify(currentUserData.currentUser.id);
         }
         return children;

@@ -9,7 +9,8 @@
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --quiet --fix",
     "codegen": "graphql-codegen --require dotenv/config --config codegen.yml",
     "dev": "parcel serve src/index.html",
-    "build": "yarn clean && yarn codegen && parcel build src/index.html && cp -Rv ./static/* ./dist"
+    "build": "yarn clean && yarn codegen && parcel build src/index.html && cp -Rv ./static/* ./dist",
+    "stage-build": "yarn clean && API_URL=https://fizbuz-api-staging.herokuapp.com/graphql  yarn codegen && parcel build src/index.html && cp -Rv ./static/* ./dist"
   },
   "alias": {
     "src": "./src"
